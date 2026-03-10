@@ -1,0 +1,107 @@
+[
+  {
+    "file": "parser\\repo_parser.py",
+    "classes": [],
+    "functions": [
+      "_extract_calls",
+      "parse_python_file",
+      "parse_repository",
+      "save_output"
+    ],
+    "function_details": [
+      {
+        "name": "_extract_calls",
+        "calls": [
+          "ast.walk",
+          "list",
+          "isinstance",
+          "dict.fromkeys",
+          "calls.append",
+          "ast.unparse"
+        ]
+      },
+      {
+        "name": "parse_python_file",
+        "calls": [
+          "ast.walk",
+          "Path(filepath).read_text",
+          "ast.parse",
+          "isinstance",
+          "list",
+          "dict.fromkeys",
+          "Path",
+          "imports.append",
+          "classes.append",
+          "ast.unparse",
+          "_extract_calls",
+          "functions.append",
+          "calls.extend"
+        ]
+      },
+      {
+        "name": "parse_repository",
+        "calls": [
+          "Path(repo_path).resolve",
+          "os.walk",
+          "Path",
+          "str",
+          "parse_python_file",
+          "results.append",
+          "fname.endswith",
+          "Path(fpath).relative_to"
+        ]
+      },
+      {
+        "name": "save_output",
+        "calls": [
+          "print",
+          "open",
+          "json.dump",
+          "len"
+        ]
+      }
+    ],
+    "imports": [
+      "ast",
+      "json",
+      "os",
+      "pathlib.Path",
+      "sys"
+    ],
+    "calls": [
+      "ast.walk",
+      "list",
+      "isinstance",
+      "dict.fromkeys",
+      "calls.append",
+      "ast.unparse",
+      "Path(filepath).read_text",
+      "ast.parse",
+      "Path",
+      "imports.append",
+      "classes.append",
+      "_extract_calls",
+      "functions.append",
+      "calls.extend",
+      "Path(repo_path).resolve",
+      "os.walk",
+      "str",
+      "parse_python_file",
+      "results.append",
+      "fname.endswith",
+      "Path(fpath).relative_to",
+      "print",
+      "open",
+      "json.dump",
+      "len"
+    ]
+  },
+  {
+    "file": "parser\\__init__.py",
+    "classes": [],
+    "functions": [],
+    "function_details": [],
+    "imports": [],
+    "calls": []
+  }
+]
