@@ -1,0 +1,454 @@
+2025-06-11 21:43:24,675 - DBUtils - INFO - Attempting to connect to database 'NLG'...
+2025-06-11 21:43:24,946 - DBUtils - INFO - Database connection successful.
+2025-06-11 21:43:24,947 - DBUtils - INFO - Checking if table 'AgentDebugLogs' exists.
+2025-06-11 21:43:25,048 - DBUtils - WARNING - Table 'AgentDebugLogs' not found. Creating it now.
+2025-06-11 21:43:25,097 - DBUtils - INFO - Table 'AgentDebugLogs' created successfully.
+2025-06-11 21:43:25,101 - MainApp - INFO - Database setup completed successfully.
+2025-06-11 21:43:48,125 - DBUtils - INFO - Attempting to connect to database 'NLG'...
+2025-06-11 21:43:48,129 - DBUtils - INFO - Database connection successful.
+2025-06-11 21:43:48,130 - DBUtils - INFO - Checking if table 'AgentDebugLogs' exists.
+2025-06-11 21:43:48,236 - DBUtils - INFO - Table 'AgentDebugLogs' already exists.
+2025-06-11 21:43:48,240 - MainApp - INFO - Database setup completed successfully.
+2025-06-11 21:44:05,208 - MainApp - INFO - OpenAI API Key has been set.
+2025-06-11 21:44:05,213 - DBUtils - INFO - Attempting to connect to database 'NLG'...
+2025-06-11 21:44:05,214 - DBUtils - INFO - Database connection successful.
+2025-06-11 21:44:05,214 - DBUtils - INFO - Checking if table 'AgentDebugLogs' exists.
+2025-06-11 21:44:05,264 - DBUtils - INFO - Table 'AgentDebugLogs' already exists.
+2025-06-11 21:44:05,267 - MainApp - INFO - Database setup completed successfully.
+2025-06-11 21:44:10,173 - DBUtils - INFO - Attempting to connect to database 'NLG'...
+2025-06-11 21:44:10,175 - DBUtils - INFO - Database connection successful.
+2025-06-11 21:44:10,176 - DBUtils - INFO - Checking if table 'AgentDebugLogs' exists.
+2025-06-11 21:44:10,179 - DBUtils - INFO - Table 'AgentDebugLogs' already exists.
+2025-06-11 21:44:10,180 - MainApp - INFO - Database setup completed successfully.
+2025-06-11 21:44:10,184 - MainApp - INFO - Agent swarm started with prompt: 'Build a simple to do list app...'
+2025-06-11 21:44:11,208 - DeveloperAgent - INFO - DeveloperAgent initialized.
+2025-06-11 21:44:11,936 - TesterAgent - INFO - TesterAgent initialized.
+2025-06-11 21:44:12,672 - EvaluatorAgent - INFO - EvaluatorAgent initialized.
+2025-06-11 21:44:12,673 - MainApp - INFO - All agents initialized successfully.
+2025-06-11 21:44:14,680 - DeveloperAgent - INFO - Generating code for prompt: 'Build a simple to do list app...'
+2025-06-11 21:44:24,293 - DeveloperAgent - INFO - Successfully received response from OpenAI API.
+2025-06-11 21:44:24,295 - DeveloperAgent - INFO - Successfully parsed file structure and code from response.
+2025-06-11 21:44:24,300 - MainApp - INFO - Developer Agent successfully generated code and saved to generated_code\app.py
+2025-06-11 21:44:26,314 - TesterAgent - INFO - Starting test and debug process for generated_code\app.py
+2025-06-11 21:44:26,405 - TesterAgent - INFO - Running syntax check on file: generated_code\app.py
+2025-06-11 21:44:26,517 - TesterAgent - INFO - Syntax check passed.
+2025-06-11 21:44:26,517 - TesterAgent - INFO - No errors detected in the initial code.
+2025-06-11 21:44:26,520 - MainApp - INFO - Tester Agent finished its diagnostics.
+2025-06-11 21:44:26,521 - MainApp - INFO - Tester agent found no errors in the initial code.
+2025-06-11 21:44:28,525 - EvaluatorAgent - INFO - Generating final evaluation report.
+2025-06-11 21:44:52,110 - EvaluatorAgent - INFO - Successfully generated evaluation report.
+2025-06-11 21:44:52,113 - MainApp - INFO - Evaluator Agent successfully generated its report.
+2025-06-11 21:44:52,121 - DBUtils - INFO - Fetching error logs from the database.
+2025-06-11 21:44:52,122 - DBUtils - INFO - Attempting to connect to database 'NLG'...
+2025-06-11 21:44:52,122 - DBUtils - INFO - Database connection successful.
+2025-06-11 21:44:53,020 - DBUtils - INFO - Successfully fetched 0 log entries.
+2025-06-11 21:51:01,596 - DBUtils - INFO - Attempting to connect to database 'NLG'...
+2025-06-11 21:51:01,715 - DBUtils - INFO - Database connection successful.
+2025-06-11 21:51:01,715 - DBUtils - INFO - Checking if table 'AgentDebugLogs' exists.
+2025-06-11 21:51:01,768 - DBUtils - INFO - Table 'AgentDebugLogs' already exists.
+2025-06-11 21:51:01,769 - MainApp - INFO - Database setup completed successfully.
+2025-06-11 21:51:15,669 - DBUtils - INFO - Attempting to connect to database 'NLG'...
+2025-06-11 21:51:15,670 - DBUtils - INFO - Database connection successful.
+2025-06-11 21:51:15,670 - DBUtils - INFO - Checking if table 'AgentDebugLogs' exists.
+2025-06-11 21:51:15,671 - DBUtils - INFO - Table 'AgentDebugLogs' already exists.
+2025-06-11 21:51:15,673 - MainApp - INFO - Database setup completed successfully.
+2025-06-11 21:51:21,193 - MainApp - INFO - OpenAI API Key has been set.
+2025-06-11 21:51:21,198 - DBUtils - INFO - Attempting to connect to database 'NLG'...
+2025-06-11 21:51:21,201 - DBUtils - INFO - Database connection successful.
+2025-06-11 21:51:21,201 - DBUtils - INFO - Checking if table 'AgentDebugLogs' exists.
+2025-06-11 21:51:21,206 - DBUtils - INFO - Table 'AgentDebugLogs' already exists.
+2025-06-11 21:51:21,211 - MainApp - INFO - Database setup completed successfully.
+2025-06-11 21:51:22,784 - DBUtils - INFO - Attempting to connect to database 'NLG'...
+2025-06-11 21:51:22,785 - DBUtils - INFO - Database connection successful.
+2025-06-11 21:51:22,786 - DBUtils - INFO - Checking if table 'AgentDebugLogs' exists.
+2025-06-11 21:51:22,789 - DBUtils - INFO - Table 'AgentDebugLogs' already exists.
+2025-06-11 21:51:22,793 - MainApp - INFO - Database setup completed successfully.
+2025-06-11 21:51:22,800 - MainApp - INFO - Agent swarm started with prompt: 'Build a simple to do list app...'
+2025-06-11 21:51:23,930 - DeveloperAgent - INFO - DeveloperAgent initialized.
+2025-06-11 21:51:24,971 - TesterAgent - INFO - TesterAgent initialized.
+2025-06-11 21:51:25,975 - EvaluatorAgent - INFO - EvaluatorAgent initialized.
+2025-06-11 21:51:25,976 - MainApp - INFO - All agents initialized successfully.
+2025-06-11 21:51:27,981 - DeveloperAgent - INFO - Generating code for prompt: 'Build a simple to do list app...'
+2025-06-11 21:51:39,704 - DeveloperAgent - INFO - Successfully received response from OpenAI API.
+2025-06-11 21:51:39,705 - DeveloperAgent - INFO - Successfully parsed file structure and code from response.
+2025-06-11 21:51:39,708 - MainApp - INFO - Developer Agent successfully generated code and saved to generated_code\app.py
+2025-06-11 21:51:41,717 - TesterAgent - INFO - Starting test and debug process for generated_code\app.py
+2025-06-11 21:51:41,718 - TesterAgent - INFO - Running syntax check on file: generated_code\app.py
+2025-06-11 21:51:41,881 - TesterAgent - INFO - Syntax check passed.
+2025-06-11 21:51:41,882 - TesterAgent - INFO - No errors detected in the initial code.
+2025-06-11 21:51:41,884 - MainApp - INFO - Tester Agent finished its diagnostics.
+2025-06-11 21:51:41,885 - MainApp - INFO - Tester agent found no errors in the initial code.
+2025-06-11 21:51:43,890 - EvaluatorAgent - INFO - Generating final evaluation report.
+2025-06-11 21:52:18,720 - EvaluatorAgent - INFO - Successfully generated evaluation report.
+2025-06-11 21:52:18,723 - MainApp - INFO - Evaluator Agent successfully generated its report.
+2025-06-11 21:52:18,730 - DBUtils - INFO - Fetching error logs from the database.
+2025-06-11 21:52:18,730 - DBUtils - INFO - Attempting to connect to database 'NLG'...
+2025-06-11 21:52:18,731 - DBUtils - INFO - Database connection successful.
+2025-06-11 21:52:19,238 - DBUtils - INFO - Successfully fetched 0 log entries.
+2025-06-11 22:03:02,523 - MainApp - INFO - OpenAI API Key has been set.
+2025-06-11 22:03:04,258 - MainApp - INFO - New build started with prompt: 'Build a simple to do list app...'
+2025-06-11 22:03:05,081 - DeveloperAgent - INFO - DeveloperAgent initialized.
+2025-06-11 22:03:05,936 - TesterAgent - INFO - TesterAgent initialized.
+2025-06-11 22:03:06,800 - EvaluatorAgent - INFO - EvaluatorAgent initialized.
+2025-06-11 22:03:06,853 - DeveloperAgent - INFO - Generating code for prompt: 'Build a simple to do list app...'
+2025-06-11 22:03:36,381 - DeveloperAgent - INFO - Successfully received JSON response from OpenAI API.
+2025-06-11 22:03:36,447 - TesterAgent - INFO - Starting test and debug process for generated_projects\simple_todo_list\app.py
+2025-06-11 22:03:36,528 - TesterAgent - INFO - Performing runtime test on file: generated_projects\simple_todo_list\app.py
+2025-06-11 22:04:06,576 - TesterAgent - INFO - Runtime test passed (timed out, which is expected for a running server).
+2025-06-11 22:04:06,577 - TesterAgent - INFO - Code passed validation on attempt 1.
+2025-06-11 22:04:06,579 - MainApp - ERROR - Execution failed: module 'os' has no attribute 'setsid'
+Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\Agentic2\main_app.py", line 171, in <module>
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, preexec_fn=os.setsid)
+                                                                                                              ^^^^^^^^^
+AttributeError: module 'os' has no attribute 'setsid'. Did you mean: 'getpid'?
+2025-06-11 22:10:24,966 - MainApp - INFO - OpenAI API Key has been set.
+2025-06-11 22:10:26,448 - MainApp - INFO - New build started with prompt: 'Build a simple to do list app...'
+2025-06-11 22:10:27,388 - DeveloperAgent - INFO - DeveloperAgent initialized.
+2025-06-11 22:10:28,112 - TesterAgent - INFO - TesterAgent initialized.
+2025-06-11 22:10:28,871 - EvaluatorAgent - INFO - EvaluatorAgent initialized.
+2025-06-11 22:10:28,924 - DeveloperAgent - INFO - Generating code for prompt: 'Build a simple to do list app...'
+2025-06-11 22:10:47,473 - DeveloperAgent - INFO - Successfully received JSON response from OpenAI API.
+2025-06-11 22:10:47,535 - TesterAgent - INFO - Starting test and debug process for generated_projects\simple_todo_app\app.py
+2025-06-11 22:10:47,584 - TesterAgent - INFO - Performing runtime test on file: generated_projects\simple_todo_app\app.py
+2025-06-11 22:11:17,678 - TesterAgent - INFO - Runtime test passed (timed out, which is expected for a running server).
+2025-06-11 22:11:17,679 - TesterAgent - INFO - Code passed validation on attempt 1.
+2025-06-11 22:11:17,688 - MainApp - INFO - Launched app 'generated_projects\simple_todo_app\app.py' on port 8502 with PID 42652
+2025-06-11 22:17:27,536 - MainApp - INFO - OpenAI API Key has been set.
+2025-06-11 22:17:31,753 - DeveloperAgent - INFO - DeveloperAgent initialized.
+2025-06-11 22:17:31,755 - DeveloperAgent - INFO - Generating code with DB details: Server=DESKTOP-9NP710O\MSSQLSERVER04, Database=NLG
+2025-06-11 22:17:58,609 - DeveloperAgent - INFO - Successfully received JSON response from OpenAI API.
+2025-06-11 22:17:59,640 - TesterAgent - INFO - TesterAgent initialized.
+2025-06-11 22:17:59,641 - TesterAgent - INFO - Starting test and debug process for generated_projects\todo_list_app\app.py
+2025-06-11 22:17:59,692 - TesterAgent - INFO - Performing runtime test on file: generated_projects\todo_list_app\app.py
+2025-06-11 22:18:29,716 - TesterAgent - INFO - Runtime test passed (timed out, which is expected for a running server).
+2025-06-11 22:18:29,717 - TesterAgent - INFO - Code passed validation on attempt 1.
+2025-06-11 22:22:05,964 - MainApp - INFO - Stopping process with PID: 37504
+2025-06-11 22:22:06,005 - MainApp - INFO - Process terminated successfully.
+2025-06-11 22:28:53,467 - DeveloperAgent - INFO - DeveloperAgent initialized.
+2025-06-11 22:28:53,468 - DeveloperAgent - INFO - Generating code with DB details: Server=DESKTOP-9NP710O\MSSQLSERVER04, Database=NLG
+2025-06-11 22:29:06,767 - DeveloperAgent - INFO - Successfully received JSON response from OpenAI API.
+2025-06-11 22:29:06,772 - DBUtils - INFO - Attempting to log project 'voice_to_text_translator' to history.
+2025-06-11 22:29:06,831 - MainApp - INFO - Project 'voice_to_text_translator' logged to ProjectHistory table.
+2025-06-11 22:29:07,738 - TesterAgent - INFO - TesterAgent initialized.
+2025-06-11 22:29:07,739 - TesterAgent - INFO - Starting test and debug process for generated_projects\voice_to_text_translator\app.py
+2025-06-11 22:29:07,806 - TesterAgent - INFO - Performing runtime test on file: generated_projects\voice_to_text_translator\app.py
+2025-06-11 22:29:37,830 - TesterAgent - INFO - Runtime test passed (timed out, which is expected for a running server).
+2025-06-11 22:29:37,831 - TesterAgent - INFO - Code passed validation on attempt 1.
+2025-06-11 22:36:21,746 - DeveloperAgent - INFO - DeveloperAgent initialized.
+2025-06-11 22:36:21,746 - DeveloperAgent - INFO - Generating code for prompt: 'Develop a simple to do list app...'
+2025-06-11 22:36:50,645 - DeveloperAgent - INFO - Successfully received JSON response from OpenAI API.
+2025-06-11 22:36:50,648 - DBUtils - INFO - Attempting to log project 'simple_todo_list' to history.
+2025-06-11 22:36:51,446 - TesterAgent - INFO - TesterAgent initialized.
+2025-06-11 22:36:51,447 - TesterAgent - INFO - Starting test and debug process for generated_projects\simple_todo_list\app.py
+2025-06-11 22:36:51,448 - TesterAgent - INFO - Performing runtime test on file: generated_projects\simple_todo_list\app.py
+2025-06-11 22:37:21,479 - TesterAgent - INFO - Runtime test passed (timed out, which is expected for a running server).
+2025-06-11 22:37:21,480 - TesterAgent - INFO - Code passed validation on attempt 1.
+2025-06-11 22:53:02,766 - DeveloperAgent - INFO - DeveloperAgent initialized.
+2025-06-11 22:53:02,767 - DeveloperAgent - INFO - Generating code for prompt: 'Generate a python program to check t=a number is p...'
+2025-06-11 22:53:12,649 - DeveloperAgent - INFO - Successfully received JSON response from OpenAI API.
+2025-06-11 22:53:12,656 - DBUtils - INFO - Attempting to log project 'prime_checker' to history.
+2025-06-11 22:53:13,881 - TesterAgent - INFO - TesterAgent initialized.
+2025-06-11 22:53:13,882 - TesterAgent - INFO - Starting test and debug process for generated_projects\prime_checker\app.py
+2025-06-11 22:53:13,930 - TesterAgent - INFO - Performing runtime test on file: generated_projects\prime_checker\app.py
+2025-06-11 22:53:43,957 - TesterAgent - INFO - Runtime test passed (timed out, which is expected for a running server).
+2025-06-11 22:53:43,958 - TesterAgent - INFO - Code passed validation on attempt 1.
+2025-06-11 22:57:59,982 - DeveloperAgent - INFO - DeveloperAgent initialized.
+2025-06-11 22:57:59,984 - DeveloperAgent - INFO - Generating code for prompt: 'Build a voice to text translator...'
+2025-06-11 22:58:13,399 - DeveloperAgent - INFO - Successfully received JSON response from OpenAI API.
+2025-06-11 22:58:13,400 - MainApp - INFO - Final connection string being written: Driver={SQL Server};Server=DESKTOP-9NP710O\MSSQLSERVER04;Database=NLG;Trusted_Connection=yes;autocommit=True
+2025-06-11 22:58:13,406 - DBUtils - INFO - Attempting to log project 'voice_to_text_translator' to history.
+2025-06-11 22:58:14,634 - TesterAgent - INFO - TesterAgent initialized.
+2025-06-11 22:58:14,635 - TesterAgent - INFO - Starting test and debug process for generated_projects\voice_to_text_translator\app.py
+2025-06-11 22:58:14,636 - TesterAgent - INFO - Performing runtime test on file: generated_projects\voice_to_text_translator\app.py
+2025-06-11 22:58:44,668 - TesterAgent - INFO - Runtime test passed (timed out, which is expected for a running server).
+2025-06-11 22:58:44,669 - TesterAgent - INFO - Code passed validation on attempt 1.
+2025-06-11 23:03:08,648 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-11 23:03:15,706 - MainApp - INFO - Found process 'python.exe' with PID 41576 using port 8502.
+2025-06-11 23:03:15,749 - MainApp - INFO - Killing parent process 41576
+2025-06-11 23:03:23,157 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-11 23:03:27,055 - MainApp - INFO - No process found running on port 8502.
+2025-06-11 23:04:07,493 - DeveloperAgent - INFO - DeveloperAgent initialized.
+2025-06-11 23:04:07,495 - DeveloperAgent - INFO - Generating code for prompt: 'Build a to do list app...'
+2025-06-11 23:04:23,440 - DeveloperAgent - INFO - Successfully received JSON response from OpenAI API.
+2025-06-11 23:04:23,441 - MainApp - INFO - Final connection string being written: Driver={SQL Server};Server=DESKTOP-9NP710O\MSSQLSERVER04;Database=NLG;Trusted_Connection=yes;autocommit=True
+2025-06-11 23:04:23,446 - DBUtils - INFO - Attempting to log project 'todo_list_app' to history.
+2025-06-11 23:04:24,654 - TesterAgent - INFO - TesterAgent initialized.
+2025-06-11 23:04:24,655 - TesterAgent - INFO - Starting test and debug process for generated_projects\todo_list_app\app.py
+2025-06-11 23:04:24,656 - TesterAgent - INFO - Performing runtime test on file: generated_projects\todo_list_app\app.py
+2025-06-11 23:04:54,682 - TesterAgent - INFO - Runtime test passed (timed out, which is expected for a running server).
+2025-06-11 23:04:54,683 - TesterAgent - INFO - Code passed validation on attempt 1.
+2025-06-11 23:10:53,369 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-11 23:10:58,402 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-11 23:11:09,436 - DeveloperAgent - INFO - DeveloperAgent initialized.
+2025-06-11 23:11:09,436 - DeveloperAgent - INFO - Generating code for prompt: 'Build a simple voice to text translator...'
+2025-06-11 23:11:17,508 - DeveloperAgent - INFO - Successfully received JSON response from OpenAI API.
+2025-06-11 23:11:17,512 - DBUtils - INFO - Attempting to log project 'voice_to_text_translator' to history.
+2025-06-11 23:11:18,579 - TesterAgent - INFO - TesterAgent initialized.
+2025-06-11 23:11:18,581 - TesterAgent - INFO - Performing headless runtime test on: generated_projects\voice_to_text_translator\app.py
+2025-06-11 23:11:38,621 - TesterAgent - INFO - Test successful: App ran without crashing for the duration of the test.
+2025-06-12 13:01:02,007 - DeveloperAgent - INFO - DeveloperAgent initialized.
+2025-06-12 13:01:02,008 - DeveloperAgent - INFO - Generating code for prompt: 'Develop a simple to do list app...'
+2025-06-12 13:01:18,776 - DeveloperAgent - INFO - Successfully received JSON response from OpenAI API.
+2025-06-12 13:01:18,777 - MainApp - INFO - Final connection string being written: Driver={SQL Server};Server=DESKTOP-9NP710O\MSSQLSERVER04;Database=NLG;Trusted_Connection=yes;autocommit=True
+2025-06-12 13:01:18,782 - DBUtils - INFO - Attempting to log project 'todo_list_app' to history.
+2025-06-12 13:01:20,009 - TesterAgent - INFO - TesterAgent initialized.
+2025-06-12 13:02:34,839 - DeveloperAgent - INFO - DeveloperAgent initialized.
+2025-06-12 13:02:34,840 - DeveloperAgent - INFO - Generating code for prompt: 'Develop a voice to text translator...'
+2025-06-12 13:02:49,160 - DeveloperAgent - INFO - Successfully received JSON response from OpenAI API.
+2025-06-12 13:02:49,161 - MainApp - INFO - Final connection string being written: Driver={SQL Server};Server=DESKTOP-9NP710O\MSSQLSERVER04;Database=NLG;Trusted_Connection=yes;autocommit=True
+2025-06-12 13:02:49,168 - DBUtils - INFO - Attempting to log project 'voice_to_text_translator' to history.
+2025-06-12 13:02:50,335 - TesterAgent - INFO - TesterAgent initialized.
+2025-06-12 13:16:47,488 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-12 13:16:55,146 - DeveloperAgent - INFO - DeveloperAgent initialized.
+2025-06-12 13:16:55,147 - DeveloperAgent - INFO - Generating code for prompt: 'Develop a simple to do list app...'
+2025-06-12 13:17:21,838 - DeveloperAgent - INFO - Successfully received JSON response from OpenAI API.
+2025-06-12 13:17:21,842 - DBUtils - INFO - Attempting to log project 'simple_todo_list' to history.
+2025-06-12 13:17:22,333 - TesterAgent - INFO - TesterAgent initialized.
+2025-06-12 13:17:22,334 - TesterAgent - INFO - Performing headless runtime test on: generated_projects\simple_todo_list\app.py
+2025-06-12 13:17:42,354 - TesterAgent - INFO - Test successful: App ran without crashing for the duration of the test.
+2025-06-12 13:20:27,046 - DeveloperAgent - INFO - DeveloperAgent initialized.
+2025-06-12 13:20:27,047 - DeveloperAgent - INFO - Generating code for prompt: 'Develop a simple to do list app...'
+2025-06-12 13:20:40,687 - DeveloperAgent - INFO - Successfully received JSON response from OpenAI API.
+2025-06-12 13:20:40,688 - MainApp - INFO - Final connection string being written: Driver={SQL Server};Server=DESKTOP-9NP710O\MSSQLSERVER04;Database=NLG;Trusted_Connection=yes;autocommit=True
+2025-06-12 13:20:40,690 - DBUtils - INFO - Attempting to log project 'todo_list_app' to history.
+2025-06-12 13:20:41,081 - TesterAgent - INFO - TesterAgent initialized.
+2025-06-12 13:20:41,082 - TesterAgent - INFO - Starting test and debug process for generated_projects\todo_list_app\app.py
+2025-06-12 13:20:41,082 - TesterAgent - INFO - Performing runtime test on file: generated_projects\todo_list_app\app.py
+2025-06-12 13:21:11,095 - TesterAgent - INFO - Runtime test passed (timed out, which is expected for a running server).
+2025-06-12 13:21:11,096 - TesterAgent - INFO - Code passed validation on attempt 1.
+2025-06-12 13:21:44,404 - MainApp - INFO - Attempting to stop process with PID: 18072
+2025-06-12 13:21:44,832 - MainApp - INFO - Successfully sent taskkill command to PID 18072 and its children.
+2025-06-12 13:21:54,789 - DeveloperAgent - INFO - DeveloperAgent initialized.
+2025-06-12 13:21:54,790 - DeveloperAgent - INFO - Generating code for prompt: 'Develop a voice to text translator...'
+2025-06-12 13:22:03,536 - DeveloperAgent - INFO - Successfully received JSON response from OpenAI API.
+2025-06-12 13:22:03,536 - MainApp - INFO - Final connection string being written: Driver={SQL Server};Server=DESKTOP-9NP710O\MSSQLSERVER04;Database=NLG;Trusted_Connection=yes;autocommit=True
+2025-06-12 13:22:03,538 - DBUtils - INFO - Attempting to log project 'voice_to_text_translator' to history.
+2025-06-12 13:22:03,855 - TesterAgent - INFO - TesterAgent initialized.
+2025-06-12 13:22:03,855 - TesterAgent - INFO - Starting test and debug process for generated_projects\voice_to_text_translator\app.py
+2025-06-12 13:22:03,875 - TesterAgent - INFO - Performing runtime test on file: generated_projects\voice_to_text_translator\app.py
+2025-06-12 13:22:34,170 - TesterAgent - INFO - Runtime test passed (timed out, which is expected for a running server).
+2025-06-12 13:22:34,170 - TesterAgent - INFO - Code passed validation on attempt 1.
+2025-06-12 13:28:39,802 - DeveloperAgent - INFO - Generating code with logging for prompt: 'Develop a simple to do list app...'
+2025-06-12 13:31:21,786 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-12 13:31:29,599 - DeveloperAgent - INFO - Generating code with logging for prompt: 'Build a simple to do list app...'
+2025-06-12 13:32:03,452 - DBUtils - INFO - Attempting to log project 'todo_list_app' to history.
+2025-06-12 13:32:03,511 - TesterAgent - INFO - Performing crash test on: generated_projects\todo_list_app\app.py
+2025-06-12 13:32:18,522 - TesterAgent - INFO - Crash test passed: App ran without crashing.
+2025-06-12 13:32:45,774 - __main__ - ERROR - Failed to retrieve tasks.
+Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\Agentic2\generated_projects\todo_list_app\app.py", line 25, in <module>
+    tasks = get_tasks(CONNECTION_STRING)
+  File "C:\Users\DELL\Desktop\Agentic2\generated_projects\todo_list_app\utils\db_utils.py", line 13, in get_tasks
+    raise e
+  File "C:\Users\DELL\Desktop\Agentic2\generated_projects\todo_list_app\utils\db_utils.py", line 8, in get_tasks
+    cursor.execute('SELECT id, task FROM tasks')
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'tasks'. (208) (SQLExecDirectW)")
+2025-06-12 13:33:30,624 - __main__ - ERROR - Failed to insert task
+Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\Agentic2\generated_projects\todo_list_app\app.py", line 17, in <module>
+    insert_task(CONNECTION_STRING, task)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Desktop\Agentic2\generated_projects\todo_list_app\utils\db_utils.py", line 24, in insert_task
+    raise e
+  File "C:\Users\DELL\Desktop\Agentic2\generated_projects\todo_list_app\utils\db_utils.py", line 20, in insert_task
+    cursor.execute('INSERT INTO tasks (task) VALUES (?)', (task,))
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'tasks'. (208) (SQLExecDirectW); [42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Statement(s) could not be prepared. (8180)")
+2025-06-12 13:33:30,627 - __main__ - ERROR - Failed to retrieve tasks.
+Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\Agentic2\generated_projects\todo_list_app\app.py", line 25, in <module>
+    tasks = get_tasks(CONNECTION_STRING)
+  File "C:\Users\DELL\Desktop\Agentic2\generated_projects\todo_list_app\utils\db_utils.py", line 13, in get_tasks
+    raise e
+  File "C:\Users\DELL\Desktop\Agentic2\generated_projects\todo_list_app\utils\db_utils.py", line 8, in get_tasks
+    cursor.execute('SELECT id, task FROM tasks')
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC SQL Server Driver][SQL Server]Invalid object name 'tasks'. (208) (SQLExecDirectW)")
+2025-06-12 14:25:57,268 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-12 14:26:03,844 - DeveloperAgent - INFO - Generating code with logging and DB init for prompt: 'Build a simple to do list app...'
+2025-06-12 14:26:26,087 - DBUtils - INFO - Attempting to log project 'To Do List App' to history.
+2025-06-12 14:26:26,090 - DBUtils - INFO - Executing INSERT for ProjectHistory...
+2025-06-12 14:26:26,099 - DBUtils - INFO - Committing transaction for ProjectHistory...
+2025-06-12 14:26:26,106 - DBUtils - INFO - Transaction committed successfully.
+2025-06-12 14:26:26,162 - TesterAgent - INFO - Performing crash test on: generated_projects\To Do List App\app.py
+2025-06-12 14:26:41,192 - TesterAgent - INFO - Crash test passed: App ran without crashing.
+2025-06-12 14:33:52,827 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-12 14:33:59,184 - DeveloperAgent - INFO - Generating code with logging and DB init for prompt: 'Build a simple to do list app...'
+2025-06-12 14:38:43,774 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-12 14:38:50,561 - DeveloperAgent - INFO - Generating code with logging for prompt: 'Build a simple to do list app...'
+2025-06-12 14:40:13,387 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-12 14:40:19,764 - DeveloperAgent - INFO - Generating code with logging and DB init for prompt: 'Build a simple to do list app...'
+2025-06-12 14:40:53,784 - MainApp - ERROR - AI response was missing required keys ('project_name', 'files'). Response:
+{
+  "project_name": "StreamlitToDoApp",
+  "files": {
+    "app.py": {
+      "content": "import streamlit as st\nimport pyodbc\nfrom utils import logger_config\n\n# Logger setup\nlogger = logger_config.setup_logger(__name__)\n\n# Database connection string\nCONNECTION_STRING = \"{{CONNECTION_STRING_PLACEHOLDER}}\"\n\n# Database initialization\ndef init_db(conn):\n    try:\n        conn.execute('''CREATE TABLE IF NOT EXISTS tasks (\n            id INTEGER PRIMARY KEY AUTOINCREMENT,\n            task TEXT NOT NULL,\n            completed BOOLEAN NOT NULL DEFAULT 0\n        )''')\n        conn.commit()\n    except Exception as e:\n        logger.error('Failed to create table', exc_info=True)\n\n# Add new task\ndef add_task(conn, task):\n    try:\n        conn.execute('INSERT INTO tasks (task, completed) VALUES (?, ?)', (task, False))\n        conn.commit()\n    except Exception as e:\n        logger.error('Failed to add task', exc_info=True)\n\n# Update task completion status\ndef update_task_status(conn, task_id, status):\n    try:\n        conn.execute('UPDATE tasks SET completed = ? WHERE id = ?', (status, task_id))\n        conn.commit()\n    except Exception as e:\n        logger.error('Failed to update task status', exc_info=True)\n\n# Delete task\ndef delete_task(conn, task_id):\n    try:\n        conn.execute('DELETE FROM tasks WHERE id = ?', (task_id,))\n        conn.commit()\n    except Exception as e:\n        logger.error('Failed to delete task', exc_info=True)\n\n# Fetch all tasks\ndef fetch_all_tasks(conn):\n    cursor = conn.cursor()\n    cursor.execute('SELECT id, task, completed FROM tasks')\n    return cursor.fetchall()\n\n# Streamlit app layout\nst.title('ToDo List App')\n\n# Database connection\ntry:\n    conn = pyodbc.connect(CONNECTION_STRING)\n    init_db(conn)\nexcept Exception as e:\n    st.error('Failed to connect to the database.')\n    logger.error('Database connection failed', exc_info=True)\n    st.stop()\n\n# Task submission form\nwith st.form('task_form'):\n    task_input = st.text_input('Task')\n    submit_button = st.form_submit_button('Add Task')\n\nif submit_button:\n    add_task(conn, task_input)\n    st.success('Task added successfully!')\n    st.rerun()\n\n# Display tasks\nfor task_id, task, completed in fetch_all_tasks(conn):\n    col1, col2, col3 = st.columns([2,1,2])\n    with col1:\n        st.write(task)\n    with col2:\n        if st.button('Done', key=f'done_{task_id}'):\n            update_task_status(conn, task_id, True)\n            st.rerun()\n    with col3:\n        if st.button('Delete', key=f'delete_{task_id}'):\n            delete_task(conn, task_id)\n            st.rerun()\n"
+    },
+    "utils/logger_config.py": {
+      "content": "import logging\nimport sys\n\n# Logger configuration function\ndef setup_logger(name):\n    \"\"\"Set up a logger with the specified name.\"\"\"\n    log_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'\n    logging.basicConfig(level=logging.INFO, format=log_format, stream=sys.stdout)\n    logger = logging.getLogger(name)\n    return logger\n"
+    }
+  }
+}
+2025-06-12 14:42:59,004 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-12 14:43:05,596 - DeveloperAgent - INFO - Generating code... Attempt 1 of 3
+2025-06-12 14:43:22,322 - DeveloperAgent - WARNING - Validation failed: 'files' key is not a list.
+2025-06-12 14:43:22,323 - DeveloperAgent - WARNING - Attempt 1 failed validation. Retrying...
+2025-06-12 14:43:23,323 - DeveloperAgent - INFO - Generating code... Attempt 2 of 3
+2025-06-12 14:43:57,129 - DeveloperAgent - WARNING - Validation failed: 'files' key is not a list.
+2025-06-12 14:43:57,129 - DeveloperAgent - WARNING - Attempt 2 failed validation. Retrying...
+2025-06-12 14:43:58,130 - DeveloperAgent - INFO - Generating code... Attempt 3 of 3
+2025-06-12 14:44:40,609 - DeveloperAgent - WARNING - Validation failed: 'files' key is not a list.
+2025-06-12 14:44:40,610 - DeveloperAgent - WARNING - Attempt 3 failed validation. Retrying...
+2025-06-12 14:47:15,779 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-12 14:47:20,460 - DeveloperAgent - INFO - Generating code... Attempt 1 of 3
+2025-06-12 14:47:38,001 - DeveloperAgent - INFO - Successfully generated and validated AI response.
+2025-06-12 14:47:38,003 - DBUtils - INFO - Attempting to log project 'SimpleToDoListApp' to history.
+2025-06-12 14:47:38,003 - DBUtils - INFO - Executing INSERT for ProjectHistory...
+2025-06-12 14:47:38,011 - DBUtils - INFO - Committing transaction for ProjectHistory...
+2025-06-12 14:47:38,012 - DBUtils - INFO - Transaction committed successfully.
+2025-06-12 14:47:38,065 - TesterAgent - INFO - Performing crash test on: generated_projects\SimpleToDoListApp\app.py
+2025-06-12 14:47:53,087 - TesterAgent - INFO - Crash test passed: App ran without crashing.
+2025-06-12 14:53:28,282 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-12 14:53:34,675 - DeveloperAgent - INFO - Generating code... Attempt 1 of 3
+2025-06-12 14:53:49,762 - DeveloperAgent - INFO - Successfully generated and validated AI response.
+2025-06-12 14:53:49,775 - DBUtils - INFO - Attempting to log project 'todo_list_app' to history.
+2025-06-12 14:53:49,776 - DBUtils - INFO - Executing INSERT for ProjectHistory...
+2025-06-12 14:53:49,785 - DBUtils - INFO - Committing transaction for ProjectHistory...
+2025-06-12 14:53:49,787 - DBUtils - INFO - Transaction committed successfully.
+2025-06-12 14:54:05,237 - CodeReviewAgent - INFO - App ran without crashing. Review complete.
+2025-06-12 14:59:27,576 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-12 14:59:27,689 - MainApp - INFO - Killing child process 0
+2025-06-12 14:59:34,258 - DeveloperAgent - INFO - Generating first draft... Attempt 1
+2025-06-12 14:59:48,761 - DBUtils - INFO - Attempting to log project 'todo_list_app' to history.
+2025-06-12 14:59:48,761 - DBUtils - INFO - Executing INSERT for ProjectHistory...
+2025-06-12 14:59:48,768 - DBUtils - INFO - Committing transaction for ProjectHistory...
+2025-06-12 14:59:48,770 - DBUtils - INFO - Transaction committed successfully.
+2025-06-12 15:01:12,253 - CodeReviewAgent - ERROR - Code review failed after correction attempt.
+2025-06-12 15:06:47,285 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-12 15:06:53,408 - DeveloperAgent - INFO - Generating first draft... Attempt 1
+2025-06-12 15:07:05,499 - DBUtils - INFO - Attempting to log project 'voice_to_text_app' to history.
+2025-06-12 15:07:05,499 - DBUtils - INFO - Executing INSERT for ProjectHistory...
+2025-06-12 15:07:05,502 - DBUtils - INFO - Committing transaction for ProjectHistory...
+2025-06-12 15:07:05,503 - DBUtils - INFO - Transaction committed successfully.
+2025-06-12 15:11:36,996 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-12 15:11:43,459 - DeveloperAgent - INFO - Generating first draft... Attempt 1
+2025-06-12 15:12:04,472 - DBUtils - INFO - Attempting to log project 'voice_to_text_translator' to history.
+2025-06-12 15:12:04,473 - DBUtils - INFO - Executing INSERT for ProjectHistory...
+2025-06-12 15:12:04,476 - DBUtils - INFO - Committing transaction for ProjectHistory...
+2025-06-12 15:12:04,477 - DBUtils - INFO - Transaction committed successfully.
+2025-06-12 15:24:02,496 - DBUtils - INFO - Adding 'LogFilePath' column to 'ProjectHistory' table.
+2025-06-12 15:24:02,522 - DBUtils - INFO - Column added successfully.
+2025-06-12 15:24:11,508 - DBUtils - INFO - Adding 'LogFilePath' column to 'ProjectHistory' table.
+2025-06-12 15:24:11,515 - DBUtils - INFO - Column added successfully.
+2025-06-12 15:24:15,968 - DBUtils - INFO - Adding 'LogFilePath' column to 'ProjectHistory' table.
+2025-06-12 15:24:15,971 - DBUtils - INFO - Column added successfully.
+2025-06-12 15:24:17,533 - DBUtils - INFO - Adding 'LogFilePath' column to 'ProjectHistory' table.
+2025-06-12 15:24:17,535 - DBUtils - INFO - Column added successfully.
+2025-06-12 15:24:17,539 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-12 15:24:23,611 - DeveloperAgent - INFO - Generating first draft... Attempt 1
+2025-06-12 15:26:24,911 - DBUtils - INFO - Adding 'LogFilePath' column to 'ProjectHistory' table.
+2025-06-12 15:26:24,913 - DBUtils - INFO - Column added successfully.
+2025-06-12 15:31:10,352 - DBUtils - INFO - Column 'LogFilePath' added successfully.
+2025-06-12 15:31:15,917 - DBUtils - INFO - Column 'LogFilePath' added successfully.
+2025-06-12 15:31:38,840 - DBUtils - INFO - Column 'LogFilePath' added successfully.
+2025-06-12 15:31:43,137 - DBUtils - INFO - Column 'LogFilePath' added successfully.
+2025-06-12 15:31:44,599 - DBUtils - INFO - Column 'LogFilePath' added successfully.
+2025-06-12 15:31:44,602 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-12 15:31:51,084 - DeveloperAgent - INFO - Generating first draft... Attempt 1
+2025-06-12 15:34:10,088 - CodeReviewAgent - ERROR - Code review failed after 3 correction attempts.
+2025-06-12 15:35:16,466 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-12 15:35:22,730 - DeveloperAgent - INFO - Generating first draft... Attempt 1
+2025-06-12 15:35:43,369 - DBUtils - INFO - Attempting to log project 'todo_list_app' to history.
+2025-06-12 15:35:43,370 - DBUtils - INFO - Executing INSERT for ProjectHistory...
+2025-06-12 15:35:43,377 - DBUtils - INFO - Committing transaction for ProjectHistory...
+2025-06-12 15:35:43,378 - DBUtils - INFO - Transaction committed successfully.
+2025-06-12 15:41:32,553 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-12 15:41:39,314 - DeveloperAgent - INFO - Generating first draft... Attempt 1
+2025-06-12 15:41:52,907 - DBUtils - INFO - Attempting to log project 'todo_list_app' to history.
+2025-06-12 15:41:52,908 - DBUtils - INFO - Executing INSERT for ProjectHistory...
+2025-06-12 15:41:52,914 - DBUtils - INFO - Committing transaction for ProjectHistory...
+2025-06-12 15:41:52,915 - DBUtils - INFO - Transaction committed successfully.
+2025-06-12 15:47:40,440 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-12 15:47:46,991 - DeveloperAgent - INFO - Generating first draft... Attempt 1
+2025-06-12 15:48:10,175 - DeveloperAgent - WARNING - Attempt 1 failed validation. Retrying...
+2025-06-12 15:48:12,177 - DeveloperAgent - INFO - Generating first draft... Attempt 2
+2025-06-12 15:48:45,638 - DeveloperAgent - WARNING - Attempt 2 failed validation. Retrying...
+2025-06-12 15:48:47,639 - DeveloperAgent - INFO - Generating first draft... Attempt 3
+2025-06-12 15:49:21,250 - DeveloperAgent - WARNING - Attempt 3 failed validation. Retrying...
+2025-06-12 15:49:55,320 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-12 15:50:01,768 - DeveloperAgent - INFO - Generating first draft... Attempt 1
+2025-06-12 15:50:19,527 - DBUtils - INFO - Attempting to log project 'todo_list_app' to history.
+2025-06-12 15:50:19,528 - DBUtils - INFO - Executing INSERT for ProjectHistory...
+2025-06-12 15:50:19,534 - DBUtils - INFO - Committing transaction for ProjectHistory...
+2025-06-12 15:50:19,536 - DBUtils - INFO - Transaction committed successfully.
+2025-06-12 16:00:34,812 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-12 16:00:40,676 - DeveloperAgent - INFO - Generating first draft... Attempt 1
+2025-06-12 16:00:56,668 - DBUtils - INFO - Attempting to log project 'todo_app' to history.
+2025-06-12 16:00:56,669 - DBUtils - INFO - Executing INSERT for ProjectHistory...
+2025-06-12 16:00:56,673 - DBUtils - INFO - Committing transaction for ProjectHistory...
+2025-06-12 16:00:56,674 - DBUtils - INFO - Transaction committed successfully.
+2025-06-12 16:02:56,030 - DEBUG - Logger is configured
+2025-06-12 16:04:19,362 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-12 16:11:58,169 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-12 16:12:04,590 - DeveloperAgent - INFO - Generating first draft... Attempt 1
+2025-06-12 16:13:17,217 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-12 16:13:23,510 - DeveloperAgent - INFO - Generating first draft... Attempt 1
+2025-06-12 16:13:40,333 - DBUtils - INFO - Attempting to log project 'todo_app' to history.
+2025-06-12 16:13:40,334 - DBUtils - INFO - Executing INSERT for ProjectHistory...
+2025-06-12 16:13:40,339 - DBUtils - INFO - Committing transaction for ProjectHistory...
+2025-06-12 16:13:40,340 - DBUtils - INFO - Transaction committed successfully.
+2025-06-12 16:15:56,098 - CodeReviewAgent - ERROR - Code review failed after 3 correction attempts.
+2025-06-12 16:17:08,996 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-12 16:17:12,838 - DeveloperAgent - INFO - Generating first draft... Attempt 1
+2025-06-12 16:17:26,593 - DBUtils - INFO - Attempting to log project 'todo_app' to history.
+2025-06-12 16:17:26,594 - DBUtils - INFO - Executing INSERT for ProjectHistory...
+2025-06-12 16:17:26,599 - DBUtils - INFO - Committing transaction for ProjectHistory...
+2025-06-12 16:17:26,601 - DBUtils - INFO - Transaction committed successfully.
+2025-06-12 16:31:49,111 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-12 16:31:55,789 - DeveloperAgent - INFO - Generating first draft... Attempt 1
+2025-06-12 16:32:10,691 - DBUtils - INFO - Attempting to log project 'checklist_app' to history.
+2025-06-12 16:32:10,692 - DBUtils - INFO - Executing INSERT for ProjectHistory...
+2025-06-12 16:32:10,699 - DBUtils - INFO - Committing transaction for ProjectHistory...
+2025-06-12 16:32:10,700 - DBUtils - INFO - Transaction committed successfully.
+2025-06-12 16:43:37,187 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-12 16:43:47,034 - DeveloperAgent - INFO - Generating first draft... Attempt 1
+2025-06-12 16:44:01,944 - DBUtils - INFO - Attempting to log project 'checklist_app' to history.
+2025-06-12 16:44:01,946 - DBUtils - INFO - Executing INSERT for ProjectHistory...
+2025-06-12 16:44:01,968 - DBUtils - INFO - Committing transaction for ProjectHistory...
+2025-06-12 16:44:01,970 - DBUtils - INFO - Transaction committed successfully.
+2025-06-13 09:04:24,007 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-13 09:04:30,947 - DeveloperAgent - INFO - Generating first draft... Attempt 1
+2025-06-13 09:04:44,261 - DBUtils - INFO - Attempting to log project 'simple_checklist_app' to history.
+2025-06-13 09:04:44,262 - DBUtils - INFO - Executing INSERT for ProjectHistory...
+2025-06-13 09:04:44,316 - DBUtils - INFO - Committing transaction for ProjectHistory...
+2025-06-13 09:04:44,319 - DBUtils - INFO - Transaction committed successfully.
+2025-06-13 12:46:12,112 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-13 12:46:18,895 - DeveloperAgent - INFO - Generating first draft... Attempt 1
+2025-06-13 12:46:36,014 - DBUtils - INFO - Attempting to log project 'simple_survey_app' to history.
+2025-06-13 12:46:36,015 - DBUtils - INFO - Executing INSERT for ProjectHistory...
+2025-06-13 12:46:36,033 - DBUtils - INFO - Committing transaction for ProjectHistory...
+2025-06-13 12:46:36,034 - DBUtils - INFO - Transaction committed successfully.
+2025-06-13 14:37:27,355 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-13 14:37:34,259 - DeveloperAgent - INFO - Generating first draft... Attempt 1
+2025-06-13 14:37:46,910 - DBUtils - INFO - Attempting to log project 'simple_survey_app' to history.
+2025-06-13 14:37:46,911 - DBUtils - INFO - Executing INSERT for ProjectHistory...
+2025-06-13 14:37:46,964 - DBUtils - INFO - Committing transaction for ProjectHistory...
+2025-06-13 14:37:46,965 - DBUtils - INFO - Transaction committed successfully.
+2025-06-13 14:40:39,774 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-13 14:40:44,728 - DeveloperAgent - INFO - Generating first draft... Attempt 1
+2025-06-13 14:41:01,286 - DBUtils - INFO - Attempting to log project 'post_generator_agent' to history.
+2025-06-13 14:41:01,287 - DBUtils - INFO - Executing INSERT for ProjectHistory...
+2025-06-13 14:41:01,292 - DBUtils - INFO - Committing transaction for ProjectHistory...
+2025-06-13 14:41:01,294 - DBUtils - INFO - Transaction committed successfully.
+2025-06-13 14:44:36,507 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-13 14:44:49,520 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-13 14:44:54,210 - DeveloperAgent - INFO - Generating first draft... Attempt 1
+2025-06-16 12:44:45,850 - MainApp - INFO - Attempting to stop any process running on port 8502.
+2025-06-16 12:44:52,631 - DeveloperAgent - INFO - Generating first draft... Attempt 1
+2025-06-16 12:45:05,524 - DBUtils - INFO - Attempting to log project 'checklist_app' to history.
+2025-06-16 12:45:05,525 - DBUtils - INFO - Executing INSERT for ProjectHistory...
+2025-06-16 12:45:05,538 - DBUtils - INFO - Committing transaction for ProjectHistory...
+2025-06-16 12:45:05,541 - DBUtils - INFO - Transaction committed successfully.

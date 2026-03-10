@@ -1,0 +1,610 @@
+2025-06-17 12:38:55,252 - DBUtils - WARNING - Could not check/create database, may already exist. Error: ('IM002', '[IM002] [Microsoft][ODBC Driver Manager] Data source name not found and no default driver specified (0) (SQLDriverConnect)')
+2025-06-17 12:42:23,408 - DBUtils - WARNING - Could not check/create database, may already exist. Error: ('IM002', '[IM002] [Microsoft][ODBC Driver Manager] Data source name not found and no default driver specified (0) (SQLDriverConnect)')
+2025-06-17 12:42:29,644 - DBUtils - WARNING - Could not check/create database, may already exist. Error: ('IM002', '[IM002] [Microsoft][ODBC Driver Manager] Data source name not found and no default driver specified (0) (SQLDriverConnect)')
+2025-06-17 12:43:00,765 - DBUtils - WARNING - Could not check/create database, may already exist. Error: ('IM002', '[IM002] [Microsoft][ODBC Driver Manager] Data source name not found and no default driver specified (0) (SQLDriverConnect)')
+2025-06-17 12:43:01,357 - PlannerAgent - INFO - Generating a workflow plan for prompt: 'Build a simple checklist app...'
+2025-06-17 12:43:04,035 - MainApp - INFO - Plan generated and hydrated for project: SimpleChecklistApp
+2025-06-17 12:43:04,510 - AgentGeneratorAgent - INFO - Generating code for agent: CodeGeneratorAgent
+2025-06-17 12:43:21,836 - AgentGeneratorAgent - INFO - Generating code for agent: CodeReviewAndHealingAgent
+2025-06-17 12:43:40,198 - AgentGeneratorAgent - INFO - Generating code for agent: LaunchAgent
+2025-06-17 12:43:56,023 - MainApp - INFO - All necessary agent files have been generated.
+2025-06-17 12:43:56,026 - WorkflowFileGeneratorAgent - INFO - Generating workflow file content from plan.
+2025-06-17 12:43:56,028 - MainApp - INFO - Workflow file saved to: project_workflows\SimpleChecklistApp\workflow.py
+2025-06-17 12:43:56,096 - MainApp - INFO - Successfully loaded dynamically generated workflow.
+2025-06-17 12:43:56,114 - MainApp - ERROR - Workflow execution failed.
+Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\Agentic2\main_app.py", line 219, in <module>
+    engine = WorkflowEngine(dynamic_workflow, project_path)
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 16, in __init__
+    self.agents = self._load_agents(workflow['nodes'])
+                  ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 39, in _load_agents
+    module = importlib.import_module(module_path)
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1324, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'agents.codegenerator'
+2025-06-17 12:48:10,230 - DBUtils - WARNING - Could not check/create database, may already exist. Error: ('IM002', '[IM002] [Microsoft][ODBC Driver Manager] Data source name not found and no default driver specified (0) (SQLDriverConnect)')
+2025-06-17 12:50:58,356 - PlannerAgent - INFO - Generating a workflow plan for prompt: 'Build a simple checklist app...'
+2025-06-17 12:51:00,908 - MainApp - INFO - Plan generated and hydrated for project: SimpleChecklistApp
+2025-06-17 12:51:01,383 - AgentGeneratorAgent - INFO - Generating code for agent: CodeGeneratorAgent
+2025-06-17 12:51:12,064 - AgentGeneratorAgent - INFO - Generating code for agent: CodeReviewAndHealingAgent
+2025-06-17 12:51:28,650 - AgentGeneratorAgent - INFO - Generating code for agent: LaunchAgent
+2025-06-17 12:51:46,360 - MainApp - INFO - All necessary agent files have been generated.
+2025-06-17 12:51:46,362 - WorkflowFileGeneratorAgent - INFO - Generating workflow file content from plan.
+2025-06-17 12:51:46,364 - MainApp - INFO - Workflow file saved to: project_workflows\SimpleChecklistApp\workflow.py
+2025-06-17 12:51:46,420 - MainApp - INFO - Successfully loaded dynamically generated workflow.
+2025-06-17 12:51:46,424 - MainApp - ERROR - Workflow execution failed.
+Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\Agentic2\main_app.py", line 227, in <module>
+    engine = WorkflowEngine(dynamic_workflow)
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 14, in __init__
+    self.agents = self._load_agents(workflow['nodes'])
+                  ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 33, in _load_agents
+    module = importlib.import_module(module_path)
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1324, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'agents.codegenerator'
+2025-06-17 13:03:01,411 - PlannerAgent - INFO - Generating a workflow plan for prompt: 'Build a simple checklist app...'
+2025-06-17 13:03:04,409 - MainApp - INFO - Plan generated and hydrated for project: SimpleChecklistApp
+2025-06-17 13:03:04,890 - AgentGeneratorAgent - INFO - Generating code for agent: CodeGeneratorAgent
+2025-06-17 13:03:22,441 - AgentGeneratorAgent - INFO - Generating code for agent: CodeReviewAndHealingAgent
+2025-06-17 13:03:40,461 - AgentGeneratorAgent - INFO - Generating code for agent: LaunchAgent
+2025-06-17 13:03:50,787 - MainApp - INFO - All necessary agent files have been generated.
+2025-06-17 13:03:50,789 - WorkflowFileGeneratorAgent - INFO - Generating workflow file content from plan.
+2025-06-17 13:03:50,790 - MainApp - INFO - Workflow file saved to: project_workflows\SimpleChecklistApp\workflow.py
+2025-06-17 13:03:50,846 - MainApp - INFO - Successfully loaded dynamically generated workflow.
+2025-06-17 13:03:50,852 - MainApp - ERROR - Workflow execution failed.
+Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\Agentic2\main_app.py", line 225, in <module>
+    engine = WorkflowEngine(dynamic_workflow)
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 15, in __init__
+    self.agents = self._load_agents(workflow['nodes'])
+                  ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 34, in _load_agents
+    module = importlib.import_module(module_path)
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1324, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'agents.codegenerator'
+2025-06-17 13:15:00,419 - PlannerAgent - INFO - Generating a workflow plan for prompt: 'Build a simple checklist app...'
+2025-06-17 13:15:02,929 - MainApp - INFO - Plan generated and hydrated for project: SimpleChecklistApp
+2025-06-17 13:15:03,326 - AgentGeneratorAgent - INFO - Generating code for agent: CodeGeneratorAgent
+2025-06-17 13:15:15,187 - AgentGeneratorAgent - INFO - Generating code for agent: CodeReviewAndHealingAgent
+2025-06-17 13:15:38,526 - AgentGeneratorAgent - INFO - Generating code for agent: LaunchAgent
+2025-06-17 13:15:49,769 - MainApp - INFO - All necessary agent files have been generated.
+2025-06-17 13:15:49,770 - WorkflowFileGeneratorAgent - INFO - Generating workflow file content from plan.
+2025-06-17 13:15:49,771 - MainApp - INFO - Workflow file saved to: project_workflows\SimpleChecklistApp\workflow.py
+2025-06-17 13:15:49,828 - MainApp - INFO - Successfully loaded dynamically generated workflow.
+2025-06-17 13:15:49,833 - MainApp - ERROR - Workflow execution failed.
+Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\Agentic2\main_app.py", line 219, in <module>
+    engine = WorkflowEngine(dynamic_workflow)
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 15, in __init__
+    self.agents = self._load_agents(workflow['nodes'])
+                  ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 34, in _load_agents
+    module = importlib.import_module(module_path)
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1324, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'agents.codegenerator'
+2025-06-17 13:19:42,628 - PlannerAgent - INFO - Generating a workflow plan for prompt: 'Build a simple checklist app...'
+2025-06-17 13:19:45,462 - MainApp - INFO - Plan generated and hydrated for project: SimpleChecklistApp
+2025-06-17 13:19:45,907 - AgentGeneratorAgent - INFO - Generating code for agent: CodeGeneratorAgent
+2025-06-17 13:20:03,701 - AgentGeneratorAgent - INFO - Generating code for agent: CodeReviewAndHealingAgent
+2025-06-17 13:20:20,032 - AgentGeneratorAgent - INFO - Generating code for agent: LaunchAgent
+2025-06-17 13:20:36,244 - MainApp - INFO - All necessary agent files have been generated.
+2025-06-17 13:20:36,247 - WorkflowFileGeneratorAgent - INFO - Generating workflow file content from plan.
+2025-06-17 13:20:36,249 - MainApp - INFO - Workflow file saved to: project_workflows\SimpleChecklistApp\workflow.py
+2025-06-17 13:20:36,311 - MainApp - INFO - Successfully loaded dynamically generated workflow.
+2025-06-17 13:20:36,316 - MainApp - ERROR - Workflow execution failed.
+Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\Agentic2\main_app.py", line 219, in <module>
+    engine = WorkflowEngine(dynamic_workflow)
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 15, in __init__
+    self.agents = self._load_agents(workflow['nodes'])
+                  ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 34, in _load_agents
+    module = importlib.import_module(module_path)
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1324, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'agents.codegenerator'
+2025-06-17 13:24:46,788 - PlannerAgent - INFO - Generating a workflow plan for prompt: 'Build a simple checklist app...'
+2025-06-17 13:24:50,213 - MainApp - INFO - Plan generated and hydrated for project: SimpleChecklistApp
+2025-06-17 13:24:50,648 - AgentGeneratorAgent - INFO - Generating code for agent: CodeGeneratorAgent
+2025-06-17 13:25:07,372 - AgentGeneratorAgent - INFO - Generating code for agent: CodeReviewAndHealingAgent
+2025-06-17 13:25:21,577 - AgentGeneratorAgent - INFO - Generating code for agent: LaunchAgent
+2025-06-17 13:25:32,169 - MainApp - INFO - All necessary agent files have been generated.
+2025-06-17 13:25:32,172 - WorkflowFileGeneratorAgent - INFO - Generating workflow file content from plan.
+2025-06-17 13:25:32,175 - MainApp - INFO - Workflow file saved to: project_workflows\SimpleChecklistApp\workflow.py
+2025-06-17 13:25:32,232 - MainApp - INFO - Successfully loaded dynamically generated workflow.
+2025-06-17 13:25:32,236 - MainApp - ERROR - Workflow execution failed.
+Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\Agentic2\main_app.py", line 224, in <module>
+    engine = WorkflowEngine(dynamic_workflow)
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 15, in __init__
+    self.agents = self._load_agents(workflow['nodes'])
+                  ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 34, in _load_agents
+    module = importlib.import_module(module_path)
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1324, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'agents.codegenerator'
+2025-06-17 13:28:19,998 - PlannerAgent - INFO - Generating a workflow plan for prompt: 'Build a simple checklist app...'
+2025-06-17 13:28:22,497 - MainApp - INFO - Plan generated and hydrated for project: SimpleChecklistApp
+2025-06-17 13:28:22,937 - AgentGeneratorAgent - INFO - Generating code for agent: CodeGeneratorAgent
+2025-06-17 13:28:35,974 - AgentGeneratorAgent - INFO - Generating code for agent: CodeReviewAndHealingAgent
+2025-06-17 13:34:59,613 - PlannerAgent - INFO - Generating a workflow plan for prompt: 'Build a simple checklist app...'
+2025-06-17 13:35:02,180 - MainApp - INFO - Created package structure for SimpleChecklistApp
+2025-06-17 13:35:02,400 - AgentGeneratorAgent - INFO - Generating code for agent: CodeGeneratorAgent
+2025-06-17 13:35:15,999 - AgentGeneratorAgent - INFO - Generating code for agent: CodeReviewAndHealingAgent
+2025-06-17 13:35:30,446 - AgentGeneratorAgent - INFO - Generating code for agent: LaunchAgent
+2025-06-17 13:35:39,347 - WorkflowFileGeneratorAgent - INFO - Generating workflow file content with full paths.
+2025-06-17 13:35:39,348 - MainApp - INFO - Workflow file saved to: project_workflows\SimpleChecklistApp\workflow.py
+2025-06-17 13:35:39,418 - MainApp - INFO - Successfully loaded dynamically generated workflow.
+2025-06-17 13:35:39,431 - MainApp - ERROR - Execution failed.
+Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\Agentic2\main_app.py", line 191, in <module>
+    engine = WorkflowEngine(dynamic_workflow)
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 15, in __init__
+    self.agents = self._load_agents(workflow['nodes'])
+                  ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 34, in _load_agents
+    module = importlib.import_module(module_path)
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1324, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'generated_projects.SimpleChecklistApp.agents.codegenerator'
+2025-06-17 13:41:18,863 - PlannerAgent - INFO - Generating a workflow plan for prompt: 'Build a simple checklist app...'
+2025-06-17 13:41:22,496 - AgentGeneratorAgent - INFO - Generating code for agent: CodeGeneratorAgent
+2025-06-17 13:41:33,407 - AgentGeneratorAgent - INFO - Generating code for agent: CodeReviewAndHealingAgent
+2025-06-17 13:41:46,915 - AgentGeneratorAgent - INFO - Generating code for agent: LaunchAgent
+2025-06-17 13:42:03,264 - WorkflowFileGeneratorAgent - INFO - Generating workflow file content with full paths.
+2025-06-17 13:42:03,317 - MainApp - INFO - Temporarily added 'C:\Users\DELL\Desktop\Agentic2' to sys.path
+2025-06-17 13:42:03,321 - MainApp - INFO - Successfully loaded dynamically generated workflow.
+2025-06-17 13:42:03,332 - MainApp - ERROR - Execution failed.
+Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\Agentic2\main_app.py", line 179, in <module>
+    engine = WorkflowEngine(dynamic_workflow)
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 15, in __init__
+    self.agents = self._load_agents(workflow['nodes'])
+                  ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 34, in _load_agents
+    module = importlib.import_module(module_path)
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1324, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'generated_projects.SimpleChecklistApp.agents.codegenerator'
+2025-06-17 13:42:03,336 - MainApp - INFO - Removed 'C:\Users\DELL\Desktop\Agentic2' from sys.path
+2025-06-17 14:27:57,782 - PlannerAgent - INFO - Generating a workflow plan for prompt: 'Build a simple checklist app...'
+2025-06-17 14:28:01,155 - AgentGeneratorAgent - INFO - Generating code for agent: CodeGeneratorAgent
+2025-06-17 14:28:16,445 - AgentGeneratorAgent - INFO - Generating code for agent: CodeReviewAndHealingAgent
+2025-06-17 14:28:33,608 - AgentGeneratorAgent - INFO - Generating code for agent: LaunchAgent
+2025-06-17 14:28:47,039 - WorkflowFileGeneratorAgent - INFO - Generating workflow file content with full paths.
+2025-06-17 14:28:47,093 - MainApp - INFO - Temporarily added 'C:\Users\DELL\Desktop\Agentic2' to sys.path
+2025-06-17 14:28:47,135 - MainApp - INFO - Successfully loaded dynamically generated workflow.
+2025-06-17 14:28:47,157 - MainApp - ERROR - Execution failed.
+Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\Agentic2\main_app.py", line 179, in <module>
+    engine = WorkflowEngine(dynamic_workflow)
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 15, in __init__
+    self.agents = self._load_agents(workflow['nodes'])
+                  ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 34, in _load_agents
+    module = importlib.import_module(module_path)
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1022, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1160, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1090, in source_to_code
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\DELL\Desktop\Agentic2\generated_projects\SimpleChecklistApp\agents\codegeneratoragent.py", line 86
+    ```
+    ^
+SyntaxError: invalid syntax
+2025-06-17 14:28:47,167 - MainApp - INFO - Removed 'C:\Users\DELL\Desktop\Agentic2' from sys.path
+2025-06-17 14:31:20,036 - PlannerAgent - INFO - Generating a workflow plan for prompt: 'Build a simple checklist app...'
+2025-06-17 14:31:22,980 - AgentGeneratorAgent - INFO - Generating code for agent: CodeGeneratorAgent
+2025-06-17 14:31:44,801 - AgentGeneratorAgent - INFO - Generating code for agent: CodeReviewAndHealingAgent
+2025-06-17 14:32:02,349 - AgentGeneratorAgent - INFO - Generating code for agent: LaunchAgent
+2025-06-17 14:32:18,611 - WorkflowFileGeneratorAgent - INFO - Generating workflow file content with full paths.
+2025-06-17 14:32:18,666 - MainApp - INFO - Temporarily added 'C:\Users\DELL\Desktop\Agentic2' to sys.path
+2025-06-17 14:32:18,671 - MainApp - INFO - Successfully loaded dynamically generated workflow.
+2025-06-17 14:32:18,685 - MainApp - ERROR - Execution failed.
+Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\Agentic2\main_app.py", line 179, in <module>
+    engine = WorkflowEngine(dynamic_workflow)
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 15, in __init__
+    self.agents = self._load_agents(workflow['nodes'])
+                  ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 34, in _load_agents
+    module = importlib.import_module(module_path)
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1022, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1160, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1090, in source_to_code
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\DELL\Desktop\Agentic2\generated_projects\SimpleChecklistApp\agents\codegeneratoragent.py", line 91
+    ```
+    ^
+SyntaxError: invalid syntax
+2025-06-17 14:32:18,687 - MainApp - INFO - Removed 'C:\Users\DELL\Desktop\Agentic2' from sys.path
+2025-06-17 14:34:09,688 - PlannerAgent - INFO - Generating a workflow plan for prompt: 'Build a simple checklist app...'
+2025-06-17 14:34:14,270 - AgentGeneratorAgent - INFO - Generating code for agent: CodeGeneratorAgent
+2025-06-17 14:34:29,852 - AgentGeneratorAgent - INFO - Generating code for agent: CodeReviewAndHealingAgent
+2025-06-17 14:34:51,399 - AgentGeneratorAgent - INFO - Generating code for agent: LaunchAgent
+2025-06-17 14:35:03,977 - WorkflowFileGeneratorAgent - INFO - Generating workflow file content with full paths.
+2025-06-17 14:35:04,030 - MainApp - INFO - Temporarily added 'C:\Users\DELL\Desktop\Agentic2' to sys.path
+2025-06-17 14:35:04,034 - MainApp - INFO - Successfully loaded dynamically generated workflow.
+2025-06-17 14:35:04,283 - MainApp - ERROR - Execution failed.
+Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\Agentic2\main_app.py", line 181, in <module>
+    final_outputs = engine.execute(initial_inputs, status_ui=status)
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 75, in execute
+    output = agent.run(inputs_for_node, status_ui)
+  File "C:\Users\DELL\Desktop\Agentic2\generated_projects\SimpleChecklistApp\agents\codereviewandhealingagent.py", line 21, in run
+    raise ValueError("Missing required input: 'code_path'")
+ValueError: Missing required input: 'code_path'
+2025-06-17 14:35:04,285 - MainApp - INFO - Removed 'C:\Users\DELL\Desktop\Agentic2' from sys.path
+2025-06-17 14:37:16,002 - PlannerAgent - INFO - Generating a workflow plan for prompt: 'Build a simple checklist app...'
+2025-06-17 14:37:19,091 - AgentGeneratorAgent - INFO - Generating code for agent: CodeGeneratorAgent
+2025-06-17 14:37:33,090 - AgentGeneratorAgent - INFO - Generating code for agent: CodeReviewAndHealingAgent
+2025-06-17 14:37:44,827 - AgentGeneratorAgent - INFO - Generating code for agent: LaunchAgent
+2025-06-17 14:37:49,920 - WorkflowFileGeneratorAgent - INFO - Generating workflow file content with full paths.
+2025-06-17 14:37:49,974 - MainApp - INFO - Temporarily added 'C:\Users\DELL\Desktop\Agentic2' to sys.path
+2025-06-17 14:37:49,978 - MainApp - INFO - Successfully loaded dynamically generated workflow.
+2025-06-17 14:38:07,773 - MainApp - ERROR - Execution failed.
+Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\Agentic2\main_app.py", line 181, in <module>
+    final_outputs = engine.execute(initial_inputs, status_ui=status)
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 75, in execute
+    output = agent.run(inputs_for_node, status_ui)
+  File "C:\Users\DELL\Desktop\Agentic2\generated_projects\SimpleChecklistApp\agents\codegeneratoragent.py", line 47, in run
+    generated_code = response['choices'][0]['message']['content']
+                     ~~~~~~~~^^^^^^^^^^^
+TypeError: 'ChatCompletion' object is not subscriptable
+2025-06-17 14:38:07,776 - MainApp - INFO - Removed 'C:\Users\DELL\Desktop\Agentic2' from sys.path
+2025-06-17 14:43:11,869 - PlannerAgent - INFO - Generating a workflow plan for prompt: 'Build a simple checklist app...'
+2025-06-17 14:43:14,844 - AgentGeneratorAgent - INFO - Generating code for agent: CodeGeneratorAgent
+2025-06-17 14:43:26,172 - AgentGeneratorAgent - INFO - Generating code for agent: CodeReviewAndHealingAgent
+2025-06-17 14:43:37,848 - AgentGeneratorAgent - INFO - Generating code for agent: LaunchAgent
+2025-06-17 14:43:48,452 - WorkflowFileGeneratorAgent - INFO - Generating workflow file content with full paths.
+2025-06-17 14:43:48,507 - MainApp - INFO - Temporarily added 'C:\Users\DELL\Desktop\Agentic2' to sys.path
+2025-06-17 14:43:48,514 - MainApp - INFO - Successfully loaded dynamically generated workflow.
+2025-06-17 14:44:50,550 - MainApp - ERROR - Execution failed.
+Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\Agentic2\main_app.py", line 181, in <module>
+    final_outputs = engine.execute(initial_inputs, status_ui=status)
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 75, in execute
+    output = agent.run(inputs_for_node, status_ui)
+  File "C:\Users\DELL\Desktop\Agentic2\generated_projects\SimpleChecklistApp\agents\codereviewandhealingagent.py", line 15, in run
+    raise ValueError("Missing required inputs. Please provide 'code_path' and 'executable'.")
+ValueError: Missing required inputs. Please provide 'code_path' and 'executable'.
+2025-06-17 14:44:50,553 - MainApp - INFO - Removed 'C:\Users\DELL\Desktop\Agentic2' from sys.path
+2025-06-17 14:46:48,747 - PlannerAgent - INFO - Generating a workflow plan for prompt: 'Build a simple checklist app...'
+2025-06-17 14:46:51,463 - AgentGeneratorAgent - INFO - Generating code for agent: CodeGeneratorAgent
+2025-06-17 14:46:59,868 - AgentGeneratorAgent - INFO - Generating code for agent: CodeReviewAndHealingAgent
+2025-06-17 14:47:12,061 - AgentGeneratorAgent - INFO - Generating code for agent: LaunchAgent
+2025-06-17 14:47:16,586 - WorkflowFileGeneratorAgent - INFO - Generating workflow file content with full paths.
+2025-06-17 14:47:16,639 - MainApp - INFO - Temporarily added 'C:\Users\DELL\Desktop\Agentic2' to sys.path
+2025-06-17 14:47:16,643 - MainApp - INFO - Successfully loaded dynamically generated workflow.
+2025-06-17 14:47:16,655 - MainApp - ERROR - Execution failed.
+Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\Agentic2\main_app.py", line 179, in <module>
+    engine = WorkflowEngine(dynamic_workflow)
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 15, in __init__
+    self.agents = self._load_agents(workflow['nodes'])
+                  ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 36, in _load_agents
+    loaded_agents[node_id] = agent_class()
+                             ~~~~~~~~~~~^^
+TypeError: CodeGeneratorAgent.__init__() missing 1 required positional argument: 'api_key'
+2025-06-17 14:47:16,658 - MainApp - INFO - Removed 'C:\Users\DELL\Desktop\Agentic2' from sys.path
+2025-06-17 14:49:15,886 - PlannerAgent - INFO - Generating a workflow plan for prompt: 'Build a simple survey app...'
+2025-06-17 14:49:19,084 - AgentGeneratorAgent - INFO - Generating code for agent: CodeGeneratorAgent
+2025-06-17 14:49:28,274 - AgentGeneratorAgent - INFO - Generating code for agent: CodeReviewAndHealingAgent
+2025-06-17 14:49:36,517 - AgentGeneratorAgent - INFO - Generating code for agent: LaunchAgent
+2025-06-17 14:49:39,780 - WorkflowFileGeneratorAgent - INFO - Generating workflow file content with full paths.
+2025-06-17 14:49:39,833 - MainApp - INFO - Temporarily added 'C:\Users\DELL\Desktop\Agentic2' to sys.path
+2025-06-17 14:49:39,851 - MainApp - INFO - Successfully loaded dynamically generated workflow.
+2025-06-17 14:49:40,832 - MainApp - ERROR - Execution failed.
+Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\Agentic2\main_app.py", line 179, in <module>
+    engine = WorkflowEngine(dynamic_workflow)
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 15, in __init__
+    self.agents = self._load_agents(workflow['nodes'])
+                  ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 34, in _load_agents
+    module = importlib.import_module(module_path)
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\DELL\Desktop\Agentic2\generated_projects\SimpleSurveyApp\agents\launchagent.py", line 3, in <module>
+    from openai.openai_object import OpenAI
+ModuleNotFoundError: No module named 'openai.openai_object'
+2025-06-17 14:49:40,840 - MainApp - INFO - Removed 'C:\Users\DELL\Desktop\Agentic2' from sys.path
+2025-06-17 14:55:19,309 - PlannerAgent - INFO - Generating a workflow plan for prompt: 'Build a simple to do list app...'
+2025-06-17 14:55:23,487 - AgentGeneratorAgent - INFO - Generating code for agent: CodeGeneratorAgent
+2025-06-17 14:55:31,836 - AgentGeneratorAgent - INFO - Generating code for agent: CodeReviewAndHealingAgent
+2025-06-17 14:55:41,416 - AgentGeneratorAgent - INFO - Generating code for agent: LaunchAgent
+2025-06-17 14:55:44,263 - WorkflowFileGeneratorAgent - INFO - Generating workflow file content with full paths.
+2025-06-17 14:55:44,334 - MainApp - INFO - Temporarily added 'C:\Users\DELL\Desktop\Agentic2' to sys.path
+2025-06-17 14:55:44,359 - MainApp - INFO - Successfully loaded dynamically generated workflow.
+2025-06-17 14:55:45,195 - MainApp - ERROR - Execution failed.
+Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\Agentic2\main_app.py", line 181, in <module>
+    final_outputs = engine.execute(initial_inputs, status_ui=status)
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 75, in execute
+    output = agent.run(inputs_for_node, status_ui)
+TypeError: CodeGeneratorAgent.run() takes 2 positional arguments but 3 were given
+2025-06-17 14:55:45,196 - MainApp - INFO - Removed 'C:\Users\DELL\Desktop\Agentic2' from sys.path
+2025-06-17 15:03:53,246 - PlannerAgent - INFO - Generating a workflow plan for prompt: 'Build a simple checklist app...'
+2025-06-17 15:03:56,103 - AgentGeneratorAgent - INFO - Generating code for agent: CodeGeneratorAgent
+2025-06-17 15:04:07,006 - AgentGeneratorAgent - INFO - Generating code for agent: CodeReviewAndHealingAgent
+2025-06-17 15:04:16,980 - AgentGeneratorAgent - INFO - Generating code for agent: LaunchAgent
+2025-06-17 15:04:21,591 - AgentValidatorAgent - ERROR - Validation failed for codegeneratoragent.py on attempt 1: Class 'Codegeneratoragent' not found in module 'codegeneratoragent'.
+2025-06-17 15:04:21,594 - AgentValidatorAgent - WARNING - Requesting AI correction for agent code due to error: Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\Agentic2\meta_agents\agent_validator_agent.py", line 96, in run
+    raise AttributeError(f"Class '{class_name}' not found in module '{module_name}'.")
+AttributeError: Class 'Codegeneratoragent' not found in module 'codegeneratoragent'.
+
+2025-06-17 15:04:35,200 - AgentValidatorAgent - ERROR - Validation failed for codegeneratoragent.py on attempt 2: Class 'Codegeneratoragent' not found in module 'codegeneratoragent'.
+2025-06-17 15:04:35,201 - AgentValidatorAgent - WARNING - Requesting AI correction for agent code due to error: Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\Agentic2\meta_agents\agent_validator_agent.py", line 96, in run
+    raise AttributeError(f"Class '{class_name}' not found in module '{module_name}'.")
+AttributeError: Class 'Codegeneratoragent' not found in module 'codegeneratoragent'.
+
+2025-06-17 15:04:44,058 - AgentValidatorAgent - ERROR - Validation failed for codegeneratoragent.py on attempt 3: Class 'Codegeneratoragent' not found in module 'codegeneratoragent'.
+2025-06-17 15:04:44,060 - AgentValidatorAgent - WARNING - Requesting AI correction for agent code due to error: Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\Agentic2\meta_agents\agent_validator_agent.py", line 96, in run
+    raise AttributeError(f"Class '{class_name}' not found in module '{module_name}'.")
+AttributeError: Class 'Codegeneratoragent' not found in module 'codegeneratoragent'.
+
+2025-06-17 15:04:53,637 - MainApp - ERROR - Generation failed.
+Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\Agentic2\main_app.py", line 153, in <module>
+    validator.run({"project_path": project_path}, status_ui=status)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Desktop\Agentic2\meta_agents\agent_validator_agent.py", line 127, in run
+    raise Exception(f"Failed to validate and heal agents in '{project_path}' after {max_retries} attempts.")
+Exception: Failed to validate and heal agents in 'generated_projects\SimpleChecklistApp' after 3 attempts.
+2025-06-17 15:09:48,420 - PlannerAgent - INFO - Generating a workflow plan for prompt: 'Build a simple survey app...'
+2025-06-17 15:09:51,181 - AgentGeneratorAgent - INFO - Generating code for agent: CodeGeneratorAgent
+2025-06-17 15:09:59,251 - AgentGeneratorAgent - INFO - Generating code for agent: CodeReviewAndHealingAgent
+2025-06-17 15:10:06,438 - AgentGeneratorAgent - INFO - Generating code for agent: LaunchAgent
+2025-06-17 15:10:11,249 - AgentValidatorAgent - INFO - Agent 'CodeGeneratorAgent' in 'codegeneratoragent.py' passed validation.
+2025-06-17 15:10:11,696 - AgentValidatorAgent - INFO - Agent 'CodeReviewAndHealingAgent' in 'codereviewandhealingagent.py' passed validation.
+2025-06-17 15:10:12,394 - AgentValidatorAgent - INFO - Agent 'LaunchAgent' in 'launchagent.py' passed validation.
+2025-06-17 15:10:12,397 - WorkflowFileGeneratorAgent - INFO - Generating workflow file content with full paths.
+2025-06-17 15:10:12,452 - MainApp - INFO - Temporarily added 'C:\Users\DELL\Desktop\Agentic2' to sys.path
+2025-06-17 15:10:14,149 - MainApp - ERROR - Execution failed.
+Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\Agentic2\main_app.py", line 182, in <module>
+    final_outputs = engine.execute(initial_inputs, status_ui=status)
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 75, in execute
+    output = agent.run(inputs_for_node, status_ui)
+TypeError: CodeGeneratorAgent.run() takes 2 positional arguments but 3 were given
+2025-06-17 15:10:14,151 - MainApp - INFO - Removed 'C:\Users\DELL\Desktop\Agentic2' from sys.path
+2025-06-17 15:15:19,585 - PlannerAgent - INFO - Generating a workflow plan for prompt: 'Build a simple to do list app...'
+2025-06-17 15:15:22,741 - AgentGeneratorAgent - INFO - Generating code for agent: CodeGeneratorAgent
+2025-06-17 15:15:29,411 - AgentGeneratorAgent - INFO - Generating code for agent: CodeReviewAndHealingAgent
+2025-06-17 15:15:40,034 - AgentGeneratorAgent - INFO - Generating code for agent: LaunchAgent
+2025-06-17 15:15:47,025 - AgentValidatorAgent - INFO - Agent 'CodeGeneratorAgent' in 'codegeneratoragent.py' passed validation.
+2025-06-17 15:15:47,538 - AgentValidatorAgent - INFO - Agent 'CodeReviewAndHealingAgent' in 'codereviewandhealingagent.py' passed validation.
+2025-06-17 15:15:48,024 - AgentValidatorAgent - INFO - Agent 'LaunchAgent' in 'launchagent.py' passed validation.
+2025-06-17 15:15:48,026 - WorkflowFileGeneratorAgent - INFO - Generating workflow file content with full paths.
+2025-06-17 15:15:48,081 - MainApp - INFO - Temporarily added 'C:\Users\DELL\Desktop\Agentic2' to sys.path
+2025-06-17 15:15:49,784 - MainApp - ERROR - Execution failed.
+Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\Agentic2\main_app.py", line 182, in <module>
+    final_outputs = engine.execute(initial_inputs, status_ui=status)
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 75, in execute
+    output = agent.run(inputs_for_node, status_ui)
+  File "C:\Users\DELL\Desktop\Agentic2\generated_projects\SimpleTodoListApp\agents\codegeneratoragent.py", line 10, in run
+    status_ui.update_status("Starting code generation...")
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python313\Lib\site-packages\streamlit\delta_generator.py", line 351, in wrapper
+    raise StreamlitAPIException(message)
+streamlit.errors.StreamlitAPIException: `update_status()` is not a valid Streamlit command.
+2025-06-17 15:15:49,787 - MainApp - INFO - Removed 'C:\Users\DELL\Desktop\Agentic2' from sys.path
+2025-06-17 15:24:39,578 - PlannerAgent - INFO - Generating a workflow plan for prompt: 'Build a simple checklist app...'
+2025-06-17 15:24:42,595 - AgentGeneratorAgent - INFO - Generating code for agent: CodeGeneratorAgent
+2025-06-17 15:24:48,060 - AgentGeneratorAgent - INFO - Generating code for agent: CodeReviewAndHealingAgent
+2025-06-17 15:25:01,534 - AgentGeneratorAgent - INFO - Generating code for agent: LaunchAgent
+2025-06-17 15:25:11,793 - AgentValidatorAgent - INFO - Agent 'CodeGeneratorAgent' in 'codegeneratoragent.py' passed validation.
+2025-06-17 15:25:12,239 - AgentValidatorAgent - INFO - Agent 'CodeReviewAndHealingAgent' in 'codereviewandhealingagent.py' passed validation.
+2025-06-17 15:25:12,265 - AgentValidatorAgent - INFO - Agent 'LaunchAgent' in 'launchagent.py' passed validation.
+2025-06-17 15:25:12,267 - WorkflowFileGeneratorAgent - INFO - Generating workflow file content with full paths.
+2025-06-17 15:25:12,325 - MainApp - INFO - Temporarily added 'C:\Users\DELL\Desktop\Agentic2' to sys.path
+2025-06-17 15:25:13,334 - MainApp - ERROR - Execution failed.
+Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\Agentic2\main_app.py", line 182, in <module>
+    final_outputs = engine.execute(initial_inputs, status_ui=status)
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 75, in execute
+    output = agent.run(inputs_for_node, status_ui)
+  File "C:\Users\DELL\Desktop\Agentic2\generated_projects\SimpleChecklistApp\agents\codegeneratoragent.py", line 13, in run
+    response = self.client.chat.completions.create(
+        model="code-davinci-002",
+        prompt=f"Create a complete Streamlit application for: {prompt}",
+        max_tokens=1000
+    )
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python313\Lib\site-packages\openai\_utils\_utils.py", line 286, in wrapper
+    raise TypeError(msg)
+TypeError: Missing required arguments; Expected either ('messages' and 'model') or ('messages', 'model' and 'stream') arguments to be given
+2025-06-17 15:25:13,341 - MainApp - INFO - Removed 'C:\Users\DELL\Desktop\Agentic2' from sys.path
+2025-06-17 15:28:51,978 - PlannerAgent - INFO - Generating a workflow plan for prompt: 'Build a simple survey app with name gender mobile ...'
+2025-06-17 15:28:57,446 - AgentGeneratorAgent - INFO - Generating code for agent: CodeGeneratorAgent
+2025-06-17 15:29:03,714 - AgentGeneratorAgent - INFO - Generating code for agent: CodeReviewAndHealingAgent
+2025-06-17 15:29:11,071 - AgentGeneratorAgent - INFO - Generating code for agent: LaunchAgent
+2025-06-17 15:29:16,337 - AgentValidatorAgent - INFO - Agent 'CodeGeneratorAgent' in 'codegeneratoragent.py' passed validation.
+2025-06-17 15:29:16,775 - AgentValidatorAgent - INFO - Agent 'CodeReviewAndHealingAgent' in 'codereviewandhealingagent.py' passed validation.
+2025-06-17 15:29:16,794 - AgentValidatorAgent - INFO - Agent 'LaunchAgent' in 'launchagent.py' passed validation.
+2025-06-17 15:29:16,798 - WorkflowFileGeneratorAgent - INFO - Generating workflow file content with full paths.
+2025-06-17 15:29:16,870 - MainApp - INFO - Temporarily added 'C:\Users\DELL\Desktop\Agentic2' to sys.path
+2025-06-17 15:29:36,940 - MainApp - ERROR - Execution failed.
+Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\Agentic2\main_app.py", line 182, in <module>
+    final_outputs = engine.execute(initial_inputs, status_ui=status)
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 75, in execute
+    output = agent.run(inputs_for_node, status_ui)
+  File "C:\Users\DELL\Desktop\Agentic2\generated_projects\SimpleSurveyApp\agents\codereviewandhealingagent.py", line 12, in run
+    app_path = os.path.join(project_path, 'app.py')
+  File "<frozen ntpath>", line 100, in join
+TypeError: expected str, bytes or os.PathLike object, not NoneType
+2025-06-17 15:29:36,942 - MainApp - INFO - Removed 'C:\Users\DELL\Desktop\Agentic2' from sys.path
+2025-06-17 15:40:28,837 - PlannerAgent - INFO - Generating a workflow plan for prompt: 'Build a simple to do list app...'
+2025-06-17 15:40:30,969 - PlannerAgent - INFO - Generating a workflow plan for prompt: 'Build a simple to do list app...'
+2025-06-17 15:40:34,125 - AgentGeneratorAgent - INFO - Generating code for agent: CodeGeneratorAgent
+2025-06-17 15:40:41,039 - AgentGeneratorAgent - INFO - Generating code for agent: CodeReviewAndHealingAgent
+2025-06-17 15:40:53,497 - AgentGeneratorAgent - INFO - Generating code for agent: LaunchAgent
+2025-06-17 15:41:01,731 - AgentValidatorAgent - INFO - Agent 'CodeGeneratorAgent' in 'codegeneratoragent.py' passed validation.
+2025-06-17 15:41:02,842 - AgentValidatorAgent - INFO - Agent 'CodeReviewAndHealingAgent' in 'codereviewandhealingagent.py' passed validation.
+2025-06-17 15:41:02,880 - AgentValidatorAgent - INFO - Agent 'LaunchAgent' in 'launchagent.py' passed validation.
+2025-06-17 15:41:02,885 - WorkflowFileGeneratorAgent - INFO - Generating workflow file content with full paths.
+2025-06-17 15:41:02,942 - MainApp - INFO - Temporarily added 'C:\Users\DELL\Desktop\Agentic2' to sys.path
+2025-06-17 15:41:07,140 - MainApp - ERROR - Execution failed.
+Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\Agentic2\main_app.py", line 182, in <module>
+    final_outputs = engine.execute(initial_inputs, status_ui=status)
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 75, in execute
+    output = agent.run(inputs_for_node, status_ui)
+  File "C:\Users\DELL\Desktop\Agentic2\generated_projects\SimpleTodoListApp\agents\codegeneratoragent.py", line 24, in run
+    files = data.get("files", [])
+            ^^^^^^^^
+AttributeError: 'str' object has no attribute 'get'
+2025-06-17 15:41:07,143 - MainApp - INFO - Removed 'C:\Users\DELL\Desktop\Agentic2' from sys.path
+2025-06-17 16:10:06,325 - PlannerAgent - INFO - Generating a workflow plan for prompt: 'Build a simple checklist app...'
+2025-06-17 16:10:09,086 - WorkflowFileGeneratorAgent - INFO - Generating workflow file content using static agent paths.
+2025-06-17 16:10:09,179 - MainApp - ERROR - Execution failed.
+Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\Agentic2\main_app.py", line 154, in <module>
+    final_outputs = engine.execute(initial_inputs, status_ui=status)
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 73, in execute
+    output = agent.run(inputs_for_node, status_ui)
+  File "C:\Users\DELL\Desktop\Agentic2\agents\launch_agent.py", line 16, in run
+    raise ValueError("LaunchAgent requires 'project_path' and 'app_port'.")
+ValueError: LaunchAgent requires 'project_path' and 'app_port'.
+2025-06-17 16:14:39,543 - PlannerAgent - INFO - Generating a workflow plan for prompt: 'Build a simple to do list app...'
+2025-06-17 16:14:42,072 - MainApp - INFO - Enforcing correct agent sequence: ['DeveloperAgent', 'CodeReviewAgent', 'LaunchAgent']
+2025-06-17 16:14:42,076 - WorkflowFileGeneratorAgent - INFO - Generating workflow file content using static agent paths.
+2025-06-17 16:14:52,810 - DBUtils - INFO - Logging project 'ToDoListApp' to history.
+2025-06-17 16:14:52,864 - DBUtils - INFO - Transaction for ProjectHistory committed successfully.
+2025-06-17 16:15:17,916 - MainApp - ERROR - Execution failed.
+Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\Agentic2\main_app.py", line 164, in <module>
+    final_outputs = engine.execute(initial_inputs, status_ui=status)
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 73, in execute
+    output = agent.run(inputs_for_node, status_ui)
+  File "C:\Users\DELL\Desktop\Agentic2\agents\launch_agent.py", line 16, in run
+    raise ValueError("LaunchAgent requires 'project_path' and 'app_port'.")
+ValueError: LaunchAgent requires 'project_path' and 'app_port'.
+2025-06-17 16:17:43,924 - PlannerAgent - INFO - Generating a workflow plan for prompt: 'Build a simple checklist app...'
+2025-06-17 16:17:46,499 - MainApp - INFO - Enforcing correct agent sequence: ['DeveloperAgent', 'CodeReviewAgent', 'LaunchAgent']
+2025-06-17 16:17:46,501 - WorkflowFileGeneratorAgent - INFO - Generating workflow file content using static agent paths.
+2025-06-17 16:17:54,201 - DBUtils - INFO - Logging project 'ChecklistApp' to history.
+2025-06-17 16:17:54,211 - DBUtils - INFO - Transaction for ProjectHistory committed successfully.
+2025-06-17 16:18:19,270 - LaunchAgent - INFO - Application launched at http://localhost:8502 with PID 43180
+2025-06-17 16:18:19,271 - MainApp - INFO - Workflow execution completed.
+2025-06-19 12:29:18,878 - PlannerAgent - INFO - Generating a workflow plan for prompt: 'Build a simple survey app...'
+2025-06-19 12:29:23,035 - MainApp - INFO - Enforcing correct agent sequence: ['DeveloperAgent', 'CodeReviewAgent', 'LaunchAgent']
+2025-06-19 12:29:23,042 - WorkflowFileGeneratorAgent - INFO - Generating workflow file content using static agent paths.
+2025-06-19 12:29:33,719 - DBUtils - INFO - Logging project 'SimpleSurveyApp' to history.
+2025-06-19 12:29:33,816 - DBUtils - INFO - Transaction for ProjectHistory committed successfully.
+2025-06-19 12:29:59,132 - MainApp - ERROR - Execution failed.
+Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\Agentic2\main_app.py", line 164, in <module>
+    final_outputs = engine.execute(initial_inputs, status_ui=status)
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 73, in execute
+    output = agent.run(inputs_for_node, status_ui)
+  File "C:\Users\DELL\Desktop\Agentic2\agents\launch_agent.py", line 22, in run
+    psutil.Process(conn.pid).kill()
+    ~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python313\Lib\site-packages\psutil\__init__.py", line 317, in __init__
+    self._init(pid)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python313\Lib\site-packages\psutil\__init__.py", line 363, in _init
+    raise NoSuchProcess(pid, msg=msg) from None
+psutil.NoSuchProcess: process PID not found (pid=46232)
+2025-06-19 12:32:13,528 - PlannerAgent - INFO - Generating a workflow plan for prompt: 'Build a simple checklist app...'
+2025-06-19 12:32:16,430 - MainApp - INFO - Enforcing correct agent sequence: ['DeveloperAgent', 'CodeReviewAgent', 'LaunchAgent']
+2025-06-19 12:32:16,443 - WorkflowFileGeneratorAgent - INFO - Generating workflow file content using static agent paths.
+2025-06-19 12:32:25,715 - DBUtils - INFO - Logging project 'ChecklistApp' to history.
+2025-06-19 12:32:25,733 - DBUtils - INFO - Transaction for ProjectHistory committed successfully.
+2025-06-19 12:32:50,864 - MainApp - ERROR - Execution failed.
+Traceback (most recent call last):
+  File "C:\Users\DELL\Desktop\Agentic2\main_app.py", line 171, in <module>
+    final_outputs = engine.execute(initial_inputs, status_ui=status)
+  File "C:\Users\DELL\Desktop\Agentic2\core\workflow_engine.py", line 73, in execute
+    output = agent.run(inputs_for_node, status_ui)
+  File "C:\Users\DELL\Desktop\Agentic2\agents\launch_agent.py", line 22, in run
+    psutil.Process(conn.pid).kill()
+    ~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python313\Lib\site-packages\psutil\__init__.py", line 317, in __init__
+    self._init(pid)
+    ~~~~~~~~~~^^^^^
+  File "C:\Users\DELL\AppData\Local\Programs\Python\Python313\Lib\site-packages\psutil\__init__.py", line 363, in _init
+    raise NoSuchProcess(pid, msg=msg) from None
+psutil.NoSuchProcess: process PID not found (pid=45312)
+2025-06-19 12:35:13,286 - PlannerAgent - INFO - Generating a workflow plan for prompt: 'Build a simple checklist app...'
+2025-06-19 12:35:16,536 - MainApp - INFO - Enforcing correct agent sequence: ['DeveloperAgent', 'CodeReviewAgent', 'LaunchAgent']
+2025-06-19 12:35:16,548 - WorkflowFileGeneratorAgent - INFO - Generating workflow file content using static agent paths.
+2025-06-19 12:35:27,453 - DBUtils - INFO - Logging project 'ChecklistApp' to history.
+2025-06-19 12:35:27,515 - DBUtils - INFO - Transaction for ProjectHistory committed successfully.
+2025-06-19 12:35:52,601 - LaunchAgent - WARNING - Process 20248 on port 8502 already terminated.
+2025-06-19 12:35:52,603 - LaunchAgent - WARNING - Process 20248 on port 8502 already terminated.
+2025-06-19 12:35:52,618 - LaunchAgent - INFO - Application launched at http://localhost:8502 with PID 19220
+2025-06-19 12:35:52,620 - MainApp - INFO - Workflow execution completed.
+2025-06-19 17:41:32,706 - PlannerAgent - INFO - Generating a workflow plan for prompt: 'Develop a simple voice to text translator...'
+2025-06-19 17:41:36,493 - MainApp - INFO - Enforcing correct agent sequence: ['DeveloperAgent', 'CodeReviewAgent', 'LaunchAgent']
+2025-06-19 17:41:36,496 - WorkflowFileGeneratorAgent - INFO - Generating workflow file content using static agent paths.
+2025-06-19 17:41:48,098 - DBUtils - INFO - Logging project 'VoiceToTextTranslator' to history.
+2025-06-19 17:41:48,112 - DBUtils - INFO - Transaction for ProjectHistory committed successfully.
+2025-06-19 17:42:13,195 - LaunchAgent - WARNING - Process 7844 on port 8502 already terminated.
+2025-06-19 17:42:13,202 - LaunchAgent - INFO - Application launched at http://localhost:8502 with PID 19220
+2025-06-19 17:42:13,203 - MainApp - INFO - Workflow execution completed.
