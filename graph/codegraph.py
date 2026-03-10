@@ -94,8 +94,22 @@ class CodeGraph:
                 for nid, data in self.G.nodes(data=True):
                     if data.get("type") == FILE:
                         node_file = data["name"].replace("\\", "/").replace(".py", "")
-                        if node_file in imp_path or imp_path.endswith(node_file):
+                        # Exact match or import is a sub-path of the file
+                        if imp_path == node_file or imp_path.startswith(node_file + "/"):
                             matched_fid = nid
+                            break
+                        # Try progressively shorter prefixes of the import path
+                        # to match the tail of the file path.
+                        # e.g. import "utils.logger_config.get_logger"
+                        #   → try "utils/logger_config/get_logger", "utils/logger_config", "utils"
+                        #   → "utils/logger_config" matches tail of "core/utils/logger_config" ✓
+                        parts = imp_path.split("/")
+                        for k in range(len(parts), 0, -1):
+                            candidate = "/".join(parts[:k])
+                            if node_file == candidate or node_file.endswith("/" + candidate):
+                                matched_fid = nid
+                                break
+                        if matched_fid:
                             break
                 if matched_fid and matched_fid != fid:
                     self._add_edge(fid, matched_fid, IMPORTS)

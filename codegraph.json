@@ -394,6 +394,11 @@
     {
       "relation": "DEPENDS_ON",
       "source": "file::main_app.py",
+      "target": "file::core\\utils\\logger_config.py"
+    },
+    {
+      "relation": "DEPENDS_ON",
+      "source": "file::main_app.py",
       "target": "file::core\\workflow_engine.py"
     },
     {
@@ -435,6 +440,11 @@
       "relation": "CONTAINS",
       "source": "file::agents\\code_review_agent.py",
       "target": "class::agents\\code_review_agent.py::CodeReviewAgent"
+    },
+    {
+      "relation": "DEPENDS_ON",
+      "source": "file::agents\\code_review_agent.py",
+      "target": "file::core\\utils\\logger_config.py"
     },
     {
       "relation": "DEPENDS_ON",
@@ -499,6 +509,11 @@
     {
       "relation": "DEPENDS_ON",
       "source": "file::agents\\developer_agent.py",
+      "target": "file::core\\utils\\logger_config.py"
+    },
+    {
+      "relation": "DEPENDS_ON",
+      "source": "file::agents\\developer_agent.py",
       "target": "file::database\\db_utils.py"
     },
     {
@@ -530,6 +545,11 @@
       "relation": "CONTAINS",
       "source": "file::agents\\launch_agent.py",
       "target": "class::agents\\launch_agent.py::LaunchAgent"
+    },
+    {
+      "relation": "DEPENDS_ON",
+      "source": "file::agents\\launch_agent.py",
+      "target": "file::core\\utils\\logger_config.py"
     },
     {
       "relation": "CONTAINS",
@@ -627,6 +647,11 @@
       "target": "func::database\\db_utils.py::log_project_to_history"
     },
     {
+      "relation": "DEPENDS_ON",
+      "source": "file::database\\db_utils.py",
+      "target": "file::core\\utils\\logger_config.py"
+    },
+    {
       "relation": "CALLS",
       "source": "func::database\\db_utils.py::setup_database",
       "target": "func::database\\db_utils.py::get_db_connection"
@@ -722,6 +747,11 @@
       "target": "class::meta_agents\\agent_generator_agent.py::AgentGeneratorAgent"
     },
     {
+      "relation": "DEPENDS_ON",
+      "source": "file::meta_agents\\agent_generator_agent.py",
+      "target": "file::core\\utils\\logger_config.py"
+    },
+    {
       "relation": "CONTAINS",
       "source": "class::meta_agents\\agent_generator_agent.py::AgentGeneratorAgent",
       "target": "func::meta_agents\\agent_generator_agent.py::__init__"
@@ -750,6 +780,11 @@
       "relation": "CONTAINS",
       "source": "file::meta_agents\\agent_validator_agent.py",
       "target": "class::meta_agents\\agent_validator_agent.py::AgentValidatorAgent"
+    },
+    {
+      "relation": "DEPENDS_ON",
+      "source": "file::meta_agents\\agent_validator_agent.py",
+      "target": "file::core\\utils\\logger_config.py"
     },
     {
       "relation": "CALLS",
@@ -792,6 +827,11 @@
       "target": "class::meta_agents\\planner_agent.py::PlannerAgent"
     },
     {
+      "relation": "DEPENDS_ON",
+      "source": "file::meta_agents\\planner_agent.py",
+      "target": "file::core\\utils\\logger_config.py"
+    },
+    {
       "relation": "CONTAINS",
       "source": "class::meta_agents\\planner_agent.py::PlannerAgent",
       "target": "func::meta_agents\\planner_agent.py::__init__"
@@ -810,6 +850,11 @@
       "relation": "CONTAINS",
       "source": "file::meta_agents\\workflow_file_generator_agent.py",
       "target": "class::meta_agents\\workflow_file_generator_agent.py::WorkflowFileGeneratorAgent"
+    },
+    {
+      "relation": "DEPENDS_ON",
+      "source": "file::meta_agents\\workflow_file_generator_agent.py",
+      "target": "file::core\\utils\\logger_config.py"
     },
     {
       "relation": "CONTAINS",

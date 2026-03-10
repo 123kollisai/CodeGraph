@@ -35,11 +35,11 @@ def parse_python_file(filepath: str) -> dict:
         # Top-level imports
         if isinstance(node, ast.Import):
             for alias in node.names:
-                imports.append(alias.asname or alias.name)
+                imports.append(alias.name)
         elif isinstance(node, ast.ImportFrom):
             module = node.module or ""
             for alias in node.names:
-                imports.append(f"{module}.{alias.asname or alias.name}" if module else alias.name)
+                imports.append(f"{module}.{alias.name}" if module else alias.name)
 
         # Classes
         elif isinstance(node, ast.ClassDef):
