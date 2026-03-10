@@ -45,12 +45,14 @@ def parse_python_file(filepath: str) -> dict:
         elif isinstance(node, ast.ClassDef):
             bases = [ast.unparse(b) for b in node.bases]
             methods = [n.name for n in ast.walk(node) if isinstance(n, ast.FunctionDef)]
-            classes.append({"name": node.name, "bases": bases, "methods": methods})
+            classes.append({"name": node.name, "bases": bases, "methods": methods,
+                            "line_start": node.lineno, "line_end": node.end_lineno})
 
         # Functions (top-level + class methods)
         elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
             func_calls = _extract_calls(node)
-            functions.append({"name": node.name, "calls": func_calls})
+            functions.append({"name": node.name, "calls": func_calls,
+                              "line_start": node.lineno, "line_end": node.end_lineno})
             calls.extend(func_calls)
 
     return {

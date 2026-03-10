@@ -1,0 +1,820 @@
+{
+  "directed": true,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "type": "File",
+      "name": "main_app.py",
+      "id": "file::main_app.py"
+    },
+    {
+      "type": "Function",
+      "name": "stop_running_app",
+      "file": "main_app.py",
+      "id": "func::main_app.py::stop_running_app"
+    },
+    {
+      "type": "Function",
+      "name": "hydrate_plan",
+      "file": "main_app.py",
+      "id": "func::main_app.py::hydrate_plan"
+    },
+    {
+      "type": "File",
+      "name": "test_connection.py",
+      "id": "file::test_connection.py"
+    },
+    {
+      "type": "File",
+      "name": "agents\\code_review_agent.py",
+      "id": "file::agents\\code_review_agent.py"
+    },
+    {
+      "type": "Function",
+      "name": "__init__",
+      "file": "agents\\code_review_agent.py",
+      "id": "func::agents\\code_review_agent.py::__init__"
+    },
+    {
+      "type": "Function",
+      "name": "_request_code_correction",
+      "file": "agents\\code_review_agent.py",
+      "id": "func::agents\\code_review_agent.py::_request_code_correction"
+    },
+    {
+      "type": "Function",
+      "name": "review_and_heal",
+      "file": "agents\\code_review_agent.py",
+      "id": "func::agents\\code_review_agent.py::review_and_heal"
+    },
+    {
+      "type": "Function",
+      "name": "run",
+      "file": "agents\\code_review_agent.py",
+      "id": "func::agents\\code_review_agent.py::run"
+    },
+    {
+      "type": "Class",
+      "name": "CodeReviewAgent",
+      "file": "agents\\code_review_agent.py",
+      "id": "class::agents\\code_review_agent.py::CodeReviewAgent"
+    },
+    {
+      "type": "File",
+      "name": "agents\\developer_agent.py",
+      "id": "file::agents\\developer_agent.py"
+    },
+    {
+      "type": "Function",
+      "name": "__init__",
+      "file": "agents\\developer_agent.py",
+      "id": "func::agents\\developer_agent.py::__init__"
+    },
+    {
+      "type": "Function",
+      "name": "run",
+      "file": "agents\\developer_agent.py",
+      "id": "func::agents\\developer_agent.py::run"
+    },
+    {
+      "type": "Class",
+      "name": "DeveloperAgent",
+      "file": "agents\\developer_agent.py",
+      "id": "class::agents\\developer_agent.py::DeveloperAgent"
+    },
+    {
+      "type": "File",
+      "name": "agents\\launch_agent.py",
+      "id": "file::agents\\launch_agent.py"
+    },
+    {
+      "type": "Function",
+      "name": "__init__",
+      "file": "agents\\launch_agent.py",
+      "id": "func::agents\\launch_agent.py::__init__"
+    },
+    {
+      "type": "Function",
+      "name": "run",
+      "file": "agents\\launch_agent.py",
+      "id": "func::agents\\launch_agent.py::run"
+    },
+    {
+      "type": "Class",
+      "name": "LaunchAgent",
+      "file": "agents\\launch_agent.py",
+      "id": "class::agents\\launch_agent.py::LaunchAgent"
+    },
+    {
+      "type": "File",
+      "name": "agents\\__init__.py",
+      "id": "file::agents\\__init__.py"
+    },
+    {
+      "type": "File",
+      "name": "core\\workflow_engine.py",
+      "id": "file::core\\workflow_engine.py"
+    },
+    {
+      "type": "Function",
+      "name": "__init__",
+      "file": "core\\workflow_engine.py",
+      "id": "func::core\\workflow_engine.py::__init__"
+    },
+    {
+      "type": "Function",
+      "name": "_load_agents",
+      "file": "core\\workflow_engine.py",
+      "id": "func::core\\workflow_engine.py::_load_agents"
+    },
+    {
+      "type": "Function",
+      "name": "execute",
+      "file": "core\\workflow_engine.py",
+      "id": "func::core\\workflow_engine.py::execute"
+    },
+    {
+      "type": "Class",
+      "name": "WorkflowEngine",
+      "file": "core\\workflow_engine.py",
+      "id": "class::core\\workflow_engine.py::WorkflowEngine"
+    },
+    {
+      "type": "File",
+      "name": "core\\__init__.py",
+      "id": "file::core\\__init__.py"
+    },
+    {
+      "type": "File",
+      "name": "core\\utils\\logger_config.py",
+      "id": "file::core\\utils\\logger_config.py"
+    },
+    {
+      "type": "Function",
+      "name": "get_logger",
+      "file": "core\\utils\\logger_config.py",
+      "id": "func::core\\utils\\logger_config.py::get_logger"
+    },
+    {
+      "type": "File",
+      "name": "core\\utils\\__init__.py",
+      "id": "file::core\\utils\\__init__.py"
+    },
+    {
+      "type": "File",
+      "name": "database\\db_utils.py",
+      "id": "file::database\\db_utils.py"
+    },
+    {
+      "type": "Function",
+      "name": "get_db_connection",
+      "file": "database\\db_utils.py",
+      "id": "func::database\\db_utils.py::get_db_connection"
+    },
+    {
+      "type": "Function",
+      "name": "setup_database",
+      "file": "database\\db_utils.py",
+      "id": "func::database\\db_utils.py::setup_database"
+    },
+    {
+      "type": "Function",
+      "name": "log_error_to_db",
+      "file": "database\\db_utils.py",
+      "id": "func::database\\db_utils.py::log_error_to_db"
+    },
+    {
+      "type": "Function",
+      "name": "log_project_to_history",
+      "file": "database\\db_utils.py",
+      "id": "func::database\\db_utils.py::log_project_to_history"
+    },
+    {
+      "type": "File",
+      "name": "database\\__init__.py",
+      "id": "file::database\\__init__.py"
+    },
+    {
+      "type": "File",
+      "name": "generated_projects\\__init__.py",
+      "id": "file::generated_projects\\__init__.py"
+    },
+    {
+      "type": "File",
+      "name": "generated_projects\\ChecklistApp\\app.py",
+      "id": "file::generated_projects\\ChecklistApp\\app.py"
+    },
+    {
+      "type": "Function",
+      "name": "add_task",
+      "file": "generated_projects\\ChecklistApp\\app.py",
+      "id": "func::generated_projects\\ChecklistApp\\app.py::add_task"
+    },
+    {
+      "type": "Function",
+      "name": "update_status",
+      "file": "generated_projects\\ChecklistApp\\app.py",
+      "id": "func::generated_projects\\ChecklistApp\\app.py::update_status"
+    },
+    {
+      "type": "Function",
+      "name": "delete_task",
+      "file": "generated_projects\\ChecklistApp\\app.py",
+      "id": "func::generated_projects\\ChecklistApp\\app.py::delete_task"
+    },
+    {
+      "type": "File",
+      "name": "generated_projects\\SimpleSurveyApp\\app.py",
+      "id": "file::generated_projects\\SimpleSurveyApp\\app.py"
+    },
+    {
+      "type": "Function",
+      "name": "survey_form",
+      "file": "generated_projects\\SimpleSurveyApp\\app.py",
+      "id": "func::generated_projects\\SimpleSurveyApp\\app.py::survey_form"
+    },
+    {
+      "type": "File",
+      "name": "generated_projects\\ToDoListApp\\app.py",
+      "id": "file::generated_projects\\ToDoListApp\\app.py"
+    },
+    {
+      "type": "Function",
+      "name": "add_task",
+      "file": "generated_projects\\ToDoListApp\\app.py",
+      "id": "func::generated_projects\\ToDoListApp\\app.py::add_task"
+    },
+    {
+      "type": "Function",
+      "name": "remove_task",
+      "file": "generated_projects\\ToDoListApp\\app.py",
+      "id": "func::generated_projects\\ToDoListApp\\app.py::remove_task"
+    },
+    {
+      "type": "Function",
+      "name": "main",
+      "file": "generated_projects\\ToDoListApp\\app.py",
+      "id": "func::generated_projects\\ToDoListApp\\app.py::main"
+    },
+    {
+      "type": "File",
+      "name": "generated_projects\\VoiceToTextTranslator\\app.py",
+      "id": "file::generated_projects\\VoiceToTextTranslator\\app.py"
+    },
+    {
+      "type": "File",
+      "name": "meta_agents\\agent_generator_agent.py",
+      "id": "file::meta_agents\\agent_generator_agent.py"
+    },
+    {
+      "type": "Function",
+      "name": "__init__",
+      "file": "meta_agents\\agent_generator_agent.py",
+      "id": "func::meta_agents\\agent_generator_agent.py::__init__"
+    },
+    {
+      "type": "Function",
+      "name": "generate_agent_code",
+      "file": "meta_agents\\agent_generator_agent.py",
+      "id": "func::meta_agents\\agent_generator_agent.py::generate_agent_code"
+    },
+    {
+      "type": "Class",
+      "name": "AgentGeneratorAgent",
+      "file": "meta_agents\\agent_generator_agent.py",
+      "id": "class::meta_agents\\agent_generator_agent.py::AgentGeneratorAgent"
+    },
+    {
+      "type": "File",
+      "name": "meta_agents\\agent_validator_agent.py",
+      "id": "file::meta_agents\\agent_validator_agent.py"
+    },
+    {
+      "type": "Function",
+      "name": "__init__",
+      "file": "meta_agents\\agent_validator_agent.py",
+      "id": "func::meta_agents\\agent_validator_agent.py::__init__"
+    },
+    {
+      "type": "Function",
+      "name": "_request_code_correction",
+      "file": "meta_agents\\agent_validator_agent.py",
+      "id": "func::meta_agents\\agent_validator_agent.py::_request_code_correction"
+    },
+    {
+      "type": "Function",
+      "name": "run",
+      "file": "meta_agents\\agent_validator_agent.py",
+      "id": "func::meta_agents\\agent_validator_agent.py::run"
+    },
+    {
+      "type": "Class",
+      "name": "AgentValidatorAgent",
+      "file": "meta_agents\\agent_validator_agent.py",
+      "id": "class::meta_agents\\agent_validator_agent.py::AgentValidatorAgent"
+    },
+    {
+      "type": "File",
+      "name": "meta_agents\\planner_agent.py",
+      "id": "file::meta_agents\\planner_agent.py"
+    },
+    {
+      "type": "Function",
+      "name": "__init__",
+      "file": "meta_agents\\planner_agent.py",
+      "id": "func::meta_agents\\planner_agent.py::__init__"
+    },
+    {
+      "type": "Function",
+      "name": "generate_plan",
+      "file": "meta_agents\\planner_agent.py",
+      "id": "func::meta_agents\\planner_agent.py::generate_plan"
+    },
+    {
+      "type": "Class",
+      "name": "PlannerAgent",
+      "file": "meta_agents\\planner_agent.py",
+      "id": "class::meta_agents\\planner_agent.py::PlannerAgent"
+    },
+    {
+      "type": "File",
+      "name": "meta_agents\\workflow_file_generator_agent.py",
+      "id": "file::meta_agents\\workflow_file_generator_agent.py"
+    },
+    {
+      "type": "Function",
+      "name": "generate_workflow_file_content",
+      "file": "meta_agents\\workflow_file_generator_agent.py",
+      "id": "func::meta_agents\\workflow_file_generator_agent.py::generate_workflow_file_content"
+    },
+    {
+      "type": "Class",
+      "name": "WorkflowFileGeneratorAgent",
+      "file": "meta_agents\\workflow_file_generator_agent.py",
+      "id": "class::meta_agents\\workflow_file_generator_agent.py::WorkflowFileGeneratorAgent"
+    },
+    {
+      "type": "File",
+      "name": "project_workflows\\SimpleChecklistApp\\workflow.py",
+      "id": "file::project_workflows\\SimpleChecklistApp\\workflow.py"
+    },
+    {
+      "type": "File",
+      "name": "project_workflows\\SimpleSurveyApp\\workflow.py",
+      "id": "file::project_workflows\\SimpleSurveyApp\\workflow.py"
+    },
+    {
+      "type": "File",
+      "name": "project_workflows\\SimpleTodoListApp\\workflow.py",
+      "id": "file::project_workflows\\SimpleTodoListApp\\workflow.py"
+    },
+    {
+      "type": "File",
+      "name": "project_workflows\\SimpleVoiceToTextTranslator\\workflow.py",
+      "id": "file::project_workflows\\SimpleVoiceToTextTranslator\\workflow.py"
+    },
+    {
+      "type": "File",
+      "name": "workflows\\app_development_workflow.py",
+      "id": "file::workflows\\app_development_workflow.py"
+    }
+  ],
+  "links": [
+    {
+      "relation": "CONTAINS",
+      "source": "file::main_app.py",
+      "target": "func::main_app.py::stop_running_app"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::main_app.py",
+      "target": "func::main_app.py::hydrate_plan"
+    },
+    {
+      "relation": "DEPENDS_ON",
+      "source": "file::main_app.py",
+      "target": "file::core\\workflow_engine.py"
+    },
+    {
+      "relation": "DEPENDS_ON",
+      "source": "file::main_app.py",
+      "target": "file::meta_agents\\planner_agent.py"
+    },
+    {
+      "relation": "DEPENDS_ON",
+      "source": "file::main_app.py",
+      "target": "file::meta_agents\\workflow_file_generator_agent.py"
+    },
+    {
+      "relation": "DEPENDS_ON",
+      "source": "file::main_app.py",
+      "target": "file::database\\db_utils.py"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::agents\\code_review_agent.py",
+      "target": "func::agents\\code_review_agent.py::__init__"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::agents\\code_review_agent.py",
+      "target": "func::agents\\code_review_agent.py::_request_code_correction"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::agents\\code_review_agent.py",
+      "target": "func::agents\\code_review_agent.py::review_and_heal"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::agents\\code_review_agent.py",
+      "target": "func::agents\\code_review_agent.py::run"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::agents\\code_review_agent.py",
+      "target": "class::agents\\code_review_agent.py::CodeReviewAgent"
+    },
+    {
+      "relation": "DEPENDS_ON",
+      "source": "file::agents\\code_review_agent.py",
+      "target": "file::database\\db_utils.py"
+    },
+    {
+      "relation": "CALLS",
+      "source": "func::agents\\code_review_agent.py::review_and_heal",
+      "target": "func::agents\\code_review_agent.py::_request_code_correction"
+    },
+    {
+      "relation": "CALLS",
+      "source": "func::agents\\code_review_agent.py::review_and_heal",
+      "target": "func::meta_agents\\agent_validator_agent.py::_request_code_correction"
+    },
+    {
+      "relation": "CALLS",
+      "source": "func::agents\\code_review_agent.py::review_and_heal",
+      "target": "func::database\\db_utils.py::log_error_to_db"
+    },
+    {
+      "relation": "CALLS",
+      "source": "func::agents\\code_review_agent.py::run",
+      "target": "func::agents\\code_review_agent.py::review_and_heal"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "class::agents\\code_review_agent.py::CodeReviewAgent",
+      "target": "func::agents\\code_review_agent.py::__init__"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "class::agents\\code_review_agent.py::CodeReviewAgent",
+      "target": "func::agents\\code_review_agent.py::_request_code_correction"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "class::agents\\code_review_agent.py::CodeReviewAgent",
+      "target": "func::agents\\code_review_agent.py::review_and_heal"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "class::agents\\code_review_agent.py::CodeReviewAgent",
+      "target": "func::agents\\code_review_agent.py::run"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::agents\\developer_agent.py",
+      "target": "func::agents\\developer_agent.py::__init__"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::agents\\developer_agent.py",
+      "target": "func::agents\\developer_agent.py::run"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::agents\\developer_agent.py",
+      "target": "class::agents\\developer_agent.py::DeveloperAgent"
+    },
+    {
+      "relation": "DEPENDS_ON",
+      "source": "file::agents\\developer_agent.py",
+      "target": "file::database\\db_utils.py"
+    },
+    {
+      "relation": "CALLS",
+      "source": "func::agents\\developer_agent.py::run",
+      "target": "func::database\\db_utils.py::log_project_to_history"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "class::agents\\developer_agent.py::DeveloperAgent",
+      "target": "func::agents\\developer_agent.py::__init__"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "class::agents\\developer_agent.py::DeveloperAgent",
+      "target": "func::agents\\developer_agent.py::run"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::agents\\launch_agent.py",
+      "target": "func::agents\\launch_agent.py::__init__"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::agents\\launch_agent.py",
+      "target": "func::agents\\launch_agent.py::run"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::agents\\launch_agent.py",
+      "target": "class::agents\\launch_agent.py::LaunchAgent"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "class::agents\\launch_agent.py::LaunchAgent",
+      "target": "func::agents\\launch_agent.py::__init__"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "class::agents\\launch_agent.py::LaunchAgent",
+      "target": "func::agents\\launch_agent.py::run"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::core\\workflow_engine.py",
+      "target": "func::core\\workflow_engine.py::__init__"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::core\\workflow_engine.py",
+      "target": "func::core\\workflow_engine.py::_load_agents"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::core\\workflow_engine.py",
+      "target": "func::core\\workflow_engine.py::execute"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::core\\workflow_engine.py",
+      "target": "class::core\\workflow_engine.py::WorkflowEngine"
+    },
+    {
+      "relation": "CALLS",
+      "source": "func::core\\workflow_engine.py::__init__",
+      "target": "func::core\\workflow_engine.py::_load_agents"
+    },
+    {
+      "relation": "CALLS",
+      "source": "func::core\\workflow_engine.py::execute",
+      "target": "func::agents\\code_review_agent.py::run"
+    },
+    {
+      "relation": "CALLS",
+      "source": "func::core\\workflow_engine.py::execute",
+      "target": "func::agents\\developer_agent.py::run"
+    },
+    {
+      "relation": "CALLS",
+      "source": "func::core\\workflow_engine.py::execute",
+      "target": "func::agents\\launch_agent.py::run"
+    },
+    {
+      "relation": "CALLS",
+      "source": "func::core\\workflow_engine.py::execute",
+      "target": "func::meta_agents\\agent_validator_agent.py::run"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "class::core\\workflow_engine.py::WorkflowEngine",
+      "target": "func::core\\workflow_engine.py::__init__"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "class::core\\workflow_engine.py::WorkflowEngine",
+      "target": "func::core\\workflow_engine.py::_load_agents"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "class::core\\workflow_engine.py::WorkflowEngine",
+      "target": "func::core\\workflow_engine.py::execute"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::core\\utils\\logger_config.py",
+      "target": "func::core\\utils\\logger_config.py::get_logger"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::database\\db_utils.py",
+      "target": "func::database\\db_utils.py::get_db_connection"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::database\\db_utils.py",
+      "target": "func::database\\db_utils.py::setup_database"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::database\\db_utils.py",
+      "target": "func::database\\db_utils.py::log_error_to_db"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::database\\db_utils.py",
+      "target": "func::database\\db_utils.py::log_project_to_history"
+    },
+    {
+      "relation": "CALLS",
+      "source": "func::database\\db_utils.py::setup_database",
+      "target": "func::database\\db_utils.py::get_db_connection"
+    },
+    {
+      "relation": "CALLS",
+      "source": "func::database\\db_utils.py::setup_database",
+      "target": "func::core\\workflow_engine.py::execute"
+    },
+    {
+      "relation": "CALLS",
+      "source": "func::database\\db_utils.py::log_error_to_db",
+      "target": "func::database\\db_utils.py::get_db_connection"
+    },
+    {
+      "relation": "CALLS",
+      "source": "func::database\\db_utils.py::log_error_to_db",
+      "target": "func::core\\workflow_engine.py::execute"
+    },
+    {
+      "relation": "CALLS",
+      "source": "func::database\\db_utils.py::log_project_to_history",
+      "target": "func::database\\db_utils.py::get_db_connection"
+    },
+    {
+      "relation": "CALLS",
+      "source": "func::database\\db_utils.py::log_project_to_history",
+      "target": "func::core\\workflow_engine.py::execute"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::generated_projects\\ChecklistApp\\app.py",
+      "target": "func::generated_projects\\ChecklistApp\\app.py::add_task"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::generated_projects\\ChecklistApp\\app.py",
+      "target": "func::generated_projects\\ChecklistApp\\app.py::update_status"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::generated_projects\\ChecklistApp\\app.py",
+      "target": "func::generated_projects\\ChecklistApp\\app.py::delete_task"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::generated_projects\\SimpleSurveyApp\\app.py",
+      "target": "func::generated_projects\\SimpleSurveyApp\\app.py::survey_form"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::generated_projects\\ToDoListApp\\app.py",
+      "target": "func::generated_projects\\ToDoListApp\\app.py::add_task"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::generated_projects\\ToDoListApp\\app.py",
+      "target": "func::generated_projects\\ToDoListApp\\app.py::remove_task"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::generated_projects\\ToDoListApp\\app.py",
+      "target": "func::generated_projects\\ToDoListApp\\app.py::main"
+    },
+    {
+      "relation": "CALLS",
+      "source": "func::generated_projects\\ToDoListApp\\app.py::main",
+      "target": "func::generated_projects\\ChecklistApp\\app.py::add_task"
+    },
+    {
+      "relation": "CALLS",
+      "source": "func::generated_projects\\ToDoListApp\\app.py::main",
+      "target": "func::generated_projects\\ToDoListApp\\app.py::add_task"
+    },
+    {
+      "relation": "CALLS",
+      "source": "func::generated_projects\\ToDoListApp\\app.py::main",
+      "target": "func::generated_projects\\ToDoListApp\\app.py::remove_task"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::meta_agents\\agent_generator_agent.py",
+      "target": "func::meta_agents\\agent_generator_agent.py::__init__"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::meta_agents\\agent_generator_agent.py",
+      "target": "func::meta_agents\\agent_generator_agent.py::generate_agent_code"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::meta_agents\\agent_generator_agent.py",
+      "target": "class::meta_agents\\agent_generator_agent.py::AgentGeneratorAgent"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "class::meta_agents\\agent_generator_agent.py::AgentGeneratorAgent",
+      "target": "func::meta_agents\\agent_generator_agent.py::__init__"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "class::meta_agents\\agent_generator_agent.py::AgentGeneratorAgent",
+      "target": "func::meta_agents\\agent_generator_agent.py::generate_agent_code"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::meta_agents\\agent_validator_agent.py",
+      "target": "func::meta_agents\\agent_validator_agent.py::__init__"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::meta_agents\\agent_validator_agent.py",
+      "target": "func::meta_agents\\agent_validator_agent.py::_request_code_correction"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::meta_agents\\agent_validator_agent.py",
+      "target": "func::meta_agents\\agent_validator_agent.py::run"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::meta_agents\\agent_validator_agent.py",
+      "target": "class::meta_agents\\agent_validator_agent.py::AgentValidatorAgent"
+    },
+    {
+      "relation": "CALLS",
+      "source": "func::meta_agents\\agent_validator_agent.py::run",
+      "target": "func::agents\\code_review_agent.py::_request_code_correction"
+    },
+    {
+      "relation": "CALLS",
+      "source": "func::meta_agents\\agent_validator_agent.py::run",
+      "target": "func::meta_agents\\agent_validator_agent.py::_request_code_correction"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "class::meta_agents\\agent_validator_agent.py::AgentValidatorAgent",
+      "target": "func::meta_agents\\agent_validator_agent.py::__init__"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "class::meta_agents\\agent_validator_agent.py::AgentValidatorAgent",
+      "target": "func::meta_agents\\agent_validator_agent.py::_request_code_correction"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "class::meta_agents\\agent_validator_agent.py::AgentValidatorAgent",
+      "target": "func::meta_agents\\agent_validator_agent.py::run"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::meta_agents\\planner_agent.py",
+      "target": "func::meta_agents\\planner_agent.py::__init__"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::meta_agents\\planner_agent.py",
+      "target": "func::meta_agents\\planner_agent.py::generate_plan"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::meta_agents\\planner_agent.py",
+      "target": "class::meta_agents\\planner_agent.py::PlannerAgent"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "class::meta_agents\\planner_agent.py::PlannerAgent",
+      "target": "func::meta_agents\\planner_agent.py::__init__"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "class::meta_agents\\planner_agent.py::PlannerAgent",
+      "target": "func::meta_agents\\planner_agent.py::generate_plan"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::meta_agents\\workflow_file_generator_agent.py",
+      "target": "func::meta_agents\\workflow_file_generator_agent.py::generate_workflow_file_content"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "file::meta_agents\\workflow_file_generator_agent.py",
+      "target": "class::meta_agents\\workflow_file_generator_agent.py::WorkflowFileGeneratorAgent"
+    },
+    {
+      "relation": "CONTAINS",
+      "source": "class::meta_agents\\workflow_file_generator_agent.py::WorkflowFileGeneratorAgent",
+      "target": "func::meta_agents\\workflow_file_generator_agent.py::generate_workflow_file_content"
+    }
+  ]
+}

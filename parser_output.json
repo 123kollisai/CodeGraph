@@ -1,103 +1,1110 @@
 [
   {
-    "file": "parser\\repo_parser.py",
+    "file": "main_app.py",
     "classes": [],
     "functions": [
-      "_extract_calls",
-      "parse_python_file",
-      "parse_repository",
-      "save_output"
+      "stop_running_app",
+      "hydrate_plan"
     ],
     "function_details": [
       {
-        "name": "_extract_calls",
+        "name": "stop_running_app",
         "calls": [
-          "ast.walk",
-          "list",
-          "isinstance",
-          "dict.fromkeys",
-          "calls.append",
-          "ast.unparse"
-        ]
+          "psutil.pid_exists",
+          "st.rerun",
+          "st.warning",
+          "psutil.Process",
+          "parent.children",
+          "parent.kill",
+          "st.success",
+          "child.kill"
+        ],
+        "line_start": 48,
+        "line_end": 68
       },
       {
-        "name": "parse_python_file",
+        "name": "hydrate_plan",
         "calls": [
-          "ast.walk",
-          "Path(filepath).read_text",
-          "ast.parse",
-          "isinstance",
-          "list",
-          "dict.fromkeys",
-          "Path",
-          "imports.append",
-          "classes.append",
-          "ast.unparse",
-          "_extract_calls",
-          "functions.append",
-          "calls.extend"
-        ]
-      },
-      {
-        "name": "parse_repository",
-        "calls": [
-          "Path(repo_path).resolve",
-          "os.walk",
-          "Path",
-          "str",
-          "parse_python_file",
-          "results.append",
-          "fname.endswith",
-          "Path(fpath).relative_to"
-        ]
-      },
-      {
-        "name": "save_output",
-        "calls": [
-          "print",
-          "open",
-          "json.dump",
-          "len"
-        ]
+          "simple_plan.get",
+          "hydrated_steps.append"
+        ],
+        "line_start": 70,
+        "line_end": 83
       }
     ],
     "imports": [
-      "ast",
-      "json",
+      "st",
       "os",
-      "pathlib.Path",
-      "sys"
+      "shutil",
+      "psutil",
+      "time",
+      "subprocess",
+      "json",
+      "importlib.util",
+      "sys",
+      "re",
+      "utils.logger_config.get_logger",
+      "core.workflow_engine.WorkflowEngine",
+      "meta_agents.planner_agent.PlannerAgent",
+      "meta_agents.workflow_file_generator_agent.WorkflowFileGeneratorAgent",
+      "database.db_utils.setup_database",
+      "database.db_utils.log_project_to_history"
     ],
     "calls": [
-      "ast.walk",
-      "list",
-      "isinstance",
-      "dict.fromkeys",
-      "calls.append",
-      "ast.unparse",
-      "Path(filepath).read_text",
-      "ast.parse",
-      "Path",
-      "imports.append",
-      "classes.append",
-      "_extract_calls",
-      "functions.append",
-      "calls.extend",
-      "Path(repo_path).resolve",
-      "os.walk",
-      "str",
-      "parse_python_file",
-      "results.append",
-      "fname.endswith",
-      "Path(fpath).relative_to",
-      "print",
-      "open",
-      "json.dump",
-      "len"
+      "psutil.pid_exists",
+      "st.rerun",
+      "st.warning",
+      "psutil.Process",
+      "parent.children",
+      "parent.kill",
+      "st.success",
+      "child.kill",
+      "simple_plan.get",
+      "hydrated_steps.append"
     ]
   },
   {
-    "file": "parser\\__init__.py",
+    "file": "test_connection.py",
+    "classes": [],
+    "functions": [],
+    "function_details": [],
+    "imports": [
+      "pyodbc"
+    ],
+    "calls": []
+  },
+  {
+    "file": "agents\\code_review_agent.py",
+    "classes": [
+      {
+        "name": "CodeReviewAgent",
+        "bases": [],
+        "methods": [
+          "__init__",
+          "_request_code_correction",
+          "review_and_heal",
+          "run"
+        ],
+        "line_start": 13,
+        "line_end": 97
+      }
+    ],
+    "functions": [
+      "__init__",
+      "_request_code_correction",
+      "review_and_heal",
+      "run"
+    ],
+    "function_details": [
+      {
+        "name": "__init__",
+        "calls": [
+          "OpenAI",
+          "os.getenv",
+          "ValueError"
+        ],
+        "line_start": 14,
+        "line_end": 17
+      },
+      {
+        "name": "_request_code_correction",
+        "calls": [
+          "'\\n\\n---\\n\\n'.join",
+          "self.client.chat.completions.create",
+          "files.items"
+        ],
+        "line_start": 19,
+        "line_end": 34
+      },
+      {
+        "name": "review_and_heal",
+        "calls": [
+          "range",
+          "os.walk",
+          "status_ui.write",
+          "subprocess.Popen",
+          "process.communicate",
+          "self._request_code_correction",
+          "json.loads",
+          "fixed_files.items",
+          "os.path.basename",
+          "log_error_to_db",
+          "os.path.join",
+          "os.path.relpath(file_path, project_path).replace",
+          "str",
+          "logger.error",
+          "open",
+          "f.read",
+          "process.kill",
+          "f.write",
+          "os.path.relpath"
+        ],
+        "line_start": 36,
+        "line_end": 85
+      },
+      {
+        "name": "run",
+        "calls": [
+          "inputs.get",
+          "self.review_and_heal",
+          "ValueError",
+          "Exception"
+        ],
+        "line_start": 87,
+        "line_end": 97
+      }
+    ],
+    "imports": [
+      "os",
+      "json",
+      "time",
+      "subprocess",
+      "openai.OpenAI",
+      "typing.Tuple",
+      "typing.Any",
+      "typing.Dict",
+      "utils.logger_config.get_logger",
+      "database.db_utils.log_error_to_db"
+    ],
+    "calls": [
+      "OpenAI",
+      "os.getenv",
+      "ValueError",
+      "'\\n\\n---\\n\\n'.join",
+      "self.client.chat.completions.create",
+      "files.items",
+      "range",
+      "os.walk",
+      "status_ui.write",
+      "subprocess.Popen",
+      "process.communicate",
+      "self._request_code_correction",
+      "json.loads",
+      "fixed_files.items",
+      "os.path.basename",
+      "log_error_to_db",
+      "os.path.join",
+      "os.path.relpath(file_path, project_path).replace",
+      "str",
+      "logger.error",
+      "open",
+      "f.read",
+      "process.kill",
+      "f.write",
+      "os.path.relpath",
+      "inputs.get",
+      "self.review_and_heal",
+      "Exception"
+    ]
+  },
+  {
+    "file": "agents\\developer_agent.py",
+    "classes": [
+      {
+        "name": "DeveloperAgent",
+        "bases": [],
+        "methods": [
+          "__init__",
+          "run"
+        ],
+        "line_start": 12,
+        "line_end": 64
+      }
+    ],
+    "functions": [
+      "__init__",
+      "run"
+    ],
+    "function_details": [
+      {
+        "name": "__init__",
+        "calls": [
+          "OpenAI",
+          "os.getenv",
+          "ValueError"
+        ],
+        "line_start": 13,
+        "line_end": 16
+      },
+      {
+        "name": "run",
+        "calls": [
+          "inputs.get",
+          "response_data.get",
+          "os.path.join",
+          "os.path.exists",
+          "os.makedirs",
+          "ValueError",
+          "status_ui.write",
+          "self.client.chat.completions.create",
+          "json.loads",
+          "shutil.rmtree",
+          "log_project_to_history",
+          "logger.error",
+          "os.path.dirname",
+          "open",
+          "f.write"
+        ],
+        "line_start": 18,
+        "line_end": 64
+      }
+    ],
+    "imports": [
+      "os",
+      "json",
+      "shutil",
+      "openai.OpenAI",
+      "utils.logger_config.get_logger",
+      "database.db_utils.log_project_to_history"
+    ],
+    "calls": [
+      "OpenAI",
+      "os.getenv",
+      "ValueError",
+      "inputs.get",
+      "response_data.get",
+      "os.path.join",
+      "os.path.exists",
+      "os.makedirs",
+      "status_ui.write",
+      "self.client.chat.completions.create",
+      "json.loads",
+      "shutil.rmtree",
+      "log_project_to_history",
+      "logger.error",
+      "os.path.dirname",
+      "open",
+      "f.write"
+    ]
+  },
+  {
+    "file": "agents\\launch_agent.py",
+    "classes": [
+      {
+        "name": "LaunchAgent",
+        "bases": [],
+        "methods": [
+          "__init__",
+          "run"
+        ],
+        "line_start": 8,
+        "line_end": 45
+      }
+    ],
+    "functions": [
+      "__init__",
+      "run"
+    ],
+    "function_details": [
+      {
+        "name": "__init__",
+        "calls": [],
+        "line_start": 9,
+        "line_end": 10
+      },
+      {
+        "name": "run",
+        "calls": [
+          "inputs.get",
+          "psutil.net_connections",
+          "os.path.join",
+          "subprocess.Popen",
+          "logger.info",
+          "ValueError",
+          "status_ui.write",
+          "str",
+          "psutil.Process",
+          "process_to_kill.kill",
+          "process_to_kill.wait",
+          "logger.warning",
+          "logger.error"
+        ],
+        "line_start": 12,
+        "line_end": 45
+      }
+    ],
+    "imports": [
+      "os",
+      "subprocess",
+      "psutil",
+      "utils.logger_config.get_logger"
+    ],
+    "calls": [
+      "inputs.get",
+      "psutil.net_connections",
+      "os.path.join",
+      "subprocess.Popen",
+      "logger.info",
+      "ValueError",
+      "status_ui.write",
+      "str",
+      "psutil.Process",
+      "process_to_kill.kill",
+      "process_to_kill.wait",
+      "logger.warning",
+      "logger.error"
+    ]
+  },
+  {
+    "file": "agents\\__init__.py",
+    "classes": [],
+    "functions": [],
+    "function_details": [],
+    "imports": [],
+    "calls": []
+  },
+  {
+    "file": "core\\workflow_engine.py",
+    "classes": [
+      {
+        "name": "WorkflowEngine",
+        "bases": [],
+        "methods": [
+          "__init__",
+          "_load_agents",
+          "execute"
+        ],
+        "line_start": 9,
+        "line_end": 84
+      }
+    ],
+    "functions": [
+      "__init__",
+      "_load_agents",
+      "execute"
+    ],
+    "function_details": [
+      {
+        "name": "__init__",
+        "calls": [
+          "self._load_agents"
+        ],
+        "line_start": 10,
+        "line_end": 12
+      },
+      {
+        "name": "_load_agents",
+        "calls": [
+          "nodes.items",
+          "node_info.get",
+          "config.get",
+          "logger.warning",
+          "path.rsplit",
+          "importlib.import_module",
+          "getattr",
+          "agent_class",
+          "logger.info",
+          "logger.error"
+        ],
+        "line_start": 14,
+        "line_end": 38
+      },
+      {
+        "name": "execute",
+        "calls": [
+          "initial_inputs.copy",
+          "self.workflow.get",
+          "self.workflow['nodes'].get",
+          "self.agents.get",
+          "node_info.get('inputs', {}).items",
+          "node_info.get",
+          "status_ui.write",
+          "ValueError",
+          "agent.run",
+          "isinstance",
+          "value.startswith",
+          "value.endswith",
+          "value.strip('{}').split",
+          "node_outputs.get",
+          "previous_output.get",
+          "workflow_context.get",
+          "logger.error",
+          "status_ui.update",
+          "value.strip"
+        ],
+        "line_start": 40,
+        "line_end": 84
+      }
+    ],
+    "imports": [
+      "logging",
+      "importlib",
+      "typing.Dict",
+      "typing.Any"
+    ],
+    "calls": [
+      "self._load_agents",
+      "nodes.items",
+      "node_info.get",
+      "config.get",
+      "logger.warning",
+      "path.rsplit",
+      "importlib.import_module",
+      "getattr",
+      "agent_class",
+      "logger.info",
+      "logger.error",
+      "initial_inputs.copy",
+      "self.workflow.get",
+      "self.workflow['nodes'].get",
+      "self.agents.get",
+      "node_info.get('inputs', {}).items",
+      "status_ui.write",
+      "ValueError",
+      "agent.run",
+      "isinstance",
+      "value.startswith",
+      "value.endswith",
+      "value.strip('{}').split",
+      "node_outputs.get",
+      "previous_output.get",
+      "workflow_context.get",
+      "status_ui.update",
+      "value.strip"
+    ]
+  },
+  {
+    "file": "core\\__init__.py",
+    "classes": [],
+    "functions": [],
+    "function_details": [],
+    "imports": [],
+    "calls": []
+  },
+  {
+    "file": "core\\utils\\logger_config.py",
+    "classes": [],
+    "functions": [
+      "get_logger"
+    ],
+    "function_details": [
+      {
+        "name": "get_logger",
+        "calls": [
+          "logging.getLogger",
+          "logger.setLevel",
+          "os.makedirs",
+          "os.path.join",
+          "logging.Formatter",
+          "logging.StreamHandler",
+          "stream_handler.setFormatter",
+          "logger.addHandler",
+          "logging.FileHandler",
+          "file_handler.setFormatter"
+        ],
+        "line_start": 9,
+        "line_end": 40
+      }
+    ],
+    "imports": [
+      "logging",
+      "sys",
+      "os"
+    ],
+    "calls": [
+      "logging.getLogger",
+      "logger.setLevel",
+      "os.makedirs",
+      "os.path.join",
+      "logging.Formatter",
+      "logging.StreamHandler",
+      "stream_handler.setFormatter",
+      "logger.addHandler",
+      "logging.FileHandler",
+      "file_handler.setFormatter"
+    ]
+  },
+  {
+    "file": "core\\utils\\__init__.py",
+    "classes": [],
+    "functions": [],
+    "function_details": [],
+    "imports": [],
+    "calls": []
+  },
+  {
+    "file": "database\\db_utils.py",
+    "classes": [],
+    "functions": [
+      "get_db_connection",
+      "setup_database",
+      "log_error_to_db",
+      "log_project_to_history"
+    ],
+    "function_details": [
+      {
+        "name": "get_db_connection",
+        "calls": [
+          "pyodbc.connect",
+          "logger.error"
+        ],
+        "line_start": 20,
+        "line_end": 27
+      },
+      {
+        "name": "setup_database",
+        "calls": [
+          "get_db_connection",
+          "conn.cursor",
+          "cursor.close",
+          "conn.close",
+          "pyodbc.connect",
+          "cursor.execute",
+          "logger.warning",
+          "cursor.tables(table=ERROR_TABLE_NAME, tableType='TABLE').fetchone",
+          "conn.commit",
+          "logger.info",
+          "cursor.tables(table=HISTORY_TABLE_NAME, tableType='TABLE').fetchone",
+          "cursor.fetchone",
+          "cursor.tables",
+          "conn.getinfo"
+        ],
+        "line_start": 29,
+        "line_end": 91
+      },
+      {
+        "name": "log_error_to_db",
+        "calls": [
+          "get_db_connection",
+          "conn.cursor",
+          "cursor.execute",
+          "conn.commit",
+          "datetime.now",
+          "logger.error"
+        ],
+        "line_start": 93,
+        "line_end": 105
+      },
+      {
+        "name": "log_project_to_history",
+        "calls": [
+          "logger.info",
+          "get_db_connection",
+          "conn.cursor",
+          "cursor.execute",
+          "conn.commit",
+          "logger.error",
+          "datetime.now"
+        ],
+        "line_start": 108,
+        "line_end": 126
+      }
+    ],
+    "imports": [
+      "pyodbc",
+      "pd",
+      "datetime.datetime",
+      "utils.logger_config.get_logger"
+    ],
+    "calls": [
+      "pyodbc.connect",
+      "logger.error",
+      "get_db_connection",
+      "conn.cursor",
+      "cursor.close",
+      "conn.close",
+      "cursor.execute",
+      "logger.warning",
+      "cursor.tables(table=ERROR_TABLE_NAME, tableType='TABLE').fetchone",
+      "conn.commit",
+      "logger.info",
+      "cursor.tables(table=HISTORY_TABLE_NAME, tableType='TABLE').fetchone",
+      "cursor.fetchone",
+      "cursor.tables",
+      "conn.getinfo",
+      "datetime.now"
+    ]
+  },
+  {
+    "file": "database\\__init__.py",
+    "classes": [],
+    "functions": [],
+    "function_details": [],
+    "imports": [],
+    "calls": []
+  },
+  {
+    "file": "generated_projects\\__init__.py",
+    "classes": [],
+    "functions": [],
+    "function_details": [],
+    "imports": [],
+    "calls": []
+  },
+  {
+    "file": "generated_projects\\ChecklistApp\\app.py",
+    "classes": [],
+    "functions": [
+      "add_task",
+      "update_status",
+      "delete_task"
+    ],
+    "function_details": [
+      {
+        "name": "add_task",
+        "calls": [
+          "st.session_state['task_list'].append"
+        ],
+        "line_start": 10,
+        "line_end": 11
+      },
+      {
+        "name": "update_status",
+        "calls": [],
+        "line_start": 13,
+        "line_end": 14
+      },
+      {
+        "name": "delete_task",
+        "calls": [],
+        "line_start": 16,
+        "line_end": 17
+      }
+    ],
+    "imports": [
+      "st",
+      "pd"
+    ],
+    "calls": [
+      "st.session_state['task_list'].append"
+    ]
+  },
+  {
+    "file": "generated_projects\\SimpleSurveyApp\\app.py",
+    "classes": [],
+    "functions": [
+      "survey_form"
+    ],
+    "function_details": [
+      {
+        "name": "survey_form",
+        "calls": [
+          "st.form",
+          "st.text_input",
+          "st.number_input",
+          "st.text_area",
+          "st.form_submit_button"
+        ],
+        "line_start": 8,
+        "line_end": 16
+      }
+    ],
+    "imports": [
+      "st",
+      "pd"
+    ],
+    "calls": [
+      "st.form",
+      "st.text_input",
+      "st.number_input",
+      "st.text_area",
+      "st.form_submit_button"
+    ]
+  },
+  {
+    "file": "generated_projects\\ToDoListApp\\app.py",
+    "classes": [],
+    "functions": [
+      "add_task",
+      "remove_task",
+      "main"
+    ],
+    "function_details": [
+      {
+        "name": "add_task",
+        "calls": [
+          "pd.DataFrame",
+          "pd.concat"
+        ],
+        "line_start": 8,
+        "line_end": 11
+      },
+      {
+        "name": "remove_task",
+        "calls": [
+          "st.session_state.todo_list.drop(index).reset_index",
+          "st.session_state.todo_list.drop"
+        ],
+        "line_start": 13,
+        "line_end": 15
+      },
+      {
+        "name": "main",
+        "calls": [
+          "st.title",
+          "st.text_input",
+          "st.button",
+          "st.write",
+          "task_list.iterrows",
+          "add_task",
+          "st.success",
+          "remove_task"
+        ],
+        "line_start": 18,
+        "line_end": 36
+      }
+    ],
+    "imports": [
+      "st",
+      "pd"
+    ],
+    "calls": [
+      "pd.DataFrame",
+      "pd.concat",
+      "st.session_state.todo_list.drop(index).reset_index",
+      "st.session_state.todo_list.drop",
+      "st.title",
+      "st.text_input",
+      "st.button",
+      "st.write",
+      "task_list.iterrows",
+      "add_task",
+      "st.success",
+      "remove_task"
+    ]
+  },
+  {
+    "file": "generated_projects\\VoiceToTextTranslator\\app.py",
+    "classes": [],
+    "functions": [],
+    "function_details": [],
+    "imports": [
+      "st",
+      "sr"
+    ],
+    "calls": []
+  },
+  {
+    "file": "meta_agents\\agent_generator_agent.py",
+    "classes": [
+      {
+        "name": "AgentGeneratorAgent",
+        "bases": [],
+        "methods": [
+          "__init__",
+          "generate_agent_code"
+        ],
+        "line_start": 10,
+        "line_end": 63
+      }
+    ],
+    "functions": [
+      "__init__",
+      "generate_agent_code"
+    ],
+    "function_details": [
+      {
+        "name": "__init__",
+        "calls": [
+          "OpenAI",
+          "os.getenv",
+          "ValueError"
+        ],
+        "line_start": 11,
+        "line_end": 14
+      },
+      {
+        "name": "generate_agent_code",
+        "calls": [
+          "logger.info",
+          "self.client.chat.completions.create",
+          "re.search",
+          "match.group(1).strip",
+          "raw_code.strip",
+          "logger.error",
+          "ValueError",
+          "match.group"
+        ],
+        "line_start": 16,
+        "line_end": 63
+      }
+    ],
+    "imports": [
+      "openai.OpenAI",
+      "utils.logger_config.get_logger",
+      "os",
+      "re"
+    ],
+    "calls": [
+      "OpenAI",
+      "os.getenv",
+      "ValueError",
+      "logger.info",
+      "self.client.chat.completions.create",
+      "re.search",
+      "match.group(1).strip",
+      "raw_code.strip",
+      "logger.error",
+      "match.group"
+    ]
+  },
+  {
+    "file": "meta_agents\\agent_validator_agent.py",
+    "classes": [
+      {
+        "name": "AgentValidatorAgent",
+        "bases": [],
+        "methods": [
+          "__init__",
+          "_request_code_correction",
+          "run"
+        ],
+        "line_start": 13,
+        "line_end": 132
+      }
+    ],
+    "functions": [
+      "__init__",
+      "_request_code_correction",
+      "run"
+    ],
+    "function_details": [
+      {
+        "name": "__init__",
+        "calls": [
+          "OpenAI",
+          "os.getenv",
+          "ValueError"
+        ],
+        "line_start": 14,
+        "line_end": 17
+      },
+      {
+        "name": "_request_code_correction",
+        "calls": [
+          "logger.warning",
+          "self.client.chat.completions.create",
+          "re.search",
+          "corrected_code.strip",
+          "match.group(1).strip",
+          "match.group"
+        ],
+        "line_start": 19,
+        "line_end": 59
+      },
+      {
+        "name": "run",
+        "calls": [
+          "inputs.get",
+          "os.path.join",
+          "range",
+          "Exception",
+          "ValueError",
+          "os.listdir",
+          "importlib.util.spec_from_file_location",
+          "importlib.util.module_from_spec",
+          "spec.loader.exec_module",
+          "agent_file.replace",
+          "next",
+          "getattr",
+          "agent_class",
+          "logger.info",
+          "status_ui.write",
+          "f.endswith",
+          "LookupError",
+          "AttributeError",
+          "traceback.format_exc",
+          "logger.error",
+          "self._request_code_correction",
+          "f.startswith",
+          "open",
+          "f.read",
+          "f.write",
+          "s['agent_name'].lower"
+        ],
+        "line_start": 61,
+        "line_end": 132
+      }
+    ],
+    "imports": [
+      "os",
+      "importlib.util",
+      "traceback",
+      "openai.OpenAI",
+      "re",
+      "utils.logger_config.get_logger"
+    ],
+    "calls": [
+      "OpenAI",
+      "os.getenv",
+      "ValueError",
+      "logger.warning",
+      "self.client.chat.completions.create",
+      "re.search",
+      "corrected_code.strip",
+      "match.group(1).strip",
+      "match.group",
+      "inputs.get",
+      "os.path.join",
+      "range",
+      "Exception",
+      "os.listdir",
+      "importlib.util.spec_from_file_location",
+      "importlib.util.module_from_spec",
+      "spec.loader.exec_module",
+      "agent_file.replace",
+      "next",
+      "getattr",
+      "agent_class",
+      "logger.info",
+      "status_ui.write",
+      "f.endswith",
+      "LookupError",
+      "AttributeError",
+      "traceback.format_exc",
+      "logger.error",
+      "self._request_code_correction",
+      "f.startswith",
+      "open",
+      "f.read",
+      "f.write",
+      "s['agent_name'].lower"
+    ]
+  },
+  {
+    "file": "meta_agents\\planner_agent.py",
+    "classes": [
+      {
+        "name": "PlannerAgent",
+        "bases": [],
+        "methods": [
+          "__init__",
+          "generate_plan"
+        ],
+        "line_start": 10,
+        "line_end": 54
+      }
+    ],
+    "functions": [
+      "__init__",
+      "generate_plan"
+    ],
+    "function_details": [
+      {
+        "name": "__init__",
+        "calls": [
+          "OpenAI",
+          "os.getenv",
+          "ValueError"
+        ],
+        "line_start": 11,
+        "line_end": 14
+      },
+      {
+        "name": "generate_plan",
+        "calls": [
+          "logger.info",
+          "self.client.chat.completions.create",
+          "json.loads",
+          "logger.error",
+          "ValueError"
+        ],
+        "line_start": 16,
+        "line_end": 54
+      }
+    ],
+    "imports": [
+      "openai.OpenAI",
+      "json",
+      "os",
+      "utils.logger_config.get_logger"
+    ],
+    "calls": [
+      "OpenAI",
+      "os.getenv",
+      "ValueError",
+      "logger.info",
+      "self.client.chat.completions.create",
+      "json.loads",
+      "logger.error"
+    ]
+  },
+  {
+    "file": "meta_agents\\workflow_file_generator_agent.py",
+    "classes": [
+      {
+        "name": "WorkflowFileGeneratorAgent",
+        "bases": [],
+        "methods": [
+          "generate_workflow_file_content"
+        ],
+        "line_start": 8,
+        "line_end": 68
+      }
+    ],
+    "functions": [
+      "generate_workflow_file_content"
+    ],
+    "function_details": [
+      {
+        "name": "generate_workflow_file_content",
+        "calls": [
+          "logger.info",
+          "enumerate",
+          "workflow_string.replace",
+          "step_info['agent_name'].lower().replace",
+          "step_info.get",
+          "len",
+          "json.dumps",
+          "step_info['agent_name'].lower",
+          "next",
+          "dep_step.get"
+        ],
+        "line_start": 9,
+        "line_end": 68
+      }
+    ],
+    "imports": [
+      "utils.logger_config.get_logger",
+      "json"
+    ],
+    "calls": [
+      "logger.info",
+      "enumerate",
+      "workflow_string.replace",
+      "step_info['agent_name'].lower().replace",
+      "step_info.get",
+      "len",
+      "json.dumps",
+      "step_info['agent_name'].lower",
+      "next",
+      "dep_step.get"
+    ]
+  },
+  {
+    "file": "project_workflows\\SimpleChecklistApp\\workflow.py",
+    "classes": [],
+    "functions": [],
+    "function_details": [],
+    "imports": [],
+    "calls": []
+  },
+  {
+    "file": "project_workflows\\SimpleSurveyApp\\workflow.py",
+    "classes": [],
+    "functions": [],
+    "function_details": [],
+    "imports": [],
+    "calls": []
+  },
+  {
+    "file": "project_workflows\\SimpleTodoListApp\\workflow.py",
+    "classes": [],
+    "functions": [],
+    "function_details": [],
+    "imports": [],
+    "calls": []
+  },
+  {
+    "file": "project_workflows\\SimpleVoiceToTextTranslator\\workflow.py",
+    "classes": [],
+    "functions": [],
+    "function_details": [],
+    "imports": [],
+    "calls": []
+  },
+  {
+    "file": "workflows\\app_development_workflow.py",
     "classes": [],
     "functions": [],
     "function_details": [],
