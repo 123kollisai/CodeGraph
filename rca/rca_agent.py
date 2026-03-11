@@ -203,6 +203,9 @@ Functions: {json.dumps(func_list[:50])}"""
 
     def _build_user_prompt(self, bug_description: str, entry_point: str, code_context: str, impact: dict) -> str:
         """Assemble the full user prompt with all context."""
+        # Build the file tree so the LLM knows the actual directory structure
+        file_tree = sorted(e["file"].replace("\\", "/") for e in self.parser_output)
+
         return f"""
 ═══════════════════════════════════════════════════════════════
 BUG REPORT
@@ -212,6 +215,11 @@ BUG REPORT
 ═══════════════════════════════════════════════════════════════
 ENTRY POINT: {entry_point}
 ═══════════════════════════════════════════════════════════════
+
+═══════════════════════════════════════════════════════════════
+REPOSITORY FILE STRUCTURE
+═══════════════════════════════════════════════════════════════
+{chr(10).join(file_tree)}
 
 ═══════════════════════════════════════════════════════════════
 RETRIEVED CODE CONTEXT (from dependency graph traversal)
@@ -225,6 +233,10 @@ Functions that CALL {entry_point}: {json.dumps(impact['callers'])}
 Functions CALLED BY {entry_point}: {json.dumps(impact['callees'])}
 Files that depend on entry file: {json.dumps(impact['dependent_files'])}
 Files IMPACTED if entry file changes: {json.dumps(impact['impacted_by'])}
+
+IMPORTANT: When suggesting fixes for import statements, verify the import path
+matches the ACTUAL file structure shown above. Do NOT guess paths — use the
+file tree to determine the correct module path.
 
 Analyze this bug following the 9-step process and return the JSON report.
 """
