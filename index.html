@@ -1,0 +1,1782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CodeGraph RCA</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..60,300;12..60,400;12..60,500;12..60,700;12..60,800&family=Fira+Code:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:    #060608;
+  --ink2:   #0c0d11;
+  --ink3:   #12141a;
+  --ink4:   #1a1d26;
+  --ink5:   #22263300;
+  --volt:   #3b82f6;
+  --volt2:  #2563eb;
+  --volt-a: rgba(59,130,246,0.12);
+  --volt-b: rgba(59,130,246,0.06);
+  --volt-c: rgba(59,130,246,0.04);
+  --danger: #ff2d55;
+  --danger-a: rgba(255,45,85,0.15);
+  --safe:   #00e5a0;
+  --safe-a: rgba(0,229,160,0.12);
+  --warn:   #ffaa00;
+  --warn-a: rgba(255,170,0,0.12);
+  --sky:    #4fc3f7;
+  --text:   #dde4f0;
+  --text2:  #8090a8;
+  --text3:  #40506a;
+  --border: rgba(255,255,255,0.06);
+  --border2:rgba(255,255,255,0.12);
+  --ff:     'Bricolage Grotesque', sans-serif;
+  --fm:     'Fira Code', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; overflow: hidden; background: var(--ink); color: var(--text); font-family: var(--ff); }
+
+/* ── Grain overlay ── */
+body::before {
+  content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.5;
+}
+
+/* ── Layout shell ── */
+.shell { display: grid; grid-template-rows: 48px 1fr 32px; grid-template-columns: 60px 1fr; height: 100vh; }
+
+/* ── Header ── */
+header {
+  grid-column: 1/-1; grid-row: 1;
+  display: flex; align-items: center; padding: 0 20px; gap: 16px;
+  background: var(--ink2); border-bottom: 1px solid var(--border);
+  position: relative; z-index: 100;
+}
+
+.brand {
+  display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+}
+
+.brand-glyph {
+  width: 28px; height: 28px; flex-shrink: 0;
+  background: var(--volt); border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; color: #fff; font-weight: 800;
+  box-shadow: 0 0 12px rgba(59,130,246,0.5);
+  animation: brandpulse 4s ease-in-out infinite;
+}
+
+@keyframes brandpulse { 0%,100%{box-shadow:0 0 12px rgba(59,130,246,0.5)} 50%{box-shadow:0 0 24px rgba(59,130,246,0.9)} }
+
+.brand-name { font-size: 15px; font-weight: 800; letter-spacing: -0.5px; color: #fff; }
+.brand-name span { color: var(--volt); }
+
+.header-divider { width: 1px; height: 20px; background: var(--border2); }
+
+/* Command bar */
+.cmd-bar {
+  flex: 1; max-width: 480px;
+  display: flex; align-items: center; gap: 10px;
+  background: var(--ink3); border: 1px solid var(--border);
+  border-radius: 8px; padding: 0 12px; height: 32px;
+  cursor: text; transition: border-color 0.2s;
+}
+.cmd-bar:hover, .cmd-bar:focus-within { border-color: rgba(59,130,246,0.3); }
+.cmd-bar input {
+  background: none; border: none; outline: none; flex: 1;
+  font-family: var(--fm); font-size: 12px; color: var(--text);
+}
+.cmd-bar input::placeholder { color: var(--text3); }
+.cmd-hint { font-family: var(--fm); font-size: 10px; color: var(--text3); background: var(--ink4);
+            padding: 2px 6px; border-radius: 4px; border: 1px solid var(--border); flex-shrink:0; }
+
+.header-right { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+
+.status-pill {
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--fm); font-size: 11px; color: var(--text2);
+  padding: 4px 10px; background: var(--ink3); border: 1px solid var(--border);
+  border-radius: 20px;
+}
+.pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--text3); flex-shrink: 0; }
+.pulse.on { background: var(--safe); animation: glow-pulse 2s infinite; }
+.pulse.off { background: var(--danger); }
+.pulse.warn { background: var(--warn); }
+@keyframes glow-pulse { 0%,100%{box-shadow:0 0 4px var(--safe)} 50%{box-shadow:0 0 10px var(--safe),0 0 20px rgba(0,229,160,0.3)} }
+
+/* ── Nav rail ── */
+nav {
+  grid-column: 1; grid-row: 2;
+  background: var(--ink2); border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; align-items: center;
+  padding: 12px 0; gap: 4px; z-index: 10;
+}
+
+.nav-btn {
+  width: 42px; height: 42px; border-radius: 10px;
+  background: none; border: none; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 2px; position: relative; transition: all 0.2s; color: var(--text3);
+}
+.nav-btn:hover { background: var(--ink3); color: var(--text2); }
+.nav-btn.active { background: var(--volt-a); color: var(--volt); }
+.nav-btn.active::before {
+  content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+  width: 2px; height: 24px; background: var(--volt);
+  border-radius: 0 2px 2px 0;
+  box-shadow: 0 0 8px var(--volt);
+}
+.nav-icon { font-size: 18px; line-height: 1; }
+.nav-label { font-size: 7px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
+
+.nav-sep { width: 28px; height: 1px; background: var(--border); margin: 4px 0; }
+
+/* ── Main canvas ── */
+main {
+  grid-column: 2; grid-row: 2;
+  overflow: hidden; position: relative;
+  background: var(--ink);
+}
+
+/* Grid pattern bg */
+main::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.view { position: absolute; inset: 0; overflow-y: auto; overflow-x: hidden; z-index: 1;
+        display: none; padding: 32px; }
+.view.active { display: block; animation: viewIn 0.3s cubic-bezier(0.16,1,0.3,1); }
+@keyframes viewIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+/* ── Statusbar ── */
+.statusbar {
+  grid-column: 1/-1; grid-row: 3;
+  background: var(--volt); color: #fff;
+  display: flex; align-items: center; padding: 0 12px; gap: 12px;
+  font-family: var(--fm); font-size: 10px; font-weight: 600; letter-spacing: 0.5px;
+}
+.statusbar span { opacity: 0.6; }
+.statusbar .sb-item { display: flex; align-items: center; gap: 5px; }
+.statusbar .sb-sep { opacity: 0.3; }
+
+/* ═══════════════════════════════════════════════════════
+   SETUP VIEW
+═══════════════════════════════════════════════════════ */
+
+.setup-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+  max-width: 960px; margin: 0 auto;
+}
+
+.panel {
+  background: var(--ink2); border: 1px solid var(--border);
+  border-radius: 16px; padding: 28px; position: relative; overflow: hidden;
+}
+
+.panel::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--volt-a), transparent);
+}
+
+.panel-title {
+  font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--text3); margin-bottom: 20px;
+  display: flex; align-items: center; gap: 8px;
+}
+.panel-title::before { content: ''; display: block; width: 3px; height: 12px; background: var(--volt); border-radius: 2px; }
+
+.big-title {
+  font-size: 38px; font-weight: 800; letter-spacing: -1.5px; line-height: 1.1;
+  color: #fff; margin-bottom: 8px;
+}
+.big-title em { font-style: normal; color: var(--volt); }
+.sub-text { font-size: 14px; color: var(--text2); line-height: 1.6; margin-bottom: 28px; }
+
+.phase-pipeline {
+  display: flex; align-items: center; gap: 0; margin: 24px 0;
+  flex-wrap: wrap; gap: 4px;
+}
+
+.phase-node {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 12px; background: var(--ink3);
+  border: 1px solid var(--border); border-radius: 6px;
+  font-size: 11px; font-weight: 600; color: var(--text2);
+  cursor: default;
+}
+.phase-node .pn { font-family: var(--fm); font-size: 9px; color: var(--text3); }
+.phase-arrow { font-size: 12px; color: var(--text3); margin: 0 2px; }
+
+.input-wrap { margin-bottom: 14px; }
+.input-label {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
+  color: var(--text2); margin-bottom: 7px; text-transform: uppercase;
+}
+.input-label small { font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--text3); font-size: 10px; }
+
+input[type=text], textarea, select {
+  width: 100%; padding: 10px 14px;
+  background: var(--ink3); border: 1px solid var(--border);
+  border-radius: 8px; color: var(--text);
+  font-family: var(--fm); font-size: 12px; outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  -webkit-appearance: none;
+}
+input[type=text]:focus, textarea:focus, select:focus {
+  border-color: rgba(59,130,246,0.4);
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.06);
+}
+input::placeholder, textarea::placeholder { color: var(--text3); }
+textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+select { cursor: pointer; }
+select option { background: var(--ink3); }
+
+.source-toggle {
+  display: grid; grid-template-columns: 1fr 1fr;
+  background: var(--ink3); border: 1px solid var(--border);
+  border-radius: 8px; padding: 3px; margin-bottom: 16px; gap: 3px;
+}
+.st-btn {
+  padding: 8px; background: none; border: none; border-radius: 6px;
+  font-family: var(--ff); font-size: 12px; font-weight: 600; cursor: pointer;
+  color: var(--text3); transition: all 0.2s;
+}
+.st-btn.on { background: var(--volt); color: #fff; box-shadow: 0 2px 8px rgba(59,130,246,0.3); }
+
+.btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 12px 20px; border: none; border-radius: 10px;
+  font-family: var(--ff); font-size: 13px; font-weight: 700; cursor: pointer;
+  transition: all 0.2s; width: 100%; letter-spacing: 0.2px;
+}
+.btn-volt {
+  background: var(--volt); color: #fff;
+  box-shadow: 0 4px 20px rgba(59,130,246,0.25);
+}
+.btn-volt:hover { transform: translateY(-1px); box-shadow: 0 6px 28px rgba(59,130,246,0.4); }
+.btn-volt:active { transform: translateY(0); }
+.btn-volt:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
+
+.btn-danger {
+  background: var(--danger); color: #fff;
+  box-shadow: 0 4px 20px rgba(255,45,85,0.25);
+}
+.btn-danger:hover { transform: translateY(-1px); box-shadow: 0 6px 28px rgba(255,45,85,0.4); }
+.btn-danger:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
+
+.btn-ghost {
+  background: var(--ink3); border: 1px solid var(--border); color: var(--text2); font-size: 12px;
+}
+.btn-ghost:hover { border-color: var(--border2); color: var(--text); }
+
+/* Stats strip */
+.stats-strip {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-top: 20px;
+}
+.stat-box {
+  background: var(--ink3); border: 1px solid var(--border);
+  border-radius: 10px; padding: 14px 16px; text-align: center;
+  position: relative; overflow: hidden;
+}
+.stat-box::before { content:''; position:absolute; inset:-1px; border-radius:10px;
+  background:linear-gradient(135deg,rgba(59,130,246,0.08),transparent); pointer-events:none; }
+.stat-num { font-family: var(--fm); font-size: 24px; font-weight: 500; color: var(--volt); display:block; line-height:1.2; }
+.stat-lbl { font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text3); margin-top:4px; }
+
+/* ═══════════════════════════════════════════════════════
+   GRAPH VIEW — D3 FORCE
+═══════════════════════════════════════════════════════ */
+
+#graph-canvas-wrap {
+  position: absolute; inset: 0; z-index: 1;
+}
+
+#graph-canvas-wrap svg { width: 100%; height: 100%; }
+
+.graph-overlay {
+  position: absolute; top: 20px; left: 20px; z-index: 10;
+  display: flex; flex-direction: column; gap: 8px;
+}
+
+.g-legend {
+  background: rgba(6,6,8,0.85); border: 1px solid var(--border);
+  border-radius: 10px; padding: 12px 14px; backdrop-filter: blur(8px);
+  font-size: 11px;
+}
+.g-legend-title { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text3); margin-bottom: 8px; }
+.g-legend-item { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; color: var(--text2); }
+.g-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+.g-controls {
+  background: rgba(6,6,8,0.85); border: 1px solid var(--border);
+  border-radius: 10px; padding: 10px; backdrop-filter: blur(8px);
+  display: flex; flex-direction: column; gap: 6px;
+}
+.gc-btn {
+  width: 32px; height: 32px; background: var(--ink3); border: 1px solid var(--border);
+  border-radius: 7px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 14px; color: var(--text2); transition: all 0.15s;
+}
+.gc-btn:hover { border-color: var(--border2); color: var(--text); }
+
+/* Node inspector panel */
+.node-inspector {
+  position: absolute; top: 20px; right: 20px; width: 280px; z-index: 10;
+  background: rgba(6,6,8,0.92); border: 1px solid var(--border);
+  border-radius: 12px; padding: 18px; backdrop-filter: blur(12px);
+  transform: translateX(320px); transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+}
+.node-inspector.open { transform: translateX(0); }
+.ni-close { position: absolute; top: 12px; right: 12px; background: none; border: none;
+            color: var(--text3); cursor: pointer; font-size: 16px; }
+.ni-type-badge {
+  display: inline-block; padding: 2px 8px; border-radius: 4px;
+  font-family: var(--fm); font-size: 9px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.badge-file { background: rgba(79,195,247,0.15); color: var(--sky); border: 1px solid rgba(79,195,247,0.3); }
+.badge-function { background: var(--volt-a); color: var(--volt); border: 1px solid rgba(59,130,246,0.3); }
+.badge-class { background: var(--warn-a); color: var(--warn); border: 1px solid rgba(255,170,0,0.3); }
+.ni-name { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4px; word-break: break-all; }
+.ni-file { font-family: var(--fm); font-size: 10px; color: var(--text3); margin-bottom: 12px; word-break: break-all; }
+.ni-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0;
+          border-bottom: 1px solid var(--border); font-size: 12px; }
+.ni-row:last-child { border: none; }
+.ni-key { color: var(--text3); }
+.ni-val { font-family: var(--fm); color: var(--volt); font-size: 11px; }
+
+/* Graph empty */
+.graph-empty {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; z-index: 5;
+  background: var(--ink); gap: 12px;
+}
+.graph-empty-icon { font-size: 56px; opacity: 0.4; }
+.graph-empty-text { font-size: 15px; font-weight: 600; color: var(--text2); }
+.graph-empty-sub { font-family: var(--fm); font-size: 11px; color: var(--text3); }
+
+/* ═══════════════════════════════════════════════════════
+   TRACE VIEW
+═══════════════════════════════════════════════════════ */
+
+.trace-layout { display: grid; grid-template-columns: 260px 1fr; gap: 20px; height: calc(100vh - 80px - 80px); }
+
+.trace-sidebar {
+  display: flex; flex-direction: column; gap: 16px;
+}
+
+.select-panel {
+  background: var(--ink2); border: 1px solid var(--border);
+  border-radius: 12px; padding: 18px;
+}
+
+.trace-result {
+  background: var(--ink2); border: 1px solid var(--border);
+  border-radius: 12px; padding: 24px; overflow-y: auto;
+  min-height: 400px;
+}
+
+.mermaid-container { overflow-x: auto; }
+.mermaid-container svg { max-width: 100%; }
+
+.trace-steps { display: flex; flex-direction: column; gap: 2px; margin-top: 16px; }
+.trace-step {
+  display: flex; align-items: center; gap: 12px; padding: 8px 12px;
+  border-radius: 6px; font-size: 12px; transition: background 0.15s;
+}
+.trace-step:hover { background: var(--ink3); }
+.ts-depth { font-family: var(--fm); font-size: 9px; color: var(--text3); min-width: 48px; }
+.ts-name { font-family: var(--fm); font-weight: 500; color: var(--volt); }
+.ts-file { font-family: var(--fm); font-size: 10px; color: var(--text3); margin-left: auto; }
+.ts-arrow { color: var(--text3); }
+
+/* ═══════════════════════════════════════════════════════
+   DEBUG (RCA) VIEW
+═══════════════════════════════════════════════════════ */
+
+.debug-layout { display: grid; grid-template-columns: 340px 1fr; gap: 20px; min-height: calc(100vh - 112px); }
+
+.rca-input-panel {
+  background: var(--ink2); border: 1px solid var(--border);
+  border-radius: 16px; padding: 24px;
+  height: fit-content; position: sticky; top: 0;
+}
+
+.rca-output { flex: 1; }
+
+/* Analysis pipeline animation */
+.analysis-pipeline {
+  display: flex; flex-direction: column; gap: 6px; margin: 16px 0;
+}
+.ap-step {
+  display: flex; align-items: center; gap: 10px; padding: 8px 12px;
+  background: var(--ink3); border: 1px solid var(--border); border-radius: 8px;
+  font-family: var(--fm); font-size: 11px; color: var(--text3);
+  opacity: 0.4; transition: all 0.4s; position: relative; overflow: hidden;
+}
+.ap-step.active { opacity: 1; color: var(--volt); border-color: rgba(59,130,246,0.3); }
+.ap-step.done { opacity: 0.7; color: var(--safe); border-color: rgba(0,229,160,0.2); }
+.ap-step.active::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(59,130,246,0.06), transparent);
+  animation: sweep 1.5s linear infinite;
+}
+@keyframes sweep { from{transform:translateX(-100%)} to{transform:translateX(100%)} }
+.ap-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink:0; }
+
+/* RCA report sections */
+.rca-section {
+  background: var(--ink2); border: 1px solid var(--border);
+  border-radius: 14px; padding: 22px; margin-bottom: 14px;
+  opacity: 0; transform: translateY(12px);
+  transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+.rca-section.revealed { opacity: 1; transform: translateY(0); }
+
+.rca-sec-header {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+}
+.rca-sec-icon {
+  width: 30px; height: 30px; border-radius: 8px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 14px;
+}
+.sec-volt { background: var(--volt-a); }
+.sec-danger { background: var(--danger-a); }
+.sec-safe { background: var(--safe-a); }
+.sec-warn { background: var(--warn-a); }
+.rca-sec-title { font-size: 13px; font-weight: 700; }
+.rca-sec-sub { font-family: var(--fm); font-size: 10px; color: var(--text3); margin-left: auto; }
+
+.conf-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 12px; border-radius: 20px;
+  font-family: var(--fm); font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+}
+.conf-high { background: var(--safe-a); color: var(--safe); border: 1px solid rgba(0,229,160,0.3); }
+.conf-med  { background: var(--warn-a); color: var(--warn); border: 1px solid rgba(255,170,0,0.3); }
+.conf-low  { background: var(--danger-a); color: var(--danger); border: 1px solid rgba(255,45,85,0.3); }
+
+.flow-chain {
+  display: flex; flex-direction: column;
+  border-left: 1px solid var(--border); padding-left: 16px; margin-left: 6px;
+}
+.flow-step {
+  position: relative; padding: 8px 0;
+  font-size: 12px; color: var(--text2); line-height: 1.5;
+}
+.flow-step::before {
+  content: ''; position: absolute; left: -20px; top: 14px;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--ink); border: 2px solid var(--text3);
+}
+.flow-step:first-child::before { background: var(--volt); border-color: var(--volt); box-shadow: 0 0 8px var(--volt); }
+
+.kv-grid { display: grid; grid-template-columns: 90px 1fr; gap: 6px 12px; align-items: start; }
+.kv-k { font-family: var(--fm); font-size: 10px; color: var(--text3); padding-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+.kv-v { font-size: 12px; color: var(--text); line-height: 1.5; }
+.kv-code { font-family: var(--fm); font-size: 11px; color: var(--volt); }
+
+.pill-list { display: flex; flex-wrap: wrap; gap: 5px; }
+.pill {
+  font-family: var(--fm); font-size: 10px; padding: 3px 9px; border-radius: 5px; border: 1px solid;
+}
+.pill-v { color: var(--volt); border-color: rgba(59,130,246,0.25); background: var(--volt-b); }
+.pill-d { color: var(--danger); border-color: rgba(255,45,85,0.25); background: var(--danger-a); }
+.pill-s { color: var(--safe); border-color: rgba(0,229,160,0.25); background: var(--safe-a); }
+.pill-w { color: var(--warn); border-color: rgba(255,170,0,0.25); background: var(--warn-a); }
+.pill-n { color: var(--text2); border-color: var(--border); background: var(--ink3); }
+
+pre.code {
+  background: var(--ink); border: 1px solid var(--border); border-radius: 8px;
+  padding: 14px 16px; font-family: var(--fm); font-size: 11px; line-height: 1.7;
+  color: var(--text); overflow-x: auto; white-space: pre-wrap; word-break: break-word;
+}
+pre.code.before { border-color: rgba(255,45,85,0.25); background: rgba(255,45,85,0.03); }
+pre.code.after { border-color: rgba(0,229,160,0.25); background: rgba(0,229,160,0.03); }
+
+.diff-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.diff-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+.dl-before { color: var(--danger); }
+.dl-after { color: var(--safe); }
+
+/* ═══════════════════════════════════════════════════════
+   IMPACT VIEW — Orbital blast radius
+═══════════════════════════════════════════════════════ */
+
+.impact-layout { display: grid; grid-template-columns: 1fr 380px; gap: 20px; min-height: calc(100vh-112px); }
+
+#orbital-canvas { width: 100%; flex:1; border-radius: 16px; overflow: hidden;
+  background: var(--ink2); border: 1px solid var(--border); min-height: 400px; position: relative; }
+
+.impact-right { display: flex; flex-direction: column; gap: 14px; }
+
+.impact-stat {
+  background: var(--ink2); border: 1px solid var(--border); border-radius: 12px; padding: 18px;
+}
+.impact-stat-num {
+  font-family: var(--fm); font-size: 40px; font-weight: 300; line-height: 1;
+}
+.impact-stat-num.red { color: var(--danger); text-shadow: 0 0 20px rgba(255,45,85,0.4); }
+.impact-stat-num.volt { color: var(--volt); text-shadow: 0 0 20px rgba(59,130,246,0.4); }
+.impact-stat-num.safe { color: var(--safe); text-shadow: 0 0 20px rgba(0,229,160,0.4); }
+.impact-stat-lbl { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text3); margin-top: 6px; }
+
+.caller-list { display: flex; flex-direction: column; gap: 4px; max-height: 200px; overflow-y: auto; }
+.caller-item {
+  display: flex; align-items: center; gap: 8px; padding: 7px 10px;
+  background: var(--ink3); border-radius: 6px; font-size: 11px;
+}
+.ci-name { font-family: var(--fm); color: var(--volt); flex: 1; }
+.ci-file { font-family: var(--fm); font-size: 9px; color: var(--text3); }
+.ci-depth { font-family: var(--fm); font-size: 9px; background: var(--warn-a); color: var(--warn);
+            padding: 1px 5px; border-radius: 3px; flex-shrink:0; }
+
+.risk-card {
+  border-radius: 12px; padding: 18px; border: 1px solid;
+}
+.risk-card.low { background: rgba(0,229,160,0.05); border-color: rgba(0,229,160,0.2); }
+.risk-card.med  { background: rgba(255,170,0,0.05); border-color: rgba(255,170,0,0.2); }
+.risk-card.high { background: rgba(255,45,85,0.05); border-color: rgba(255,45,85,0.2); }
+.risk-title { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+.risk-card.low .risk-title { color: var(--safe); }
+.risk-card.med .risk-title { color: var(--warn); }
+.risk-card.high .risk-title { color: var(--danger); }
+.risk-body { font-size: 12px; color: var(--text2); line-height: 1.6; }
+.risk-body li { padding-left: 16px; position: relative; list-style: none; }
+.risk-body li::before { content:'→'; position:absolute; left:0; color:var(--danger); }
+
+/* ═══════════════════════════════════════════════════════
+   EXPLORER VIEW
+═══════════════════════════════════════════════════════ */
+
+.explorer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+.exp-panel {
+  background: var(--ink2); border: 1px solid var(--border); border-radius: 14px; padding: 22px;
+}
+
+.tag-cloud { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+.t-chip {
+  font-family: var(--fm); font-size: 10px; padding: 3px 9px; border-radius: 5px;
+  border: 1px solid var(--border); color: var(--text2); background: var(--ink3); cursor: default;
+  transition: all 0.15s;
+}
+.t-chip:hover { border-color: rgba(59,130,246,0.3); color: var(--volt); background: var(--volt-b); }
+.t-chip.type-f { border-color: rgba(79,195,247,0.2); color: var(--sky); background: rgba(79,195,247,0.06); }
+
+/* ═══════════════════════════════════════════════════════
+   COMMAND PALETTE
+═══════════════════════════════════════════════════════ */
+
+.palette-bg {
+  position: fixed; inset: 0; z-index: 9000;
+  background: rgba(6,6,8,0.8); backdrop-filter: blur(8px);
+  display: none; align-items: flex-start; justify-content: center; padding-top: 15vh;
+}
+.palette-bg.open { display: flex; animation: palIn 0.15s ease; }
+@keyframes palIn { from{opacity:0;transform:scale(0.97)} to{opacity:1;transform:scale(1)} }
+.palette-box {
+  width: 540px; background: var(--ink2); border: 1px solid var(--border2);
+  border-radius: 14px; overflow: hidden; box-shadow: 0 24px 64px rgba(0,0,0,0.6);
+}
+.palette-input-row {
+  display: flex; align-items: center; gap: 10px; padding: 0 16px;
+  border-bottom: 1px solid var(--border);
+}
+.palette-input-row span { color: var(--text3); font-size: 16px; }
+.palette-input-row input {
+  background: none; border: none; height: 52px; flex: 1;
+  font-family: var(--ff); font-size: 15px; color: var(--text); outline: none;
+}
+.palette-results { max-height: 360px; overflow-y: auto; padding: 6px; }
+.pr-group-title { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+                  color: var(--text3); padding: 10px 10px 4px; }
+.pr-item {
+  display: flex; align-items: center; gap: 10px; padding: 9px 12px;
+  border-radius: 7px; cursor: pointer; transition: background 0.1s; font-size: 13px;
+}
+.pr-item:hover, .pr-item.sel { background: var(--ink3); }
+.pr-item.sel { background: var(--volt-b); border: 1px solid rgba(59,130,246,0.15); }
+.pr-icon { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center;
+           justify-content: center; font-size: 13px; flex-shrink: 0; }
+.pr-name { flex: 1; font-weight: 500; }
+.pr-hint { font-family: var(--fm); font-size: 10px; color: var(--text3); }
+
+/* ═══════════════════════════════════════════════════════
+   TOAST / NOTIFICATIONS
+═══════════════════════════════════════════════════════ */
+.toasts { position: fixed; top: 60px; right: 16px; z-index: 8000; display: flex; flex-direction: column; gap: 6px; }
+.toast {
+  display: flex; align-items: center; gap: 10px; padding: 10px 16px;
+  background: var(--ink2); border: 1px solid var(--border2);
+  border-radius: 10px; font-size: 12px; max-width: 340px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  animation: tin 0.3s cubic-bezier(0.16,1,0.3,1);
+}
+@keyframes tin { from{transform:translateX(60px);opacity:0} }
+.toast.ok { border-color: rgba(0,229,160,0.3); }
+.toast.err { border-color: rgba(255,45,85,0.3); }
+.t-icon { font-size: 14px; flex-shrink: 0; }
+
+/* section labels */
+.slabel {
+  font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--text3); margin-bottom: 8px; margin-top: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.slabel:first-child { margin-top: 0; }
+.slabel::after { content:''; flex:1; height:1px; background: var(--border); }
+
+/* empty state */
+.empty { display: flex; flex-direction: column; align-items: center; justify-content: center;
+         min-height: 240px; gap: 8px; opacity: 0.5; }
+.empty-icon { font-size: 40px; }
+.empty-title { font-size: 15px; font-weight: 600; color: var(--text2); }
+.empty-sub { font-family: var(--fm); font-size: 11px; color: var(--text3); }
+
+/* scrollbars */
+* { scrollbar-width: thin; scrollbar-color: var(--ink4) transparent; }
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-thumb { background: var(--ink4); border-radius: 3px; }
+
+/* section stripe accent */
+.accent-bar { height: 2px; background: linear-gradient(90deg, var(--volt), transparent); border-radius: 2px; margin-bottom: 20px; }
+
+/* ── Quip contextual messages ── */
+.quip-text {
+  font-family: var(--fm); font-size: 11px; font-style: italic;
+  color: var(--text2); padding: 6px 10px; margin-top: 10px;
+  border-left: 2px solid var(--volt); background: var(--volt-c);
+  border-radius: 0 6px 6px 0; line-height: 1.5;
+  animation: quipIn 0.4s ease;
+}
+.quip-text.warn  { border-left-color: var(--warn);   background: var(--warn-a);   color: var(--warn); }
+.quip-text.danger{ border-left-color: var(--danger);  background: var(--danger-a);  color: var(--danger); }
+.quip-text.safe  { border-left-color: var(--safe);    background: var(--safe-a);    color: var(--safe); }
+@keyframes quipIn { from{opacity:0;transform:translateX(-8px)} to{opacity:1;transform:translateX(0)} }
+</style>
+</head>
+<body>
+
+<div class="toasts" id="toasts"></div>
+
+<!-- Command palette -->
+<div class="palette-bg" id="palette" onclick="if(event.target===this)closePalette()">
+  <div class="palette-box">
+    <div class="palette-input-row">
+      <span>⌘</span>
+      <input id="pal-input" placeholder="Search views, functions, files…" oninput="filterPalette()" onkeydown="palKeydown(event)">
+    </div>
+    <div class="palette-results" id="pal-results"></div>
+  </div>
+</div>
+
+<div class="shell">
+
+  <!-- Header -->
+  <header>
+    <div class="brand">
+      <div class="brand-glyph">⬡</div>
+      <div class="brand-name">Code<span>Graph</span></div>
+    </div>
+    <div class="header-divider"></div>
+    <div class="cmd-bar" onclick="openPalette()">
+      <span style="color:var(--text3);font-size:13px;">⌘</span>
+      <input id="cmd-fake" placeholder="Search or jump to… (Ctrl+K)" readonly style="cursor:pointer;">
+      <span class="cmd-hint">Ctrl K</span>
+    </div>
+    <div class="header-right">
+      <div class="status-pill" id="api-pill">
+        <div class="pulse warn" id="api-dot"></div>
+        <span id="api-text">Connecting…</span>
+      </div>
+      <div class="status-pill" id="graph-pill" style="display:none;">
+        <div class="pulse on"></div>
+        <span id="graph-pill-text">Graph ready</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Nav rail -->
+  <nav>
+    <button class="nav-btn active" id="nav-setup" onclick="goTo('setup')" title="Setup">
+      <span class="nav-icon">◈</span>
+      <span class="nav-label">Setup</span>
+    </button>
+    <button class="nav-btn" id="nav-graph" onclick="goTo('graph')" title="Graph">
+      <span class="nav-icon">◎</span>
+      <span class="nav-label">Graph</span>
+    </button>
+    <div class="nav-sep"></div>
+    <button class="nav-btn" id="nav-trace" onclick="goTo('trace')" title="Flow Trace">
+      <span class="nav-icon">⟳</span>
+      <span class="nav-label">Trace</span>
+    </button>
+    <button class="nav-btn" id="nav-debug" onclick="goTo('debug')" title="RCA Debug">
+      <span class="nav-icon">⚡</span>
+      <span class="nav-label">Debug</span>
+    </button>
+    <button class="nav-btn" id="nav-impact" onclick="goTo('impact')" title="Impact Analysis">
+      <span class="nav-icon">◉</span>
+      <span class="nav-label">Impact</span>
+    </button>
+    <div class="nav-sep"></div>
+    <button class="nav-btn" id="nav-explore" onclick="goTo('explore')" title="Explorer">
+      <span class="nav-icon">⊞</span>
+      <span class="nav-label">Explore</span>
+    </button>
+  </nav>
+
+  <!-- Main canvas -->
+  <main>
+
+    <!-- ── SETUP ── -->
+    <div class="view active" id="view-setup">
+      <div class="setup-grid">
+        <div>
+          <div class="big-title">Root Cause<br><em>Analysis.</em></div>
+          <p class="sub-text">AI-powered forensic debugging for large codebases. Parse any Python repository, build a live dependency graph, and trace bugs to their origin.</p>
+
+          <div class="slabel">Analysis Pipeline</div>
+          <div class="phase-pipeline">
+            <div class="phase-node"><span class="pn">01</span> Parser</div>
+            <span class="phase-arrow">→</span>
+            <div class="phase-node"><span class="pn">02</span> CodeGraph</div>
+            <span class="phase-arrow">→</span>
+            <div class="phase-node"><span class="pn">03</span> Context</div>
+            <span class="phase-arrow">→</span>
+            <div class="phase-node"><span class="pn">04</span> RCA Agent</div>
+            <span class="phase-arrow">→</span>
+            <div class="phase-node"><span class="pn">05</span> Report</div>
+          </div>
+
+          <div id="setup-stats" style="display:none;">
+            <div class="slabel" style="margin-top:24px;">Graph Statistics</div>
+            <div class="stats-strip" id="stats-strip"></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title">Repository Source</div>
+
+          <div class="source-toggle">
+            <button class="st-btn on" id="st-gh" onclick="setSrc('github')">GitHub URL</button>
+            <button class="st-btn" id="st-lc" onclick="setSrc('local')">Local Path</button>
+          </div>
+
+          <div class="input-wrap">
+            <div class="input-label">
+              <span id="inp-label">Repository URL</span>
+            </div>
+            <input type="text" id="repo-inp" placeholder="https://github.com/user/repo"/>
+          </div>
+
+          <button class="btn btn-volt" id="parse-btn" onclick="doParse()">
+            <span>⚙</span> Parse &amp; Build Graph
+          </button>
+
+          <div id="node-type-strip" style="display:none;margin-top:20px;">
+            <div class="slabel">Node Types</div>
+            <div id="nt-rows"></div>
+            <div class="slabel" style="margin-top:12px;">Edge Types</div>
+            <div id="et-rows"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── GRAPH ── -->
+    <div class="view" id="view-graph" style="padding:0;overflow:hidden;">
+      <div id="graph-empty" class="graph-empty">
+        <div class="graph-empty-icon">◎</div>
+        <div class="graph-empty-text">nothing to see here... yet</div>
+        <div class="graph-empty-sub">feed me a repo and I'll show you the spaghetti</div>
+      </div>
+      <div id="graph-canvas-wrap" style="display:none; position:absolute;inset:0;">
+        <svg id="graph-svg"></svg>
+      </div>
+      <div class="graph-overlay">
+        <div class="g-legend">
+          <div class="g-legend-title">Node Types</div>
+          <div class="g-legend-item"><div class="g-dot" style="background:#4fc3f7;"></div> File</div>
+          <div class="g-legend-item"><div class="g-dot" style="background:#3b82f6;"></div> Function</div>
+          <div class="g-legend-item"><div class="g-dot" style="background:#ffaa00;"></div> Class</div>
+        </div>
+        <div class="g-controls">
+          <div class="gc-btn" onclick="zoomGraph(1.3)" title="Zoom in">+</div>
+          <div class="gc-btn" onclick="zoomGraph(0.7)" title="Zoom out">−</div>
+          <div class="gc-btn" onclick="resetGraph()" title="Reset">⊙</div>
+        </div>
+      </div>
+      <div class="node-inspector" id="node-inspector">
+        <button class="ni-close" onclick="closeInspector()">✕</button>
+        <div id="ni-content"></div>
+      </div>
+    </div>
+
+    <!-- ── TRACE ── -->
+    <div class="view" id="view-trace">
+      <div id="trace-empty" class="empty" style="min-height:50vh;">
+        <div class="empty-icon">⟳</div>
+        <div class="empty-title">Logic Flow Tracer</div>
+        <div class="empty-sub">parse a repo first. can't trace what I can't see.</div>
+      </div>
+      <div id="trace-ui" style="display:none;">
+        <div class="trace-layout">
+          <div class="trace-sidebar">
+            <div class="select-panel">
+              <div class="slabel">Function Flow</div>
+              <div class="input-wrap" style="margin-bottom:10px;">
+                <select id="trace-func-sel" onchange="doTraceFunc()">
+                  <option value="">— pick a function —</option>
+                </select>
+              </div>
+              <div class="slabel">File Dependencies</div>
+              <div class="input-wrap" style="margin-bottom:0;">
+                <select id="trace-file-sel" onchange="doTraceFile()">
+                  <option value="">— pick a file —</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="trace-result" id="trace-result">
+            <div class="empty"><div class="empty-icon" style="font-size:28px;">↳</div><div class="empty-sub">pick a function. any function. I'll follow the breadcrumbs.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── DEBUG ── -->
+    <div class="view" id="view-debug">
+      <div id="debug-empty" class="empty" style="min-height:50vh;">
+        <div class="empty-icon">⚡</div>
+        <div class="empty-title">RCA Debug Engine</div>
+        <div class="empty-sub">parse a repo first. can't debug vibes alone.</div>
+      </div>
+      <div id="debug-ui" style="display:none;">
+        <div class="debug-layout">
+          <div class="rca-input-panel">
+            <div class="accent-bar"></div>
+            <div class="slabel">Bug Report</div>
+            <div class="input-wrap" style="margin-bottom:12px;">
+              <div class="input-label"><span>Description</span></div>
+              <textarea id="bug-inp" placeholder="Describe the bug in detail. Be specific about when it occurs and what the expected behavior is…"></textarea>
+            </div>
+            <div class="input-wrap" style="margin-bottom:16px;">
+              <div class="input-label">
+                <span>Entry Point</span>
+                <small>optional</small>
+              </div>
+              <input type="text" id="ep-inp" placeholder="e.g.  execute   or   WorkflowEngine"/>
+            </div>
+            <button class="btn btn-danger" id="rca-btn" onclick="doRCA()">
+              <span>⚡</span> Run Root Cause Analysis
+            </button>
+
+            <div id="rca-pipeline" style="display:none;">
+              <div class="slabel" style="margin-top:20px;">Analysis Progress</div>
+              <div class="analysis-pipeline">
+                <div class="ap-step" data-step="0"><div class="ap-dot"></div>Initializing RCA Agent</div>
+                <div class="ap-step" data-step="1"><div class="ap-dot"></div>Auto-detecting entry point</div>
+                <div class="ap-step" data-step="2"><div class="ap-dot"></div>Retrieving code context</div>
+                <div class="ap-step" data-step="3"><div class="ap-dot"></div>Gathering impact data</div>
+                <div class="ap-step" data-step="4"><div class="ap-dot"></div>Sending to Gemini AI</div>
+                <div class="ap-step" data-step="5"><div class="ap-dot"></div>Parsing RCA report</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="rca-output" id="rca-output">
+            <div class="empty" style="min-height:400px;">
+              <div class="empty-icon" style="font-size:36px;">🔬</div>
+              <div class="empty-title">Awaiting Analysis</div>
+              <div class="empty-sub">tell me where it hurts. describe the bug and let the AI play detective.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── IMPACT ── -->
+    <div class="view" id="view-impact">
+      <div id="impact-empty" class="empty" style="min-height:50vh;">
+        <div class="empty-icon">◉</div>
+        <div class="empty-title">Impact Analysis</div>
+        <div class="empty-sub">parse a repo first. blast radius requires something to blast.</div>
+      </div>
+      <div id="impact-ui" style="display:none;">
+        <div class="input-wrap" style="max-width:360px;margin-bottom:24px;">
+          <div class="input-label"><span>Function to Modify</span></div>
+          <select id="impact-func-sel" onchange="doImpact()">
+            <option value="">— select a function to analyze blast radius —</option>
+          </select>
+        </div>
+        <div class="impact-layout" id="impact-body" style="display:none;">
+          <div id="orbital-canvas">
+            <svg id="orbital-svg" style="width:100%;height:100%;min-height:400px;"></svg>
+          </div>
+          <div class="impact-right" id="impact-right"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── EXPLORE ── -->
+    <div class="view" id="view-explore">
+      <div id="explore-empty" class="empty" style="min-height:50vh;">
+        <div class="empty-icon">⊞</div>
+        <div class="empty-title">Graph Explorer</div>
+        <div class="empty-sub">parse a repo first. the explorer needs a map.</div>
+      </div>
+      <div id="explore-ui" style="display:none;">
+        <div class="explorer-grid">
+          <div class="exp-panel">
+            <div class="slabel">Function Lookup</div>
+            <select id="exp-func-sel" onchange="doExpFunc()" style="margin-bottom:14px;">
+              <option value="">— select function —</option>
+            </select>
+            <div id="exp-func-res"></div>
+          </div>
+          <div class="exp-panel">
+            <div class="slabel">File Dependencies</div>
+            <select id="exp-file-sel" onchange="doExpFile()" style="margin-bottom:14px;">
+              <option value="">— select file —</option>
+            </select>
+            <div id="exp-file-res"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main><!-- /main -->
+
+  <!-- Statusbar -->
+  <div class="statusbar" id="statusbar">
+    <div class="sb-item">⬡ CodeGraph RCA</div>
+    <div class="sb-item"><span>version</span> 2.0</div>
+    <div class="sb-sep">|</div>
+    <div class="sb-item" id="sb-repo"><span>repo</span> —</div>
+    <div class="sb-item" id="sb-nodes" style="margin-left:auto;"><span>nodes</span> —</div>
+    <div class="sb-sep">|</div>
+    <div class="sb-item" id="sb-edges"><span>edges</span> —</div>
+    <div class="sb-sep">|</div>
+    <div class="sb-item">Ctrl+K palette</div>
+  </div>
+
+</div><!-- /shell -->
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   CORE STATE + HELPERS
+═══════════════════════════════════════════════════════ */
+const API = 'http://localhost:8000';
+let STATE = { ready: false, funcs: [], files: [], graphData: null };
+let currentView = 'setup';
+let source = 'github';
+let d3Sim = null, d3Zoom = null;
+
+mermaid.initialize({
+  startOnLoad: false, theme: 'dark',
+  themeVariables: {
+    background:'#060608', primaryColor:'#0c0d11', primaryTextColor:'#dde4f0',
+    primaryBorderColor:'#3b82f6', lineColor:'#3b82f6', secondaryColor:'#12141a',
+    fontFamily:'Fira Code', fontSize:'12px',
+  },
+  flowchart: { curve: 'basis', padding: 14 },
+});
+
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function q(s){ return document.querySelector(s); }
+
+/* ── Contextual quip engine ── */
+function quip(category, data){
+  const pick = a => a[Math.floor(Math.random()*a.length)];
+  const n = data.value ?? 0;
+  const MSGS = {
+    parse:[
+      {max:5,   v:'safe',   m:["that's a cute little project. like a hello-world with ambition.",
+        "5 files? you could review this in a coffee break.","small repo energy. nothing wrong with that."]},
+      {max:20,  v:'',       m:["decent sized project. someone's been busy.",
+        "~20 files is the sweet spot. big enough to matter, small enough to understand."]},
+      {max:50,  v:'warn',   m:["we're getting into 'needs a README' territory now.",
+        "50+ files. hope someone wrote docs. just kidding, nobody does.",
+        "this repo has layers. like an onion. might make you cry too."]},
+      {max:1/0, v:'danger', m:["large codebase boss!!! my parser is sweating.",
+        "bro shipped a whole operating system. respect.",
+        "this repo is so big it probably has its own gravitational field.",
+        "at this point you don't read the code. the code reads you."]},
+    ],
+    stats_nodes:[
+      {max:50,  v:'safe',  m:["compact graph. easy to reason about. cherish this.",
+        "nice and tidy. your future self will thank you."]},
+      {max:150, v:'',      m:["healthy node count. the graph is getting interesting.",
+        "enough nodes to tell a story but not enough to write a novel."]},
+      {max:300, v:'warn',  m:["that's a lot of nodes. hope your laptop has fans.",
+        "the graph is starting to look like a conspiracy board.",
+        "we're entering 'I need a bigger screen' territory."]},
+      {max:1/0, v:'danger',m:["massive graph. the D3 simulation just filed for overtime.",
+        "your dependency graph has more connections than LinkedIn.",
+        "this graph is basically a Jackson Pollock painting at this point."]},
+    ],
+    graph_ready:[
+      {max:50,  v:'safe', m:["Graph ready -- smol boi","Graph loaded. it's cute."]},
+      {max:200, v:'',     m:["Graph ready -- looking good","Graph loaded and vibing"]},
+      {max:1/0, v:'warn', m:["Graph ready -- absolute unit","Graph loaded. pray for your RAM.","Graph ready -- chonky boi detected"]},
+    ],
+    graph_overflow:[
+      {max:500, v:'warn',  m:[
+        v=>`showing 300 of ${v} nodes. the rest are in witness protection.`,
+        v=>`capped at 300 nodes because your browser has feelings too.`,
+        v=>`only rendering 300/${v} nodes. the others didn't make the cut.`]},
+      {max:1/0, v:'danger',m:[
+        v=>`${v} nodes?? only showing 300 or your browser will file a restraining order.`,
+        v=>`rendering all ${v} nodes would require a GPU from NASA. showing 300.`,
+        v=>`${v} nodes. we're showing 300. you're welcome, CPU.`]},
+    ],
+    trace_depth:[
+      {max:2,  v:'safe',  m:["short call chain. clean architecture vibes.","shallow trace. the good kind of simple."]},
+      {max:5,  v:'',      m:["medium depth trace. functions are having conversations.",
+        "a few levels deep. still readable. still sane."]},
+      {max:8,  v:'warn',  m:["getting deep. are we in inception or a codebase?",
+        "callback hell called, it wants its throne back."]},
+      {max:1/0,v:'danger',m:["this call chain is deeper than my existential dread.",
+        "bro this trace goes deeper than the Mariana Trench.",
+        "stack depth: yes. good luck debugging this by hand."]},
+    ],
+    trace_length:[
+      {max:5,  v:'safe',  m:["short and sweet. a function that minds its own business.",
+        "minimal call tree. this function is an introvert."]},
+      {max:15, v:'',      m:["reasonable call tree. someone did think about architecture.",
+        "moderate branching. nothing the debugger can't handle."]},
+      {max:1/0,v:'warn',  m:["this function calls half the codebase. it's the main character.",
+        "that's a lot of branches. this function is a social butterfly.",
+        "function said: 'I'll do it all myself' and meant it."]},
+    ],
+    rca_confidence:{
+      High:  {v:'safe',  m:["high confidence. the AI is basically flexing right now.",
+        "pretty sure about this one. like, 'I'd bet my GPU' sure.",
+        "high confidence diagnosis. even the bugs are impressed."]},
+      Medium:{v:'warn',  m:["medium confidence. the AI is squinting at this one.",
+        "60/40ish. might want a second opinion. or just console.log everything.",
+        "the AI equivalent of 'I think so but don't quote me'."]},
+      Low:   {v:'danger',m:["low confidence. the AI is basically guessing. honestly, same.",
+        "low confidence. this is more of a vibe check than a diagnosis.",
+        "the AI looked at this and went 'uhh...maybe?' proceed with caution."]},
+    },
+    impact_risk:{
+      low: {v:'safe',  m:["no callers. this function is living off-grid. modify at will.",
+        "zero blast radius. it's giving hermit energy. safe to touch.",
+        "nobody calls this. it's either critical infrastructure or dead code. good luck."]},
+      med: {v:'warn',  m:["a few callers. not catastrophic, but maybe don't yolo-push to main.",
+        "moderate impact zone. write a test first. or at least cross your fingers.",
+        "some functions depend on this. handle with care-ish."]},
+      high:{v:'danger',m:["be careful broooo you may crash the system. half the codebase touches this.",
+        "this function is load-bearing. like, structurally. don't sneeze on it.",
+        "modifying this is the coding equivalent of pulling a Jenga block from the bottom.",
+        "high blast radius. if this breaks, your Slack is going to light up."]},
+    },
+    explorer_callers:[
+      {max:0,  v:'safe',  m:["zero callers. either it's dead code or it's main(). flip a coin.",
+        "nobody calls this. it's the lone wolf of functions."]},
+      {max:3,  v:'',      m:["a handful of callers. nice and manageable.","small friend group. quality over quantity."]},
+      {max:10, v:'warn',  m:["popular function. gets around.","double-digit callers. this function is networking."]},
+      {max:1/0,v:'danger',m:["this function is basically a celebrity. everyone knows it.",
+        "so many callers. this function should start charging rent."]},
+    ],
+    explorer_deps:[
+      {max:0,  v:'safe',  m:["no dependencies. this file is fully self-sufficient. respect.",
+        "zero imports. either it's pure genius or it's empty."]},
+      {max:5,  v:'',      m:["reasonable dependency count. nothing alarming.","a few imports, all under control."]},
+      {max:15, v:'warn',  m:["that's a lot of imports. this file is having a potluck.",
+        "double-digit deps. spaghetti alert level: yellow."]},
+      {max:1/0,v:'danger',m:["import statement goes brrrrr. this file depends on everything.",
+        "so many dependencies. sneezing in any file will break this one."]},
+    ],
+  };
+  const bank = MSGS[category];
+  if(!bank) return {text:'',variant:''};
+  if(!Array.isArray(bank)){
+    const entry = bank[data.label]||bank[Object.keys(bank)[0]];
+    const msg = pick(entry.m);
+    return {text:typeof msg==='function'?msg(n):msg, variant:entry.v};
+  }
+  for(const tier of bank){
+    if(n<=tier.max){
+      const msg = pick(tier.m);
+      return {text:typeof msg==='function'?msg(n):msg, variant:tier.v};
+    }
+  }
+  const last = bank[bank.length-1]; const msg = pick(last.m);
+  return {text:typeof msg==='function'?msg(n):msg, variant:last.v};
+}
+function quipHTML(cat,data){
+  const {text,variant}=quip(cat,data);
+  return text?`<div class="quip-text ${variant}">${text}</div>`:'';
+}
+
+async function api(path, method='GET', body=null){
+  const opts = { method, headers:{'Content-Type':'application/json'} };
+  if(body) opts.body = JSON.stringify(body);
+  const r = await fetch(API+path, opts);
+  if(!r.ok){ const e = await r.json().catch(()=>({detail:r.statusText})); throw new Error(e.detail||r.statusText); }
+  return r.json();
+}
+
+function toast(msg, type='ok'){
+  const c = q('#toasts'); const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.innerHTML = `<span class="t-icon">${type==='ok'?'✓':'✕'}</span> ${msg}`;
+  c.appendChild(el);
+  setTimeout(()=>{ el.style.transition='opacity 0.3s'; el.style.opacity='0'; setTimeout(()=>el.remove(),300); },4000);
+}
+
+function goTo(view){
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  q(`#nav-${view}`).classList.add('active');
+  q(`#view-${view}`).classList.add('active');
+  currentView = view;
+  if(view==='graph' && STATE.ready && !STATE.graphData) loadGraphData();
+}
+
+/* ═══════════════════════════════════════════════════════
+   STATUS CHECK
+═══════════════════════════════════════════════════════ */
+async function checkStatus(){
+  try {
+    const s = await api('/api/status');
+    const dot = q('#api-dot'); const txt = q('#api-text');
+    if(s.api_key_set){ dot.className='pulse on'; txt.textContent='Gemini ready'; }
+    else { dot.className='pulse off'; txt.textContent='No API key'; }
+    if(s.ready){ onGraphReady(s.graph_stats, s.repo_path); }
+  } catch(e){
+    q('#api-dot').className='pulse off'; q('#api-text').textContent='Backend offline';
+    toast('Backend offline — run server.py', 'err');
+  }
+}
+
+function onGraphReady(stats, repoPath){
+  STATE.ready = true;
+  q('#graph-pill').style.display='flex';
+  q('#graph-pill-text').textContent = quip('graph_ready',{value:stats.nodes}).text;
+  q('#sb-repo').innerHTML = `<span>repo</span> ${esc(repoPath.split('/').pop()||repoPath)}`;
+  q('#sb-nodes').innerHTML = `<span>nodes</span> ${stats.nodes}`;
+  q('#sb-edges').innerHTML = `<span>edges</span> ${stats.edges}`;
+  renderStats(stats);
+  fetchListsAndPopulate();
+}
+
+/* ═══════════════════════════════════════════════════════
+   SOURCE TOGGLE
+═══════════════════════════════════════════════════════ */
+function setSrc(s){
+  source=s;
+  q('#st-gh').classList.toggle('on',s==='github');
+  q('#st-lc').classList.toggle('on',s==='local');
+  q('#inp-label').textContent = s==='github' ? 'Repository URL' : 'Local Path';
+  q('#repo-inp').placeholder = s==='github' ? 'https://github.com/user/repo' : '/path/to/repo';
+}
+
+/* ═══════════════════════════════════════════════════════
+   PARSE
+═══════════════════════════════════════════════════════ */
+async function doParse(){
+  const path = q('#repo-inp').value.trim();
+  if(!path){ toast('Enter a repository URL or path','err'); return; }
+  const btn = q('#parse-btn'); btn.disabled=true; btn.textContent='Parsing…';
+  try {
+    const r = await api('/api/parse','POST',{source,path});
+    onGraphReady(r.graph_stats, r.repo_path);
+    const pq = quip('parse',{value:r.files_parsed});
+    toast(`Parsed ${r.files_parsed} files — ${pq.text}`);
+  } catch(e){ toast(e.message,'err'); }
+  finally { btn.disabled=false; btn.innerHTML='<span>⚙</span> Parse &amp; Build Graph'; }
+}
+
+function renderStats(stats){
+  q('#setup-stats').style.display='block';
+  q('#stats-strip').innerHTML = [
+    ['nodes', stats.nodes, 'volt'],
+    ['edges', stats.edges, 'volt'],
+    ['files', stats.node_types?.File||0, 'safe'],
+    ['functions', stats.node_types?.Function||0, 'volt'],
+  ].map(([l,n])=>`<div class="stat-box"><span class="stat-num">${n}</span><span class="stat-lbl">${l}</span></div>`).join('');
+
+  const nt = stats.node_types||{}, et = stats.edge_types||{};
+  q('#node-type-strip').style.display='block';
+  q('#nt-rows').innerHTML = Object.entries(nt).map(([k,v])=>
+    `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border);font-family:var(--fm);font-size:11px;color:var(--text2);">
+      <span>${k}</span><span style="color:var(--volt)">${v}</span>
+    </div>`).join('');
+  q('#et-rows').innerHTML = Object.entries(et).map(([k,v])=>
+    `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border);font-family:var(--fm);font-size:11px;color:var(--text2);">
+      <span>${k}</span><span style="color:var(--text3)">${v}</span>
+    </div>`).join('');
+  const oldQ = q('#setup-stats .quip-text'); if(oldQ) oldQ.remove();
+  q('#stats-strip').insertAdjacentHTML('afterend', quipHTML('stats_nodes',{value:stats.nodes}));
+}
+
+async function fetchListsAndPopulate(){
+  const [fR, fiR] = await Promise.all([api('/api/graph/functions'), api('/api/graph/files')]);
+  STATE.funcs = fR.functions; STATE.files = fiR.files;
+
+  // Show UIs
+  ['trace','debug','impact','explore'].forEach(v=>{
+    q(`#${v}-empty`).style.display='none';
+    q(`#${v}-ui`).style.display='block';
+  });
+
+  const funcs = STATE.funcs, files = STATE.files;
+  const fOpts = `<option value="">—</option>`+funcs.map(f=>`<option>${esc(f)}</option>`).join('');
+  const fiOpts = `<option value="">—</option>`+files.map(f=>`<option>${esc(f)}</option>`).join('');
+
+  q('#trace-func-sel').innerHTML = `<option value="">— pick a function —</option>`+funcs.map(f=>`<option>${esc(f)}</option>`).join('');
+  q('#trace-file-sel').innerHTML = `<option value="">— pick a file —</option>`+files.map(f=>`<option>${esc(f)}</option>`).join('');
+  q('#impact-func-sel').innerHTML = `<option value="">— select a function —</option>`+funcs.map(f=>`<option>${esc(f)}</option>`).join('');
+  q('#exp-func-sel').innerHTML = `<option value="">— select function —</option>`+funcs.map(f=>`<option>${esc(f)}</option>`).join('');
+  q('#exp-file-sel').innerHTML = `<option value="">— select file —</option>`+files.map(f=>`<option>${esc(f)}</option>`).join('');
+}
+
+/* ═══════════════════════════════════════════════════════
+   D3 FORCE GRAPH
+═══════════════════════════════════════════════════════ */
+async function loadGraphData(){
+  if(!STATE.ready) return;
+  try {
+    STATE.graphData = await api('/api/graph/d3data');
+    q('#graph-empty').style.display='none';
+    q('#graph-canvas-wrap').style.display='block';
+    buildD3Graph(STATE.graphData);
+  } catch(e){ toast(e.message,'err'); }
+}
+
+function buildD3Graph(data){
+  const wrap = q('#graph-canvas-wrap');
+  const W = wrap.clientWidth, H = wrap.clientHeight;
+  const svg = d3.select('#graph-svg').attr('width',W).attr('height',H);
+  svg.selectAll('*').remove();
+
+  const nodeColor = t => t==='File'?'#4fc3f7':t==='Function'?'#3b82f6':'#ffaa00';
+  const nodeSize = t => t==='File'?8:t==='Function'?5:6;
+  const linkColor = r => r==='CALLS'?'rgba(59,130,246,0.4)':r==='DEPENDS_ON'?'rgba(79,195,247,0.3)':'rgba(255,255,255,0.1)';
+
+  // Limit nodes for performance
+  const MAX_NODES = 300;
+  let nodes = data.nodes.slice(0, MAX_NODES);
+  const nodeSet = new Set(nodes.map(n=>n.id));
+  const links = data.links.filter(l=>nodeSet.has(l.source)&&nodeSet.has(l.target));
+
+  // Overflow quip banner
+  let ob = q('#graph-overflow-banner'); if(ob) ob.remove();
+  if(data.nodes.length > MAX_NODES){
+    const oq = quip('graph_overflow',{value:data.nodes.length});
+    wrap.insertAdjacentHTML('afterbegin',
+      `<div id="graph-overflow-banner" class="quip-text ${oq.variant}" style="position:absolute;top:12px;left:50%;transform:translateX(-50%);z-index:20;max-width:500px;text-align:center;border-left:none;border:1px solid var(--border2);border-radius:8px;padding:8px 16px;">${oq.text}</div>`);
+  }
+
+  const g = svg.append('g');
+
+  d3Zoom = d3.zoom().scaleExtent([0.1,4]).on('zoom', e=>g.attr('transform',e.transform));
+  svg.call(d3Zoom);
+
+  // Glow filter
+  const defs = svg.append('defs');
+  const filter = defs.append('filter').attr('id','glow');
+  filter.append('feGaussianBlur').attr('stdDeviation','3').attr('result','coloredBlur');
+  const feMerge = filter.append('feMerge');
+  feMerge.append('feMergeNode').attr('in','coloredBlur');
+  feMerge.append('feMergeNode').attr('in','SourceGraphic');
+
+  const sim = d3.forceSimulation(nodes)
+    .force('link', d3.forceLink(links).id(d=>d.id).distance(60).strength(0.3))
+    .force('charge', d3.forceManyBody().strength(-120))
+    .force('center', d3.forceCenter(W/2, H/2))
+    .force('collision', d3.forceCollide(12));
+  d3Sim = sim;
+
+  const link = g.append('g').selectAll('line').data(links).join('line')
+    .attr('stroke', d=>linkColor(d.relation))
+    .attr('stroke-width', 1)
+    .attr('stroke-opacity', 0.6);
+
+  const node = g.append('g').selectAll('circle').data(nodes).join('circle')
+    .attr('r', d=>nodeSize(d.type))
+    .attr('fill', d=>nodeColor(d.type))
+    .attr('filter','url(#glow)')
+    .attr('cursor','pointer')
+    .attr('stroke','rgba(0,0,0,0.3)').attr('stroke-width',1)
+    .call(d3.drag()
+      .on('start', (e,d)=>{ if(!e.active) sim.alphaTarget(0.3).restart(); d.fx=d.x; d.fy=d.y; })
+      .on('drag', (e,d)=>{ d.fx=e.x; d.fy=e.y; })
+      .on('end', (e,d)=>{ if(!e.active) sim.alphaTarget(0); d.fx=null; d.fy=null; }))
+    .on('click', (e,d)=>{ e.stopPropagation(); openInspector(d); })
+    .on('mouseover', function(e,d){
+      d3.select(this).attr('r', nodeSize(d.type)*1.8).attr('stroke','rgba(59,130,246,0.6)').attr('stroke-width',2);
+    })
+    .on('mouseout', function(e,d){
+      d3.select(this).attr('r', nodeSize(d.type)).attr('stroke','rgba(0,0,0,0.3)').attr('stroke-width',1);
+    });
+
+  svg.on('click', ()=>closeInspector());
+
+  sim.on('tick', ()=>{
+    link.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y)
+        .attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);
+    node.attr('cx',d=>d.x).attr('cy',d=>d.y);
+  });
+}
+
+function openInspector(d){
+  const ni = q('#node-inspector');
+  const badges = { File:'badge-file', Function:'badge-function', Class:'badge-class' };
+  const callers = STATE.graphData?.links.filter(l=>(l.target===d.id||l.target?.id===d.id)&&l.relation==='CALLS').length||0;
+  const callees = STATE.graphData?.links.filter(l=>(l.source===d.id||l.source?.id===d.id)&&l.relation==='CALLS').length||0;
+  q('#ni-content').innerHTML = `
+    <span class="ni-type-badge ${badges[d.type]||'badge-function'}">${esc(d.type)}</span>
+    <div class="ni-name">${esc(d.name)}</div>
+    <div class="ni-file">${esc(d.file||'—')}</div>
+    <div class="ni-row"><span class="ni-key">Callers</span><span class="ni-val">${callers}</span></div>
+    <div class="ni-row"><span class="ni-key">Callees</span><span class="ni-val">${callees}</span></div>
+    <div class="ni-row"><span class="ni-key">ID</span><span class="ni-val" style="font-size:9px;word-break:break-all;">${esc(d.id)}</span></div>
+  `;
+  ni.classList.add('open');
+}
+function closeInspector(){ q('#node-inspector').classList.remove('open'); }
+
+function zoomGraph(factor){
+  if(!d3Zoom) return;
+  d3.select('#graph-svg').transition().duration(300).call(d3Zoom.scaleBy, factor);
+}
+function resetGraph(){
+  if(!d3Zoom) return;
+  d3.select('#graph-svg').transition().duration(400).call(d3Zoom.transform, d3.zoomIdentity);
+}
+
+/* ═══════════════════════════════════════════════════════
+   TRACE
+═══════════════════════════════════════════════════════ */
+async function doTraceFunc(){
+  const fn = q('#trace-func-sel').value; if(!fn) return;
+  q('#trace-result').innerHTML = '<div class="empty"><div class="empty-sub">Loading…</div></div>';
+  try {
+    const r = await api('/api/flow','POST',{func_name:fn});
+    let html = '';
+    if(r.func_mermaid){
+      const id='mmd_'+Math.random().toString(36).slice(2);
+      const { svg } = await mermaid.render(id, r.func_mermaid);
+      html += `<div class="slabel">Call Graph</div><div class="mermaid-container">${svg}</div>`;
+    }
+    if(r.trace?.length){
+      html += `<div class="slabel" style="margin-top:20px;">Execution Trace</div>
+        <div class="trace-steps">
+          ${r.trace.map(s=>`
+            <div class="trace-step">
+              <span class="ts-depth">${'  '.repeat(s.depth)}${'→'.repeat(s.depth||1)}</span>
+              <span class="ts-name">${esc(s.name)}</span>
+              <span class="ts-file">${esc(s.file)}</span>
+            </div>`).join('')}
+        </div>`;
+    }
+    if(html){
+      const maxD = r.trace?.reduce((m,s)=>Math.max(m,s.depth||0),0)||0;
+      const trLen = r.trace?.length||0;
+      html += quipHTML('trace_depth',{value:maxD});
+      if(trLen>0) html += quipHTML('trace_length',{value:trLen});
+    }
+    q('#trace-result').innerHTML = html || '<div class="empty"><div class="empty-sub">no call graph found. this function keeps to itself.</div></div>';
+  } catch(e){ q('#trace-result').innerHTML = `<div style="color:var(--danger);font-size:12px;">${e.message}</div>`; }
+}
+
+async function doTraceFile(){
+  const fn = q('#trace-file-sel').value; if(!fn) return;
+  q('#trace-result').innerHTML = '<div class="empty"><div class="empty-sub">Loading…</div></div>';
+  try {
+    const r = await api('/api/flow','POST',{file_name:fn});
+    if(r.file_mermaid){
+      const id='mmd_'+Math.random().toString(36).slice(2);
+      const { svg } = await mermaid.render(id, r.file_mermaid);
+      q('#trace-result').innerHTML = `<div class="slabel">File Dependency Graph</div><div class="mermaid-container">${svg}</div>`;
+    } else {
+      q('#trace-result').innerHTML = '<div class="empty"><div class="empty-sub">no file dependencies. this file is an island.</div></div>';
+    }
+  } catch(e){ q('#trace-result').innerHTML = `<div style="color:var(--danger);font-size:12px;">${e.message}</div>`; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   RCA
+═══════════════════════════════════════════════════════ */
+async function doRCA(){
+  const bug = q('#bug-inp').value.trim(); const ep = q('#ep-inp').value.trim();
+  if(!bug){ toast('Describe the bug first','err'); return; }
+  const btn = q('#rca-btn'); btn.disabled=true; btn.textContent='Analyzing…';
+  q('#rca-pipeline').style.display='block';
+  animatePipeline();
+  q('#rca-output').innerHTML = '';
+  try {
+    const r = await api('/api/rca','POST',{bug_description:bug,entry_point:ep||null,depth:3});
+    stopPipeline();
+    renderRCA(r);
+    toast('Analysis complete!');
+  } catch(e){ stopPipeline(); toast(e.message,'err'); q('#rca-output').innerHTML=`<div style="color:var(--danger);padding:20px;">${e.message}</div>`; }
+  finally { btn.disabled=false; btn.innerHTML='<span>⚡</span> Run Root Cause Analysis'; }
+}
+
+let pipelineTimer = null;
+function animatePipeline(){
+  const steps = document.querySelectorAll('.ap-step');
+  steps.forEach(s=>s.className='ap-step');
+  let i=0;
+  pipelineTimer = setInterval(()=>{
+    if(i>0) steps[i-1].className='ap-step done';
+    if(i<steps.length){ steps[i].className='ap-step active'; i++; }
+  }, 900);
+}
+function stopPipeline(){
+  clearInterval(pipelineTimer);
+  document.querySelectorAll('.ap-step').forEach(s=>s.className='ap-step done');
+}
+
+function renderRCA(rca){
+  const out = q('#rca-output');
+  if(rca.parse_error){
+    out.innerHTML=`<div class="rca-section"><pre class="code">${esc(rca.raw_response||'')}</pre></div>`;
+    setTimeout(()=>out.querySelectorAll('.rca-section').forEach(s=>s.classList.add('revealed')),50);
+    return;
+  }
+  const conf = rca.confidence||'Medium';
+  const confCls = conf==='High'?'conf-high':conf==='Low'?'conf-low':'conf-med';
+  const ep = rca.entry_point||{}, fp = rca.failure_point||{}, rc = rca.root_cause||{};
+  const sf = rca.suggested_fix||{}, ia = rca.impact_analysis||{}, deps = rca.dependencies||{};
+
+  const sections = [
+    {
+      icon:'💡', iconCls:'sec-volt', title:'Feature Intent', sub:'Step 1',
+      body:`<p style="font-size:13px;line-height:1.7;color:var(--text2);">${esc(rca.feature_intent||'N/A')}</p>`
+    },
+    {
+      icon:'📍', iconCls:'sec-volt', title:'Entry Point', sub:'Step 2',
+      body:`<div class="kv-grid">
+        <span class="kv-k">file</span><span class="kv-code">${esc(ep.file||'N/A')}</span>
+        <span class="kv-k">function</span><span class="kv-code" style="color:var(--volt)">${esc(ep.function||'N/A')}</span>
+      </div>`
+    },
+    {
+      icon:'🔄', iconCls:'sec-volt', title:'Execution Flow', sub:'Step 3',
+      body:`<div class="flow-chain">${(rca.execution_flow||[]).map(s=>`<div class="flow-step">${esc(s)}</div>`).join('')}</div>
+      ${rca.mermaid_flow?'<div id="rca-mermaid-slot" style="margin-top:14px;"></div>':''}`
+    },
+    {
+      icon:'📦', iconCls:'sec-warn', title:'Dependencies', sub:'Step 4',
+      body: Object.entries(deps).filter(([,v])=>v?.length).map(([k,v])=>`
+        <div class="slabel">${esc(k)}</div>
+        <div class="pill-list" style="margin-bottom:10px;">${v.map(x=>`<span class="pill pill-n">${esc(x)}</span>`).join('')}</div>
+      `).join('')||'<span style="color:var(--text3);font-size:12px;">No dependencies found</span>'
+    },
+    {
+      icon:'⚠', iconCls:'sec-warn', title:'Edge Cases', sub:'Step 5',
+      body:`<div style="display:flex;flex-direction:column;gap:5px;">${(rca.edge_cases||[]).map(e=>`
+        <div style="display:flex;gap:10px;padding:7px 10px;background:var(--ink3);border-radius:6px;font-size:12px;color:var(--text2);">
+          <span style="color:var(--warn);">⚡</span>${esc(e)}
+        </div>`).join('')}</div>`
+    },
+    {
+      icon:'❌', iconCls:'sec-danger', title:'Failure Point', sub:'Step 6',
+      body:`<div class="kv-grid">
+        <span class="kv-k">file</span><span class="kv-code">${esc(fp.file||'N/A')}</span>
+        <span class="kv-k">function</span><span class="kv-code">${esc(fp.function||'N/A')}</span>
+        <span class="kv-k">condition</span><span class="kv-v" style="color:var(--danger);font-size:12px;">${esc(fp.condition||'N/A')}</span>
+      </div>`
+    },
+    {
+      icon:'🔎', iconCls:'sec-danger', title:'Root Cause', sub:'Step 7',
+      body:`<div style="display:flex;flex-direction:column;gap:12px;">
+        <div><div class="slabel">Why</div><p style="font-size:12px;color:var(--text2);line-height:1.6;">${esc(rc.why||'N/A')}</p></div>
+        <div><div class="slabel">When</div><p style="font-size:12px;color:var(--text2);line-height:1.6;">${esc(rc.when||'N/A')}</p></div>
+        <div><div class="slabel">Propagation</div><p style="font-size:12px;color:var(--text2);line-height:1.6;">${esc(rc.how_it_propagates||'N/A')}</p></div>
+      </div>`
+    },
+    {
+      icon:'💥', iconCls:'sec-danger', title:'Impact Analysis', sub:'Step 8',
+      body: Object.entries(ia).filter(([,v])=>v?.length).map(([k,v])=>`
+        <div class="slabel">${esc(k)}</div>
+        <div class="pill-list" style="margin-bottom:10px;">${v.map(x=>`<span class="pill pill-d">${esc(x)}</span>`).join('')}</div>
+      `).join('')||'<span style="color:var(--text3);font-size:12px;">No impact data</span>'
+    },
+    {
+      icon:'🛠', iconCls:'sec-safe', title:'Suggested Fix', sub:'Step 9',
+      body:`<p style="font-size:13px;line-height:1.6;color:var(--text2);margin-bottom:14px;">${esc(sf.description||'N/A')}</p>
+      ${(sf.code_changes||[]).map(ch=>`
+        <div style="margin-bottom:16px;">
+          <div style="font-family:var(--fm);font-size:10px;color:var(--text3);margin-bottom:6px;">📄 <span style="color:var(--volt)">${esc(ch.file||'?')}</span></div>
+          <div class="diff-cols">
+            <div><div class="diff-label dl-before">✕ Before</div><pre class="code before">${esc(ch.original||'')}</pre></div>
+            <div><div class="diff-label dl-after">✓ After</div><pre class="code after">${esc(ch.fixed||'')}</pre></div>
+          </div>
+        </div>`).join('')}`
+    },
+  ];
+
+  const rcaQ = quip('rca_confidence',{label:conf});
+  out.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
+      <h2 style="font-size:22px;font-weight:800;letter-spacing:-0.5px;color:#fff;">Root Cause<br>Analysis Report</h2>
+      <div style="text-align:right;">
+        <span class="conf-badge ${confCls}">● ${esc(conf)} confidence</span>
+        <div class="quip-text ${rcaQ.variant}" style="margin-top:6px;border-left:none;text-align:right;font-size:10px;">${rcaQ.text}</div>
+      </div>
+    </div>
+    ${sections.map(s=>`
+      <div class="rca-section">
+        <div class="rca-sec-header">
+          <div class="rca-sec-icon ${s.iconCls}">${s.icon}</div>
+          <span class="rca-sec-title">${s.title}</span>
+          <span class="rca-sec-sub">${s.sub}</span>
+        </div>
+        ${s.body}
+      </div>`).join('')}
+  `;
+
+  // Stagger reveal
+  const sections_el = out.querySelectorAll('.rca-section');
+  sections_el.forEach((el,i)=>{
+    setTimeout(()=>el.classList.add('revealed'), i*80);
+  });
+
+  // Render mermaid flow in slot
+  if(rca.mermaid_flow){
+    const slot = q('#rca-mermaid-slot');
+    if(slot){
+      mermaid.render('rca_flow_'+Date.now(), rca.mermaid_flow).then(({svg})=>{
+        slot.innerHTML = `<div class="slabel">Call Graph</div><div style="overflow-x:auto;">${svg}</div>`;
+      }).catch(()=>{});
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   IMPACT — ORBITAL VISUALIZATION
+═══════════════════════════════════════════════════════ */
+async function doImpact(){
+  const fn = q('#impact-func-sel').value;
+  q('#impact-body').style.display = 'none';
+  if(!fn) return;
+  try {
+    const r = await api('/api/impact','POST',{func_name:fn});
+    q('#impact-body').style.display='grid';
+    renderOrbital(r, fn);
+    renderImpactRight(r, fn);
+  } catch(e){ toast(e.message,'err'); }
+}
+
+function renderOrbital(r, fn){
+  const svg = d3.select('#orbital-svg');
+  const el = q('#orbital-canvas');
+  const W = el.clientWidth||500, H = el.clientHeight||420;
+  svg.attr('viewBox',`0 0 ${W} ${H}`).selectAll('*').remove();
+
+  const cx=W/2, cy=H/2;
+  const radii=[0,90,160,220];
+
+  // Glow filter
+  const defs=svg.append('defs');
+  const f=defs.append('filter').attr('id','og');
+  f.append('feGaussianBlur').attr('stdDeviation','4').attr('result','b');
+  const fm=f.append('feMerge');
+  fm.append('feMergeNode').attr('in','b');
+  fm.append('feMergeNode').attr('in','SourceGraphic');
+
+  // Orbit rings
+  [1,2,3].forEach(i=>{
+    svg.append('circle').attr('cx',cx).attr('cy',cy).attr('r',radii[i])
+      .attr('fill','none').attr('stroke','rgba(255,255,255,0.06)').attr('stroke-width',1).attr('stroke-dasharray','4 8');
+  });
+
+  // Center node (target function)
+  svg.append('circle').attr('cx',cx).attr('cy',cy).attr('r',22)
+    .attr('fill','#ff2d55').attr('filter','url(#og)');
+  svg.append('text').attr('x',cx).attr('y',cy+4)
+    .attr('text-anchor','middle').attr('font-family','Fira Code')
+    .attr('font-size','9').attr('fill','#fff').attr('font-weight','600')
+    .text(fn.length>12?fn.slice(0,10)+'…':fn);
+
+  // Depth labels
+  [1,2,3].forEach(i=>{
+    svg.append('text').attr('x',cx+radii[i]+8).attr('y',cy-4)
+      .attr('font-family','Fira Code').attr('font-size','8').attr('fill','rgba(255,255,255,0.2)')
+      .text(`depth ${i}`);
+  });
+
+  // Caller nodes by depth
+  const byDepth = [[],r.direct_callers||[]];
+  (r.all_callers||[]).forEach(c=>{
+    while(byDepth.length<=c.depth) byDepth.push([]);
+    byDepth[c.depth].push(c);
+  });
+
+  byDepth.forEach((callers,depth)=>{
+    if(!callers.length||depth===0) return;
+    const rad = radii[Math.min(depth,3)];
+    callers.forEach((c,i)=>{
+      const angle = (2*Math.PI*i/callers.length) - Math.PI/2;
+      const nx=cx+rad*Math.cos(angle), ny=cy+rad*Math.sin(angle);
+      svg.append('line')
+        .attr('x1',cx).attr('y1',cy).attr('x2',nx).attr('y2',ny)
+        .attr('stroke','rgba(59,130,246,0.2)').attr('stroke-width',1);
+      svg.append('circle').attr('cx',nx).attr('cy',ny).attr('r',8)
+        .attr('fill','#3b82f6').attr('filter','url(#og)').attr('opacity',0.85);
+      const nm=c.name.length>8?c.name.slice(0,7)+'…':c.name;
+      svg.append('text').attr('x',nx).attr('y',ny+3)
+        .attr('text-anchor','middle').attr('font-family','Fira Code')
+        .attr('font-size','7').attr('fill','#fff').attr('font-weight','700')
+        .text(nm);
+    });
+  });
+}
+
+function renderImpactRight(r, fn){
+  const nc=r.total_impacted_functions, nf=r.total_impacted_files;
+  let riskLevel='low', riskTitle='Low Risk', riskMsg='';
+  if(nc===0){ riskMsg=`<strong>${esc(fn)}</strong> has no callers. Safe to modify freely.`; }
+  else if(nc<=3){ riskLevel='med'; riskTitle='Moderate Risk'; riskMsg=`Called by ${nc} function(s) across ${nf} file(s). Review each caller before signature changes.`; }
+  else{ riskLevel='high'; riskTitle='High Risk'; riskMsg=`Called by ${nc} functions across ${nf} files.<ul style="margin-top:8px;"><li>Add behavior in a new function, migrate incrementally</li><li>Update all callers in same commit if signature changes</li><li>Add tests before modifying</li></ul>`; }
+  const impQ = quip('impact_risk',{label:riskLevel});
+
+  q('#impact-right').innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div class="impact-stat"><div class="impact-stat-num red">${nc}</div><div class="impact-stat-lbl">Functions impacted</div></div>
+      <div class="impact-stat"><div class="impact-stat-num volt">${r.direct_callers.length}</div><div class="impact-stat-lbl">Direct callers</div></div>
+      <div class="impact-stat"><div class="impact-stat-num volt">${nf}</div><div class="impact-stat-lbl">Files impacted</div></div>
+      <div class="impact-stat"><div class="impact-stat-num safe">${r.target_files.length}</div><div class="impact-stat-lbl">Target files</div></div>
+    </div>
+    <div style="background:var(--ink2);border:1px solid var(--border);border-radius:12px;padding:16px;">
+      <div class="slabel">Direct Callers</div>
+      ${r.direct_callers.length?`<div class="caller-list">${r.direct_callers.map(c=>`
+        <div class="caller-item"><span class="ci-name">${esc(c.name)}</span><span class="ci-file">${esc(c.file)}</span></div>`).join('')}</div>`
+      :'<span style="color:var(--text3);font-size:11px;font-family:var(--fm);">None — root entry point</span>'}
+      ${r.all_callers.length>r.direct_callers.length?`
+      <div class="slabel" style="margin-top:12px;">Transitive Callers</div>
+      <div class="caller-list">${r.all_callers.map(c=>`
+        <div class="caller-item">
+          <span class="ci-depth">d${c.depth}</span>
+          <span class="ci-name">${esc(c.name)}</span>
+          <span class="ci-file">${esc(c.file)}</span>
+        </div>`).join('')}</div>`:''}
+    </div>
+    <div class="risk-card ${riskLevel}">
+      <div class="risk-title">${riskTitle}</div>
+      <div class="risk-body">${riskMsg}</div>
+      <div class="quip-text ${impQ.variant}" style="margin-top:10px;font-size:10px;">${impQ.text}</div>
+    </div>
+  `;
+}
+
+/* ═══════════════════════════════════════════════════════
+   EXPLORER
+═══════════════════════════════════════════════════════ */
+async function doExpFunc(){
+  const fn=q('#exp-func-sel').value; const el=q('#exp-func-res');
+  if(!fn){ el.innerHTML=''; return; }
+  try {
+    const r=await api(`/api/graph/lookup?name=${encodeURIComponent(fn)}`);
+    const tc = r.callers.length + r.callees.length;
+    el.innerHTML=`
+      <div class="slabel">Callers</div>
+      <div class="tag-cloud">${r.callers.length?r.callers.map(c=>`<span class="t-chip">${esc(c)}</span>`).join(''):'<span style="color:var(--text3);font-size:11px;font-family:var(--fm);">none</span>'}</div>
+      <div class="slabel">Callees</div>
+      <div class="tag-cloud">${r.callees.length?r.callees.map(c=>`<span class="t-chip">${esc(c)}</span>`).join(''):'<span style="color:var(--text3);font-size:11px;font-family:var(--fm);">none</span>'}</div>
+      ${quipHTML('explorer_callers',{value:tc})}
+    `;
+  } catch(e){ el.innerHTML=`<span style="color:var(--danger);font-size:12px;">${e.message}</span>`; }
+}
+
+async function doExpFile(){
+  const fn=q('#exp-file-sel').value; const el=q('#exp-file-res');
+  if(!fn){ el.innerHTML=''; return; }
+  try {
+    const r=await api(`/api/graph/file-deps?name=${encodeURIComponent(fn)}`);
+    const td = r.depends_on.length + r.depended_by.length;
+    el.innerHTML=`
+      <div class="slabel">Imports (Depends On)</div>
+      <div class="tag-cloud">${r.depends_on.length?r.depends_on.map(f=>`<span class="t-chip type-f">${esc(f)}</span>`).join(''):'<span style="color:var(--text3);font-size:11px;font-family:var(--fm);">none</span>'}</div>
+      <div class="slabel">Imported By</div>
+      <div class="tag-cloud">${r.depended_by.length?r.depended_by.map(f=>`<span class="t-chip type-f">${esc(f)}</span>`).join(''):'<span style="color:var(--text3);font-size:11px;font-family:var(--fm);">none</span>'}</div>
+      <div class="slabel">Functions</div>
+      <div class="tag-cloud">${r.functions.length?r.functions.map(f=>`<span class="t-chip">${esc(f)}</span>`).join(''):'<span style="color:var(--text3);font-size:11px;font-family:var(--fm);">none</span>'}</div>
+      ${quipHTML('explorer_deps',{value:td})}
+    `;
+  } catch(e){ el.innerHTML=`<span style="color:var(--danger);font-size:12px;">${e.message}</span>`; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   COMMAND PALETTE
+═══════════════════════════════════════════════════════ */
+const PAL_VIEWS = [
+  {icon:'◈',name:'Setup',hint:'Ctrl+1',action:()=>goTo('setup')},
+  {icon:'◎',name:'Graph — D3 Force Visualization',hint:'Ctrl+2',action:()=>goTo('graph')},
+  {icon:'⟳',name:'Trace — Logic Flow',hint:'Ctrl+3',action:()=>goTo('trace')},
+  {icon:'⚡',name:'Debug — RCA Analysis',hint:'Ctrl+4',action:()=>goTo('debug')},
+  {icon:'◉',name:'Impact — Blast Radius',hint:'Ctrl+5',action:()=>goTo('impact')},
+  {icon:'⊞',name:'Explore — Graph Explorer',hint:'Ctrl+6',action:()=>goTo('explore')},
+];
+let palSel=0, filteredItems=[];
+
+function openPalette(){
+  q('#palette').classList.add('open');
+  q('#pal-input').value=''; filterPalette();
+  setTimeout(()=>q('#pal-input').focus(),50);
+}
+function closePalette(){ q('#palette').classList.remove('open'); }
+
+function filterPalette(){
+  const v=q('#pal-input').value.toLowerCase(); palSel=0;
+  const funcs = STATE.funcs.filter(f=>!v||f.toLowerCase().includes(v)).slice(0,8);
+  const views = PAL_VIEWS.filter(vi=>!v||vi.name.toLowerCase().includes(v));
+  filteredItems=[...views, ...funcs.map(f=>({icon:'⚙',name:f,hint:'function',action:()=>{goTo('explore');q('#exp-func-sel').value=f;doExpFunc();}}))]
+  const res=q('#pal-results');
+  res.innerHTML=`
+    ${views.length?`<div class="pr-group-title">Views</div>${views.map((vi,i)=>`
+      <div class="pr-item${i===palSel?' sel':''}" onclick="palRun(${i})" data-i="${i}">
+        <div class="pr-icon" style="background:var(--volt-a);">${vi.icon}</div>
+        <span class="pr-name">${vi.name}</span>
+        <span class="pr-hint">${vi.hint}</span>
+      </div>`).join('')}`:''}
+    ${funcs.length?`<div class="pr-group-title">Functions</div>${funcs.map((f,i)=>{const idx=views.length+i;return`
+      <div class="pr-item${idx===palSel?' sel':''}" onclick="palRun(${idx})" data-i="${idx}">
+        <div class="pr-icon" style="background:var(--volt-a);">⚙</div>
+        <span class="pr-name" style="font-family:var(--fm);font-size:12px;">${esc(f)}</span>
+        <span class="pr-hint">function</span>
+      </div>`}).join('')}`:''}
+  `;
+}
+
+function palRun(i){ filteredItems[i]?.action(); closePalette(); }
+
+function palKeydown(e){
+  if(e.key==='Escape'){ closePalette(); return; }
+  if(e.key==='ArrowDown'){ palSel=Math.min(palSel+1,filteredItems.length-1); filterPalette(); return; }
+  if(e.key==='ArrowUp'){ palSel=Math.max(palSel-1,0); filterPalette(); return; }
+  if(e.key==='Enter'){ palRun(palSel); }
+}
+
+/* ── Keyboard shortcuts ── */
+document.addEventListener('keydown',e=>{
+  if((e.ctrlKey||e.metaKey)&&e.key==='k'){ e.preventDefault(); openPalette(); return; }
+  if(e.key==='Escape' && q('#palette').classList.contains('open')){ closePalette(); return; }
+  if(e.ctrlKey){
+    const map={'1':'setup','2':'graph','3':'trace','4':'debug','5':'impact','6':'explore'};
+    if(map[e.key]){ e.preventDefault(); goTo(map[e.key]); }
+  }
+});
+
+/* ── Boot ── */
+checkStatus();
+</script>
+</body>
+</html>
