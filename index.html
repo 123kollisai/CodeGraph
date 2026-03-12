@@ -662,6 +662,41 @@ pre.code.after { border-color: rgba(0,229,160,0.25); background: rgba(0,229,160,
 .quip-text.danger{ border-left-color: var(--danger);  background: var(--danger-a);  color: var(--danger); }
 .quip-text.safe  { border-left-color: var(--safe);    background: var(--safe-a);    color: var(--safe); }
 @keyframes quipIn { from{opacity:0;transform:translateX(-8px)} to{opacity:1;transform:translateX(0)} }
+
+/* ── Light theme ── */
+body.light {
+  --ink: #f5f7fa; --ink2: #ebedf2; --ink3: #e0e3ea; --ink4: #d2d6df; --ink5: #c5c9d200;
+  --volt: #2563eb; --volt2: #1d4ed8;
+  --volt-a: rgba(37,99,235,0.10); --volt-b: rgba(37,99,235,0.05); --volt-c: rgba(37,99,235,0.03);
+  --danger: #dc2626; --danger-a: rgba(220,38,38,0.10);
+  --safe: #059669; --safe-a: rgba(5,150,105,0.10);
+  --warn: #d97706; --warn-a: rgba(217,119,6,0.10);
+  --sky: #0284c7;
+  --text: #1e293b; --text2: #475569; --text3: #94a3b8;
+  --border: rgba(0,0,0,0.08); --border2: rgba(0,0,0,0.15);
+}
+.light .brand-glyph { color: #fff; box-shadow: 0 0 12px rgba(37,99,235,0.4); }
+.light .brand-name { color: #1e293b; }
+.light .g-legend,
+.light .g-controls { background: rgba(245,247,250,0.9); }
+.light .node-inspector { background: rgba(245,247,250,0.95); }
+.light .palette-bg { background: rgba(245,247,250,0.85); }
+.light .palette-box { box-shadow: 0 24px 64px rgba(0,0,0,0.15); }
+.light .toast { background: var(--ink2); color: var(--text); border-color: var(--border2); }
+.light main::before { background-image: radial-gradient(rgba(0,0,0,0.04) 1px, transparent 1px); }
+.light .ni-name { color: var(--text); }
+.light .conf-badge.conf-high { background: var(--safe-a); color: var(--safe); }
+.light .conf-badge.conf-med  { background: var(--warn-a); color: var(--warn); }
+.light .conf-badge.conf-low  { background: var(--danger-a); color: var(--danger); }
+
+/* Theme toggle button */
+.theme-toggle {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: var(--ink3); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 15px; transition: all 0.2s; color: var(--text2);
+}
+.theme-toggle:hover { border-color: var(--volt); color: var(--volt); background: var(--volt-a); }
 </style>
 </head>
 <body>
@@ -694,6 +729,9 @@ pre.code.after { border-color: rgba(0,229,160,0.25); background: rgba(0,229,160,
       <span class="cmd-hint">Ctrl K</span>
     </div>
     <div class="header-right">
+      <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">
+        <span id="theme-icon">☀</span>
+      </button>
       <div class="status-pill" id="api-pill">
         <div class="pulse warn" id="api-dot"></div>
         <span id="api-text">Connecting…</span>
@@ -994,6 +1032,22 @@ mermaid.initialize({
 
 function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function q(s){ return document.querySelector(s); }
+
+/* ── Theme toggle ── */
+function toggleTheme(){
+  const on = document.body.classList.toggle('light');
+  q('#theme-icon').textContent = on ? '🌙' : '☀';
+  localStorage.setItem('cg-theme', on ? 'light' : 'dark');
+}
+(function(){
+  if(localStorage.getItem('cg-theme')==='light'){
+    document.body.classList.add('light');
+    document.addEventListener('DOMContentLoaded', ()=>{
+      const ic = document.querySelector('#theme-icon');
+      if(ic) ic.textContent = '🌙';
+    });
+  }
+})();
 
 /* ── Contextual quip engine ── */
 function quip(category, data){
@@ -1526,7 +1580,7 @@ function renderRCA(rca){
   const rcaQ = quip('rca_confidence',{label:conf});
   out.innerHTML = `
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
-      <h2 style="font-size:22px;font-weight:800;letter-spacing:-0.5px;color:#fff;">Root Cause<br>Analysis Report</h2>
+      <h2 style="font-size:22px;font-weight:800;letter-spacing:-0.5px;color:var(--volt);">Root Cause<br>Analysis Report
       <div style="text-align:right;">
         <span class="conf-badge ${confCls}">● ${esc(conf)} confidence</span>
         <div class="quip-text ${rcaQ.variant}" style="margin-top:6px;border-left:none;text-align:right;font-size:10px;">${rcaQ.text}</div>
