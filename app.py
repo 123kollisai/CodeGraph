@@ -184,6 +184,14 @@ class FlowRequest(BaseModel):
 class ImpactRequest(BaseModel):
     func_name: str
 
+class ChatMessage(BaseModel):
+    role: str
+    content: str
+
+class ChatRequest(BaseModel):
+    message: str
+    history: list[ChatMessage] = []
+
 # ── Routes ─────────────────────────────────────────────────────────────────────
 
 @app.get("/api/status")
@@ -297,3 +305,88 @@ def get_d3_data():
         if key in seen: continue
         seen.add(key); links.append({"source": src, "target": dst, "relation": rel})
     return {"nodes": nodes, "links": links}
+
+# ── Chat ──────────────────────────────────────────────────────────────────────
+
+CHAT_SYSTEM_PROMPT = """\
+You are an expert code assistant analyzing a codebase that has been parsed into a dependency graph.
+You have access to the code structure, function call chains, file dependencies, and actual source code snippets.
+
+When answering questions:
+- Reference specific files, functions, and line numbers when relevant.
+- Explain code behavior by tracing through the call graph.
+- If you're unsure about something, say so rather than guessing.
+- Use markdown formatting: headings, code blocks, bold, lists.
+- Keep answers focused and practical.
+
+Repository file structure:
+{file_tree}
+
+Graph statistics: {stats}
+"""
+
+def _build_chat_context(message: str, graph, parser_output: list[dict]) -> str:
+    from retrieval.context_engine import ContextEngine
+    message_lower = message.lower()
+    all_funcs = set()
+    for entry in parser_output:
+        for f in entry.get("functions", []):
+            all_funcs.add(f)
+    all_files = set()
+    for entry in parser_output:
+        all_files.add(entry["file"].replace("\\", "/"))
+    mentioned_funcs = [f for f in all_funcs
+                       if len(f) > 2 and not f.startswith("__")
+                       and (f.lower() in message_lower or f in message)]
+    mentioned_files = [f for f in all_files
+                       if f.split("/")[-1].lower() in message_lower
+                       or f.split("/")[-1].rsplit(".", 1)[0].lower() in message_lower]
+    if not mentioned_funcs and not mentioned_files:
+        return ""
+    engine = ContextEngine(graph, STATE["repo_path"], parser_output)
+    parts = []
+    for func in mentioned_funcs[:3]:
+        r = engine.retrieve(func, depth=2)
+        if "error" not in r:
+            parts.append(engine.format_for_llm(r))
+    for file in mentioned_files[:2]:
+        r = engine.retrieve(file, depth=1)
+        if "error" not in r:
+            parts.append(engine.format_for_llm(r))
+    return "\n\n".join(parts)
+
+@app.post("/api/chat")
+def chat(req: ChatRequest):
+    if not STATE["graph"]:
+        raise HTTPException(400, "No graph loaded. Parse a repository first.")
+    if not os.getenv("GEMINI_API_KEY"):
+        raise HTTPException(400, "GEMINI_API_KEY not set.")
+    try:
+        import google.generativeai as genai
+        genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+        model = genai.GenerativeModel("gemini-2.0-flash")
+        file_tree = sorted(e["file"].replace("\\", "/") for e in STATE["parser_output"])
+        system = CHAT_SYSTEM_PROMPT.format(
+            file_tree="\n".join(file_tree),
+            stats=json.dumps(STATE["graph_stats"]),
+        )
+        code_context = _build_chat_context(req.message, STATE["graph"], STATE["parser_output"])
+        first_msg = system + "\n\n"
+        if code_context:
+            first_msg += "=== RELEVANT CODE CONTEXT ===\n" + code_context + "\n\n"
+        contents = []
+        if req.history:
+            contents.append({"role": "user", "parts": [{"text": first_msg + req.history[0].content}]})
+            for msg in req.history[1:]:
+                role = "user" if msg.role == "user" else "model"
+                contents.append({"role": role, "parts": [{"text": msg.content}]})
+            contents.append({"role": "user", "parts": [{"text": req.message}]})
+        else:
+            contents.append({"role": "user", "parts": [{"text": first_msg + req.message}]})
+        response = model.generate_content(
+            contents,
+            generation_config=genai.types.GenerationConfig(temperature=0.3),
+        )
+        return {"response": response.text}
+    except Exception as e:
+        raise HTTPException(500, str(e))

@@ -1,4 +1,5 @@
 import json
+import re as _re
 import networkx as nx
 from pathlib import Path
 
@@ -93,7 +94,7 @@ class CodeGraph:
                 matched_fid = None
                 for nid, data in self.G.nodes(data=True):
                     if data.get("type") == FILE:
-                        node_file = data["name"].replace("\\", "/").replace(".py", "")
+                        node_file = _re.sub(r'\.(py|js|jsx|ts|tsx)$', '', data["name"].replace("\\", "/"))
                         # Exact match or import is a sub-path of the file
                         if imp_path == node_file or imp_path.startswith(node_file + "/"):
                             matched_fid = nid
