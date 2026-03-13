@@ -1903,10 +1903,27 @@ function renderRCA(rca){
     },
     {
       icon:'⚠', iconCls:'sec-warn', title:'Edge Cases', sub:'Step 5',
-      body:`<div style="display:flex;flex-direction:column;gap:5px;">${(rca.edge_cases||[]).map(e=>`
-        <div style="display:flex;gap:10px;padding:7px 10px;background:var(--ink3);border-radius:6px;font-size:12px;color:var(--text2);">
-          <span style="color:var(--warn);">⚡</span>${esc(e)}
-        </div>`).join('')}</div>`
+      body:(()=>{
+        const cases = rca.edge_cases||[];
+        if(!cases.length) return '<span style="color:var(--text3);font-size:12px;">No edge cases identified.</span>';
+        return '<div style="display:flex;flex-direction:column;gap:8px;">'+cases.map(e=>{
+          if(typeof e !== 'object' || e === null)
+            return `<div style="display:flex;gap:10px;padding:7px 10px;background:var(--ink3);border-radius:6px;font-size:12px;color:var(--text2);"><span style="color:var(--warn);">⚡</span>${esc(String(e))}</div>`;
+          const sev = (e.severity||'').toLowerCase();
+          const sevColor = sev==='high'?'var(--danger)':sev==='low'?'var(--safe)':'var(--warn)';
+          const sevBg    = sev==='high'?'var(--danger-a)':sev==='low'?'var(--safe-a)':'var(--warn-a)';
+          const file = e.file?(e.file.replace(/\\/g,'/').split('/').pop()):'';
+          return `<div style="background:var(--ink3);border:1px solid var(--border);border-left:3px solid ${sevColor};border-radius:8px;padding:12px 14px;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap;">
+              <span style="font-family:var(--fm);font-size:11px;font-weight:600;color:var(--volt);">${esc(e.function||'unknown')}</span>
+              ${file?`<span style="font-family:var(--fm);font-size:10px;color:var(--text3);">${esc(file)}</span>`:''}
+              <span style="margin-left:auto;font-size:10px;font-weight:700;letter-spacing:0.5px;padding:2px 8px;border-radius:4px;background:${sevBg};color:${sevColor};">${esc(e.severity||'?')}</span>
+            </div>
+            <div style="font-size:12px;color:var(--text2);margin-bottom:5px;line-height:1.5;"><span style="color:var(--text3);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-right:6px;">Trigger</span>${esc(e.trigger||'—')}</div>
+            <div style="font-size:12px;color:var(--text2);line-height:1.5;"><span style="color:var(--text3);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-right:6px;">Consequence</span>${esc(e.consequence||'—')}</div>
+          </div>`;
+        }).join('')+'</div>';
+      })()
     },
   ];
 
