@@ -302,7 +302,7 @@ select option { background: var(--ink3); }
 #graph-canvas-wrap svg { width: 100%; height: 100%; }
 
 .graph-overlay {
-  position: absolute; top: 20px; left: 20px; z-index: 10;
+  position: absolute; top: 20px; right: 20px; z-index: 10;
   display: flex; flex-direction: column; gap: 8px;
 }
 
@@ -327,12 +327,54 @@ select option { background: var(--ink3); }
 }
 .gc-btn:hover { border-color: var(--border2); color: var(--text); }
 
+/* Graph search */
+.g-search {
+  position: absolute; top: 20px; left: 20px; z-index: 15; width: 260px;
+}
+.g-search input {
+  width: 100%; box-sizing: border-box; height: 36px; padding: 0 12px;
+  background: rgba(6,6,8,0.85); border: 1px solid var(--border); border-radius: 10px;
+  backdrop-filter: blur(8px); color: var(--text); font-family: var(--fm); font-size: 11px; outline: none;
+  transition: border-color 0.2s;
+}
+.g-search input:focus { border-color: var(--volt); }
+.g-search input::placeholder { color: var(--text3); }
+.light .g-search input { background: rgba(245,247,250,0.9); }
+.g-search-results {
+  margin-top: 4px; background: rgba(6,6,8,0.92); border: 1px solid var(--border);
+  border-radius: 10px; overflow: hidden; backdrop-filter: blur(8px);
+}
+.light .g-search-results { background: rgba(245,247,250,0.95); }
+.g-search-item {
+  padding: 8px 12px; cursor: pointer; display: flex; align-items: center; gap: 8px;
+  font-size: 11px; font-family: var(--fm); color: var(--text2); transition: background 0.1s;
+}
+.g-search-item:hover { background: var(--volt-a); color: var(--volt); }
+.g-search-item .gs-type {
+  font-size: 8px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  padding: 2px 6px; border-radius: 4px; flex-shrink: 0;
+}
+.gs-type-File { background: rgba(79,195,247,0.15); color: var(--sky); }
+.gs-type-Function { background: var(--volt-a); color: var(--volt); }
+.gs-type-Class { background: var(--warn-a); color: var(--warn); }
+.g-focus-banner {
+  position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 15;
+  background: var(--volt); color: #fff; padding: 8px 18px; border-radius: 20px;
+  font-family: var(--fm); font-size: 11px; display: flex; align-items: center; gap: 10px;
+  box-shadow: 0 4px 16px rgba(59,130,246,0.3); animation: chatIn .3s ease;
+}
+.g-focus-banner button {
+  background: rgba(255,255,255,0.2); border: none; color: #fff; padding: 3px 10px;
+  border-radius: 10px; cursor: pointer; font-family: var(--fm); font-size: 10px;
+}
+.g-focus-banner button:hover { background: rgba(255,255,255,0.35); }
+
 /* Node inspector panel */
 .node-inspector {
-  position: absolute; top: 20px; right: 20px; width: 280px; z-index: 10;
+  position: absolute; top: 80px; left: 20px; width: 280px; z-index: 10;
   background: rgba(6,6,8,0.92); border: 1px solid var(--border);
   border-radius: 12px; padding: 18px; backdrop-filter: blur(12px);
-  transform: translateX(320px); transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+  transform: translateX(-320px); transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
 }
 .node-inspector.open { transform: translateX(0); }
 .ni-close { position: absolute; top: 12px; right: 12px; background: none; border: none;
@@ -377,6 +419,29 @@ select option { background: var(--ink3); }
   background: var(--ink2); border: 1px solid var(--border);
   border-radius: 12px; padding: 18px;
 }
+
+/* Searchable select */
+.search-select { position: relative; }
+.search-select input {
+  width: 100%; box-sizing: border-box; height: 34px; padding: 0 10px;
+  background: var(--ink3); border: 1px solid var(--border); border-radius: 8px;
+  color: var(--text); font-family: var(--fm); font-size: 11px; outline: none;
+  transition: border-color 0.2s;
+}
+.search-select input:focus { border-color: var(--volt); }
+.search-select input::placeholder { color: var(--text3); }
+.ss-dropdown {
+  position: absolute; top: 100%; left: 0; right: 0; z-index: 20; margin-top: 4px;
+  background: var(--ink2); border: 1px solid var(--border); border-radius: 8px;
+  max-height: 200px; overflow-y: auto; display: none;
+}
+.ss-dropdown.open { display: block; }
+.ss-item {
+  padding: 7px 10px; cursor: pointer; font-family: var(--fm); font-size: 11px;
+  color: var(--text2); transition: background 0.1s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.ss-item:hover { background: var(--volt-a); color: var(--volt); }
+.ss-item.active { background: var(--volt-a); color: var(--volt); }
 
 .trace-result {
   background: var(--ink2); border: 1px solid var(--border);
@@ -901,6 +966,10 @@ body.light {
           <div class="gc-btn" onclick="resetGraph()" title="Reset">⊙</div>
         </div>
       </div>
+      <div class="g-search" id="g-search" style="display:none;">
+        <input id="graph-search-inp" placeholder="Search function, class, or file…" oninput="onGraphSearch()" onkeydown="if(event.key==='Escape'){this.value='';onGraphSearch();}">
+        <div class="g-search-results" id="graph-search-results"></div>
+      </div>
       <div class="node-inspector" id="node-inspector">
         <button class="ni-close" onclick="closeInspector()">✕</button>
         <div id="ni-content"></div>
@@ -919,16 +988,14 @@ body.light {
           <div class="trace-sidebar">
             <div class="select-panel">
               <div class="slabel">Function Flow</div>
-              <div class="input-wrap" style="margin-bottom:10px;">
-                <select id="trace-func-sel" onchange="doTraceFunc()">
-                  <option value="">— pick a function —</option>
-                </select>
+              <div class="search-select" style="margin-bottom:14px;">
+                <input id="trace-func-inp" placeholder="Search function…" oninput="traceSearchFn()" onkeydown="traceSearchKey(event,'func')" autocomplete="off">
+                <div class="ss-dropdown" id="trace-func-dd"></div>
               </div>
               <div class="slabel">File Dependencies</div>
-              <div class="input-wrap" style="margin-bottom:0;">
-                <select id="trace-file-sel" onchange="doTraceFile()">
-                  <option value="">— pick a file —</option>
-                </select>
+              <div class="search-select">
+                <input id="trace-file-inp" placeholder="Search file…" oninput="traceSearchFile()" onkeydown="traceSearchKey(event,'file')" autocomplete="off">
+                <div class="ss-dropdown" id="trace-file-dd"></div>
               </div>
             </div>
           </div>
@@ -1412,11 +1479,7 @@ async function fetchListsAndPopulate(){
   });
 
   const funcs = STATE.funcs, files = STATE.files;
-  const fOpts = `<option value="">—</option>`+funcs.map(f=>`<option>${esc(f)}</option>`).join('');
-  const fiOpts = `<option value="">—</option>`+files.map(f=>`<option>${esc(f)}</option>`).join('');
 
-  q('#trace-func-sel').innerHTML = `<option value="">— pick a function —</option>`+funcs.map(f=>`<option>${esc(f)}</option>`).join('');
-  q('#trace-file-sel').innerHTML = `<option value="">— pick a file —</option>`+files.map(f=>`<option>${esc(f)}</option>`).join('');
   q('#impact-func-sel').innerHTML = `<option value="">— select a function —</option>`+funcs.map(f=>`<option>${esc(f)}</option>`).join('');
   q('#exp-func-sel').innerHTML = `<option value="">— select function —</option>`+funcs.map(f=>`<option>${esc(f)}</option>`).join('');
   q('#exp-file-sel').innerHTML = `<option value="">— select file —</option>`+files.map(f=>`<option>${esc(f)}</option>`).join('');
@@ -1428,9 +1491,11 @@ async function fetchListsAndPopulate(){
 async function loadGraphData(){
   if(!STATE.ready) return;
   try {
-    STATE.graphData = await api('/api/graph/d3data');
+    STATE.graphDataRaw = await api('/api/graph/d3data');
+    STATE.graphData = JSON.parse(JSON.stringify(STATE.graphDataRaw));
     q('#graph-empty').style.display='none';
     q('#graph-canvas-wrap').style.display='block';
+    q('#g-search').style.display='block';
     buildD3Graph(STATE.graphData);
   } catch(e){ toast(e.message,'err'); }
 }
@@ -1547,11 +1612,145 @@ function resetGraph(){
   d3.select('#graph-svg').transition().duration(400).call(d3Zoom.transform, d3.zoomIdentity);
 }
 
+/* ── Graph search & focus ── */
+let graphFocused = false;
+
+let _graphSearchMatches = [];
+
+function onGraphSearch(){
+  const val = q('#graph-search-inp').value.trim().toLowerCase();
+  const res = q('#graph-search-results');
+  if(!val || !STATE.graphDataRaw){ res.innerHTML=''; _graphSearchMatches=[]; return; }
+  _graphSearchMatches = STATE.graphDataRaw.nodes
+    .filter(n=> n.name.toLowerCase().includes(val))
+    .slice(0, 8);
+  if(!_graphSearchMatches.length){ res.innerHTML='<div class="g-search-item" style="color:var(--text3);cursor:default;">No matches</div>'; return; }
+  res.innerHTML = _graphSearchMatches.map((n,i)=>`
+    <div class="g-search-item" data-idx="${i}">
+      <span class="gs-type gs-type-${n.type}">${n.type}</span>
+      <span>${esc(n.name)}</span>
+    </div>`).join('');
+}
+
+document.addEventListener('click', function(e){
+  const item = e.target.closest('#graph-search-results .g-search-item');
+  if(!item || item.dataset.idx===undefined) return;
+  const idx = parseInt(item.dataset.idx);
+  const match = _graphSearchMatches[idx];
+  if(match) focusGraphOn(match.id);
+});
+
+function focusGraphOn(nodeId){
+  if(!STATE.graphDataRaw) return;
+  const raw = STATE.graphDataRaw;
+  const target = raw.nodes.find(n=>n.id===nodeId);
+  if(!target) return;
+
+  // Collect neighbor IDs from clean raw data (string IDs, never mutated)
+  const neighborIds = new Set([nodeId]);
+  raw.links.forEach(l=>{
+    if(l.source===nodeId) neighborIds.add(l.target);
+    if(l.target===nodeId) neighborIds.add(l.source);
+  });
+
+  // Build filtered subgraph as fresh deep copy
+  const subNodes = raw.nodes.filter(n=>neighborIds.has(n.id)).map(n=>({...n}));
+  const subLinks = raw.links.filter(l=>neighborIds.has(l.source)&&neighborIds.has(l.target)).map(l=>({...l}));
+
+  buildD3Graph({nodes:subNodes, links:subLinks});
+  graphFocused = true;
+
+  // Clear search
+  q('#graph-search-inp').value='';
+  q('#graph-search-results').innerHTML='';
+
+  // Show focus banner
+  let banner = q('#g-focus-banner'); if(banner) banner.remove();
+  q('#graph-canvas-wrap').insertAdjacentHTML('afterbegin',
+    `<div class="g-focus-banner" id="g-focus-banner">
+      <span>Focused on <strong>${esc(target.name)}</strong> (${subNodes.length} nodes, ${subLinks.length} edges)</span>
+      <button onclick="clearGraphFocus()">✕ Clear</button>
+    </div>`);
+}
+
+function clearGraphFocus(){
+  if(!STATE.graphDataRaw) return;
+  const banner = q('#g-focus-banner'); if(banner) banner.remove();
+  STATE.graphData = JSON.parse(JSON.stringify(STATE.graphDataRaw));
+  buildD3Graph(STATE.graphData);
+  graphFocused = false;
+}
+
 /* ═══════════════════════════════════════════════════════
    TRACE
 ═══════════════════════════════════════════════════════ */
-async function doTraceFunc(){
-  const fn = q('#trace-func-sel').value; if(!fn) return;
+let _traceFuncMatches=[], _traceFileMatches=[], _traceFuncIdx=-1, _traceFileIdx=-1;
+
+function traceSearchFn(){
+  const val = q('#trace-func-inp').value.trim().toLowerCase();
+  const dd = q('#trace-func-dd');
+  _traceFuncIdx = -1;
+  if(!val||!STATE.funcs.length){ dd.innerHTML=''; dd.classList.remove('open'); return; }
+  _traceFuncMatches = STATE.funcs.filter(f=>f.toLowerCase().includes(val)).slice(0,10);
+  if(!_traceFuncMatches.length){ dd.innerHTML='<div class="ss-item" style="color:var(--text3);">No matches</div>'; dd.classList.add('open'); return; }
+  dd.innerHTML = _traceFuncMatches.map((f,i)=>`<div class="ss-item" data-idx="${i}">${esc(f)}</div>`).join('');
+  dd.classList.add('open');
+}
+
+function traceSearchFile(){
+  const val = q('#trace-file-inp').value.trim().toLowerCase();
+  const dd = q('#trace-file-dd');
+  _traceFileIdx = -1;
+  if(!val||!STATE.files.length){ dd.innerHTML=''; dd.classList.remove('open'); return; }
+  _traceFileMatches = STATE.files.filter(f=>f.toLowerCase().includes(val)).slice(0,10);
+  if(!_traceFileMatches.length){ dd.innerHTML='<div class="ss-item" style="color:var(--text3);">No matches</div>'; dd.classList.add('open'); return; }
+  dd.innerHTML = _traceFileMatches.map((f,i)=>`<div class="ss-item" data-idx="${i}">${esc(f)}</div>`).join('');
+  dd.classList.add('open');
+}
+
+function traceSearchKey(e, type){
+  const matches = type==='func'?_traceFuncMatches:_traceFileMatches;
+  const dd = q(type==='func'?'#trace-func-dd':'#trace-file-dd');
+  let idx = type==='func'?_traceFuncIdx:_traceFileIdx;
+  if(e.key==='ArrowDown'){ e.preventDefault(); idx=Math.min(idx+1,matches.length-1); }
+  else if(e.key==='ArrowUp'){ e.preventDefault(); idx=Math.max(idx-1,0); }
+  else if(e.key==='Enter'){
+    e.preventDefault();
+    const name = idx>=0&&matches[idx]?matches[idx]:matches[0];
+    if(!name) return;
+    q(type==='func'?'#trace-func-inp':'#trace-file-inp').value=name;
+    dd.innerHTML=''; dd.classList.remove('open');
+    if(type==='func') doTraceFunc(name); else doTraceFile(name);
+    return;
+  } else if(e.key==='Escape'){ dd.innerHTML=''; dd.classList.remove('open'); return; }
+  else return;
+  if(type==='func') _traceFuncIdx=idx; else _traceFileIdx=idx;
+  dd.querySelectorAll('.ss-item').forEach((el,i)=>el.classList.toggle('active',i===idx));
+}
+
+document.addEventListener('click', function(e){
+  // Trace func dropdown
+  const fi = e.target.closest('#trace-func-dd .ss-item');
+  if(fi&&fi.dataset.idx!==undefined){
+    const name=_traceFuncMatches[parseInt(fi.dataset.idx)];
+    if(name){ q('#trace-func-inp').value=name; q('#trace-func-dd').classList.remove('open'); doTraceFunc(name); }
+    return;
+  }
+  // Trace file dropdown
+  const fli = e.target.closest('#trace-file-dd .ss-item');
+  if(fli&&fli.dataset.idx!==undefined){
+    const name=_traceFileMatches[parseInt(fli.dataset.idx)];
+    if(name){ q('#trace-file-inp').value=name; q('#trace-file-dd').classList.remove('open'); doTraceFile(name); }
+    return;
+  }
+  // Close dropdowns on outside click
+  if(!e.target.closest('.search-select')){
+    document.querySelectorAll('.ss-dropdown').forEach(d=>{d.innerHTML='';d.classList.remove('open');});
+  }
+});
+
+async function doTraceFunc(name){
+  const fn = name || q('#trace-func-inp').value.trim(); if(!fn) return;
   q('#trace-result').innerHTML = '<div class="empty"><div class="empty-sub">Loading…</div></div>';
   try {
     const r = await api('/api/flow','POST',{func_name:fn});
@@ -1582,8 +1781,8 @@ async function doTraceFunc(){
   } catch(e){ q('#trace-result').innerHTML = `<div style="color:var(--danger);font-size:12px;">${e.message}</div>`; }
 }
 
-async function doTraceFile(){
-  const fn = q('#trace-file-sel').value; if(!fn) return;
+async function doTraceFile(name){
+  const fn = name || q('#trace-file-inp').value.trim(); if(!fn) return;
   q('#trace-result').innerHTML = '<div class="empty"><div class="empty-sub">Loading…</div></div>';
   try {
     const r = await api('/api/flow','POST',{file_name:fn});
