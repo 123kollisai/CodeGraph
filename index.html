@@ -833,7 +833,7 @@ body.light {
       </button>
       <div class="status-pill" id="api-pill">
         <div class="pulse warn" id="api-dot"></div>
-        <span id="api-text">Connecting…</span>
+        <!-- <span id="api-text">Connecting…</span>  -->
       </div>
       <div class="status-pill" id="graph-pill" style="display:none;">
         <div class="pulse on"></div>
@@ -1349,9 +1349,9 @@ async function checkStatus(){
   try {
     const s = await api('/api/status');
     const dot = q('#api-dot'); const txt = q('#api-text');
-    if(s.api_key_set){ dot.className='pulse on'; txt.textContent='Gemini ready'; }
-    else { dot.className='pulse off'; txt.textContent='No API key'; }
-    if(s.ready){ onGraphReady(s.graph_stats, s.repo_path); }
+    // if(s.api_key_set){ dot.className='pulse on'; txt.textContent='Gemini ready'; }
+    // else { dot.className='pulse off'; txt.textContent='No API key'; }
+    // if(s.ready){ onGraphReady(s.graph_stats, s.repo_path); }
   } catch(e){
     q('#api-dot').className='pulse off'; q('#api-text').textContent='Backend offline';
     toast('Backend offline — run server.py', 'err');
