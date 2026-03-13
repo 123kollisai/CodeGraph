@@ -45,8 +45,19 @@ Show the call chain with file names.
 List: dependent modules, called functions, external services, database interactions.
 
 ─── STEP 5 — Edge Case Detection ───
-Check for: null inputs, invalid parameters, incorrect conditional logic,
-missing validations, concurrency issues, improper exception handling.
+ONLY derive edge cases from the actual code snippets provided above. Do NOT list
+generic patterns unless you can point to the exact line or variable in the code.
+
+For each edge case you must:
+- Name the specific function and file it lives in.
+- State the exact variable, parameter, or condition that is at risk.
+- Describe what specific input value or runtime state triggers it.
+- Explain the direct consequence (exception type, wrong return value, silent failure, etc.).
+- Rate severity: High (causes crash/data loss), Medium (wrong output/partial failure), Low (cosmetic/recoverable).
+
+Limit to a maximum of 5 edge cases. Exclude anything not visible in the provided
+code context. Exclude trivially obvious language-level null checks unless the code
+provably skips them.
 
 ─── STEP 6 — Identify Failure Point ───
 Locate where system behavior diverges from expectations.
@@ -71,7 +82,15 @@ You MUST respond with a single valid JSON object with these exact keys:
   "entry_point": {"file": "...", "function": "..."},
   "execution_flow": ["step1", "step2", ...],
   "dependencies": {"modules": [...], "functions": [...], "external_services": [...], "database_interactions": [...]},
-  "edge_cases": ["...", "..."],
+  "edge_cases": [
+    {
+      "function": "...",
+      "file": "...",
+      "trigger": "exact input value or runtime condition that causes this",
+      "consequence": "what breaks — exception type, wrong value, silent failure, etc.",
+      "severity": "High | Medium | Low"
+    }
+  ],
   "failure_point": {"file": "...", "function": "...", "condition": "..."},
   "root_cause": {"why": "...", "when": "...", "how_it_propagates": "..."},
   "impact_analysis": {"impacted_files": [...], "impacted_functions": [...], "dependent_modules": [...], "side_effects": [...]},
@@ -283,7 +302,12 @@ Analyze this bug following the 9-step process and return the JSON report.
         lines.append("\nEdge Cases")
         lines.append("-" * 40)
         for ec in rca.get("edge_cases", []):
-            lines.append(f"  - {ec}")
+            if isinstance(ec, dict):
+                lines.append(f"  [{ec.get('severity','?')}] {ec.get('function','?')} — {ec.get('file','?')}")
+                lines.append(f"    Trigger     : {ec.get('trigger','—')}")
+                lines.append(f"    Consequence : {ec.get('consequence','—')}")
+            else:
+                lines.append(f"  - {ec}")
 
         fp = rca.get("failure_point", {})
         lines.append("\nFailure Point")
