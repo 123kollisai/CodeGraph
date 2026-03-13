@@ -1389,18 +1389,28 @@ function buildD3Graph(data){
   const nodeSize = t => t==='File'?8:t==='Function'?5:6;
   const linkColor = r => r==='CALLS'?'rgba(59,130,246,0.4)':r==='DEPENDS_ON'?'rgba(79,195,247,0.3)':'rgba(255,255,255,0.1)';
 
-  // Limit nodes for performance
+  // Limit nodes & edges for performance
   const MAX_NODES = 300;
+  const MAX_EDGES = 600;
   let nodes = data.nodes.slice(0, MAX_NODES);
   const nodeSet = new Set(nodes.map(n=>n.id));
-  const links = data.links.filter(l=>nodeSet.has(l.source)&&nodeSet.has(l.target));
+  let allLinks = data.links.filter(l=>nodeSet.has(l.source)&&nodeSet.has(l.target));
+  const edgesOverflow = allLinks.length > MAX_EDGES;
+  const links = edgesOverflow ? allLinks.slice(0, MAX_EDGES) : allLinks;
 
   // Overflow quip banner
   let ob = q('#graph-overflow-banner'); if(ob) ob.remove();
+  const warnings = [];
   if(data.nodes.length > MAX_NODES){
     const oq = quip('graph_overflow',{value:data.nodes.length});
+    warnings.push(`<span class="quip-text ${oq.variant}" style="border-left:none;display:inline;padding:4px 10px;border-radius:6px;">${oq.text}</span>`);
+  }
+  if(edgesOverflow){
+    warnings.push(`<span class="quip-text warn" style="border-left:none;display:inline;padding:4px 10px;border-radius:6px;">showing ${MAX_EDGES} of ${allLinks.length} edges. the rest were too tangled to render.</span>`);
+  }
+  if(warnings.length){
     wrap.insertAdjacentHTML('afterbegin',
-      `<div id="graph-overflow-banner" class="quip-text ${oq.variant}" style="position:absolute;top:12px;left:50%;transform:translateX(-50%);z-index:20;max-width:500px;text-align:center;border-left:none;border:1px solid var(--border2);border-radius:8px;padding:8px 16px;">${oq.text}</div>`);
+      `<div id="graph-overflow-banner" style="position:absolute;top:12px;left:50%;transform:translateX(-50%);z-index:20;max-width:560px;text-align:center;display:flex;flex-direction:column;gap:6px;align-items:center;">${warnings.join('')}</div>`);
   }
 
   const g = svg.append('g');
