@@ -718,6 +718,7 @@ body.light {
 .light .toast { background: var(--ink2); color: var(--text); border-color: var(--border2); }
 .light main::before { background-image: radial-gradient(rgba(0,0,0,0.04) 1px, transparent 1px); }
 .light .ni-name { color: var(--text); }
+.light .big-title { color: var(--text); }
 .light .conf-badge.conf-high { background: var(--safe-a); color: var(--safe); }
 .light .conf-badge.conf-med  { background: var(--warn-a); color: var(--warn); }
 .light .conf-badge.conf-low  { background: var(--danger-a); color: var(--danger); }
@@ -852,7 +853,15 @@ body.light {
             <div class="input-label">
               <span id="inp-label">Repository URL</span>
             </div>
-            <input type="text" id="repo-inp" placeholder="https://github.com/user/repo"/>
+            <input type="text" id="repo-inp" placeholder="https://github.com/user/repo" oninput="onRepoUrlChange()"/>
+          </div>
+
+          <div id="branch-wrap" style="display:none;margin-bottom:14px;">
+            <div class="input-label" style="display:flex;align-items:center;justify-content:space-between;">
+              <span>Branch</span>
+              <span id="branch-status" style="font-size:10px;font-weight:400;text-transform:none;letter-spacing:0;color:var(--text3);"></span>
+            </div>
+            <select id="branch-sel" style="width:100%;"></select>
           </div>
 
           <button class="btn btn-volt" id="parse-btn" onclick="doParse()">
@@ -1302,6 +1311,50 @@ function setSrc(s){
   q('#st-lc').classList.toggle('on',s==='local');
   q('#inp-label').textContent = s==='github' ? 'Repository URL' : 'Local Path';
   q('#repo-inp').placeholder = s==='github' ? 'https://github.com/user/repo' : '/path/to/repo';
+  if(s !== 'github'){
+    q('#branch-wrap').style.display = 'none';
+    branchFetchUrl = '';
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   BRANCH SELECTOR
+═══════════════════════════════════════════════════════ */
+let branchFetchUrl = '';
+let branchFetchTimer = null;
+
+function onRepoUrlChange(){
+  if(source !== 'github') return;
+  clearTimeout(branchFetchTimer);
+  branchFetchTimer = setTimeout(fetchBranches, 800);
+}
+
+async function fetchBranches(){
+  const url = q('#repo-inp').value.trim();
+  if(!url || url === branchFetchUrl) return;
+  if(!url.includes('github.com')) return;
+  branchFetchUrl = url;
+  const statusEl = q('#branch-status');
+  const sel = q('#branch-sel');
+  statusEl.textContent = 'Fetching…';
+  q('#branch-wrap').style.display = 'block';
+  sel.innerHTML = '<option value="">Loading branches…</option>';
+  sel.disabled = true;
+  try {
+    const r = await api('/api/branches','POST',{url});
+    if(!r.branches || r.branches.length === 0){
+      q('#branch-wrap').style.display = 'none';
+      branchFetchUrl = '';
+      return;
+    }
+    sel.innerHTML = r.branches.map(b => `<option value="${b}">${b}</option>`).join('');
+    sel.disabled = false;
+    statusEl.textContent = `${r.branches.length} branch${r.branches.length===1?'':'es'}`;
+  } catch(e){
+    q('#branch-wrap').style.display = 'none';
+    branchFetchUrl = '';
+    statusEl.textContent = '';
+  }
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -1310,9 +1363,12 @@ function setSrc(s){
 async function doParse(){
   const path = q('#repo-inp').value.trim();
   if(!path){ toast('Enter a repository URL or path','err'); return; }
+  const branch = (source === 'github' && q('#branch-wrap').style.display !== 'none')
+    ? q('#branch-sel').value || null
+    : null;
   const btn = q('#parse-btn'); btn.disabled=true; btn.textContent='Parsing…';
   try {
-    const r = await api('/api/parse','POST',{source,path});
+    const r = await api('/api/parse','POST',{source, path, branch});
     onGraphReady(r.graph_stats, r.repo_path);
     chatHistory=[];
     q('#chat-messages').innerHTML=`<div class="chat-welcome"><div class="empty-icon" style="font-size:32px;">◇</div><div class="empty-title" style="font-size:16px;">Ask anything about this codebase</div><div class="empty-sub">I can explain functions, trace call chains, find dependencies, and more.</div></div>`;
@@ -1656,14 +1712,32 @@ function renderRCA(rca){
   ];
 
   const rcaQ = quip('rca_confidence',{label:conf});
-  out.innerHTML = `
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
-      <h2 style="font-size:22px;font-weight:800;letter-spacing:-0.5px;color:var(--volt);">Root Cause<br>Analysis Report
-      <div style="text-align:right;">
-        <span class="conf-badge ${confCls}">● ${esc(conf)} confidence</span>
-        <div class="quip-text ${rcaQ.variant}" style="margin-top:6px;border-left:none;text-align:right;font-size:10px;">${rcaQ.text}</div>
+  // out.innerHTML = `
+  //   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
+  //     <h2 style="font-size:22px;font-weight:800;letter-spacing:-0.5px;color:var(--volt);">Root Cause<br>Analysis Report
+  //     <div style="text-align:right;">
+  //       <span class="conf-badge ${confCls}">● ${esc(conf)} confidence</span>
+  //       <div class="quip-text ${rcaQ.variant}" style="margin-top:6px;border-left:none;text-align:right;font-size:10px;">${rcaQ.text}</div>
+  //     </div>
+  //   </div>
+   out.innerHTML = `
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
+    
+    <h2 style="font-size:22px;font-weight:800;letter-spacing:-0.5px;">
+      <span style="color:var(--volt);">Root Cause</span><br>
+      <span style="color:var(--volt);">Analysis Report</span>
+    </h2>
+
+    <div style="text-align:right;">
+      <span class="conf-badge ${confCls}">● ${esc(conf)} confidence</span>
+      <div class="quip-text ${rcaQ.variant}" style="margin-top:6px;border-left:none;text-align:right;font-size:10px;">
+        ${rcaQ.text}
       </div>
     </div>
+
+  </div>
+  
+
     ${sections.map(s=>`
       <div class="rca-section">
         <div class="rca-sec-header">

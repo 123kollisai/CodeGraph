@@ -168,9 +168,13 @@ def compute_impact(graph, func_name):
 
 # ── Models ─────────────────────────────────────────────────────────────────────
 
+class BranchesRequest(BaseModel):
+    url: str
+
 class ParseRequest(BaseModel):
     source: str
     path: str
+    branch: Optional[str] = None
 
 class RCARequest(BaseModel):
     bug_description: str
@@ -199,6 +203,26 @@ def status():
     return {"ready": STATE["graph"] is not None, "repo_path": STATE["repo_path"],
             "graph_stats": STATE["graph_stats"], "api_key_set": bool(os.getenv("GEMINI_API_KEY"))}
 
+@app.post("/api/branches")
+def list_branches(req: BranchesRequest):
+    url = req.url.strip().rstrip("/")
+    clone_url = url if url.endswith(".git") else url + ".git"
+    try:
+        result = subprocess.run(
+            ["git", "ls-remote", "--heads", clone_url],
+            capture_output=True, text=True, timeout=30
+        )
+        if result.returncode != 0:
+            raise HTTPException(400, f"Failed to fetch branches: {result.stderr.strip()}")
+        branches = []
+        for line in result.stdout.splitlines():
+            parts = line.split("\t")
+            if len(parts) == 2 and parts[1].startswith("refs/heads/"):
+                branches.append(parts[1].replace("refs/heads/", ""))
+        return {"branches": branches}
+    except subprocess.TimeoutExpired:
+        raise HTTPException(408, "Timed out fetching branches")
+
 @app.post("/api/parse")
 def parse_repo(req: ParseRequest):
     resolved_path = None
@@ -208,7 +232,11 @@ def parse_repo(req: ParseRequest):
         clone_base = os.path.join(tempfile.gettempdir(), "codegraph_repos"); os.makedirs(clone_base, exist_ok=True)
         clone_dir = os.path.join(clone_base, repo_name)
         if os.path.isdir(clone_dir): shutil.rmtree(clone_dir, onerror=_rm_readonly)
-        result = subprocess.run(["git","clone","--depth","1",clone_url,clone_dir], capture_output=True, text=True, timeout=120)
+        clone_cmd = ["git", "clone", "--depth", "1"]
+        if req.branch:
+            clone_cmd += ["--branch", req.branch]
+        clone_cmd += [clone_url, clone_dir]
+        result = subprocess.run(clone_cmd, capture_output=True, text=True, timeout=120)
         if result.returncode != 0: raise HTTPException(400, f"Git clone failed: {result.stderr.strip()}")
         resolved_path = clone_dir
     else:
